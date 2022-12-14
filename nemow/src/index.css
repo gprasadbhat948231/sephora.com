@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Filter_Parents{
+  justify-content: center;
+  width: 100%;
+  display: block;
+  }
+  .Filter_Brand_links{
+    display: block;
+    line-height: 2;
+  
+  }
+  .Filter_Price_links{
+  
+    display: block;
+    text-align: left;
+    line-height: 2;
+  }
+  .Filter_Type_links{
+  
+    display: block;
+    text-align: left;
+    line-height: 2;
+  }
+  
+  
