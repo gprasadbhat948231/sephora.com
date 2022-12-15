@@ -1,10 +1,10 @@
 import Navbar from './Components/Navbar';
+import EyeCare from './Pages/EyeCare';
 function App() {
   return (
     <div>
-      <Navbar/>
+    
     </div>
   );
 }
-
 export default App;
