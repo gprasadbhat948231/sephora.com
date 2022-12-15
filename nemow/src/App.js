@@ -1,10 +1,10 @@
 import Navbar from './Components/Navbar';
-import EyeCare from './Pages/EyeCare';
+import Home from './Pages/Home';
 function App() {
   return (
     <div>
-    
+      <Navbar/>
+      <Home/>
     </div>
-  );
 }
 export default App;
