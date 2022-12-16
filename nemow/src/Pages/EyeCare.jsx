@@ -115,7 +115,7 @@ function EyeCareSection({
                 <Box
                   align="left"
                   fontSize="2xl"
-                  // color={useColorModeValue("gray.800", "white")}
+                // color={useColorModeValue("gray.800", "white")}
                 >
                   <Box as="span" color={"gray.600"} fontSize="lg">
                     $:
@@ -185,8 +185,8 @@ function EyeCare() {
       setfilterdata(EyeBrowData);
     } else {
       let filterdata = EyeBrowData.filter((ele) =>
-      ele.name.includes(type)
-        );
+        ele.name.includes(type)
+      );
       setfilterdata(filterdata);
     }
   };
