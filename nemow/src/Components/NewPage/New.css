@@ -1,0 +1,32 @@
+/* Ritik */
+.sub-pages:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.text-content{
+    flex-direction: column;
+    justify-content: center;
+}
+.card{
+    justify-content: center;
+    padding: 8px;
+    gap: 1;
+}
+.card:hover{
+    cursor: pointer;
+}
+.card:hover .text-content{
+    text-decoration: underline;   
+}
+.card:hover .like{
+    display: flex;  
+}
+.card .price{
+    font-size: small;
+    font-weight: bold;
+}
+.like{
+    display: none;
+}
+

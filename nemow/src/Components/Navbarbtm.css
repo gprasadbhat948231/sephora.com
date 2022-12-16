@@ -35,6 +35,7 @@
 .lists{
     color: black;
     font-weight: 600;
+    line-height: 30px;
     font-size: 14px;
 }
 .lists:hover{
@@ -43,6 +44,7 @@
 .sublists{
     color: black;
     font-size: 14px;
+    line-height: 26px;
 }
 .sublists:hover{
     text-decoration: underline;

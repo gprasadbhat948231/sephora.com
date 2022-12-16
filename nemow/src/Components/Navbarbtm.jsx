@@ -508,6 +508,3 @@ const Navbarbtm = () => {
 }
 
 export default Navbarbtm
-/* 
-
-*/
