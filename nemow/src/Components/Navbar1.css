@@ -28,7 +28,6 @@
     justify-content: space-evenly;
     align-items: center;
     margin: auto;
-    /* border: 1px solid; */
     padding: 10px;
 }
 .nav-searchbar{
@@ -41,7 +40,7 @@
 }
 .inputsec{
     width: 30%;
-    background-color:#edebeb84;
+    background-color:#edebeb4e;
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -56,7 +55,6 @@
 .storebox{
     display: flex;
     align-items: center;
-    /* border: 1px solid; */
     height: 45px;
 }
 .storetext{
@@ -94,4 +92,111 @@
 .communitytext{
     font-weight: 600;
     padding-left: 5px;
+}
+
+
+/* Media Query */
+@media screen and (max-width:480px)
+{
+    .nav-top-1-text{
+        font-size: 12px;
+    }
+    .storebox{
+        display: none;
+    }
+    .sephora-logo{
+        width:100px;
+        height: 60px;
+    }
+    .nav-searchbar{
+        width:200px;
+        border-radius: 10px;
+    }
+    .inputsec{
+        border-radius: 10px;
+        width: 200px;
+    }
+    .lastbox{
+        width: 150px;
+    }
+    .nav-top-2{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+@media screen and (max-width:768px)
+{
+    .nav-top-1-text{
+        font-size: 14px;
+    }
+    .storebox{
+        display: none;
+    }
+    .sephora-logo{
+        width:140px;
+        height: 60px;
+    }
+    .nav-searchbar{
+        width:250px;
+        border-radius: 10px;
+    }
+    .inputsec{
+        border-radius: 10px;
+        width: 300px;
+    }
+    .lastbox{
+        width: 100%;
+    }
+    .nav-top-2{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+@media screen and (max-width:1024px)
+{
+    .nav-top-1-text{
+        font-size: 14px;
+    }
+    .storebox{
+        display: none;
+        width: 140px;
+    }
+    .sephora-logo{
+        width:180px;
+        height: 60px;
+    }
+    .nav-searchbar{
+        width:180px;
+        border-radius: 10px;
+    }
+    .inputsec{
+        border-radius: 10px;
+        width: 200px;
+    }
+    .lastbox{
+        width: 70%;
+    }
+    .nav-top-2{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        justify-content:space-between;
+    }
+    .storeicon{
+        width:30px;
+        height:30px;
+    }
+    .storetext>p:first-child{
+        line-height: 1px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .storetext>p:last-child{
+        line-height: 1px;
+        font-size: 12px;
+    }
 }

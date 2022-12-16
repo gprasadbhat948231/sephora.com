@@ -1,4 +1,5 @@
 import Navbar from './Components/Navbar';
+import Footer from './Pages/Footer';
 import Navbarbtm from './Components/Navbarbtm';
 import CartPage from './Components/CartPage/CartPage';
 import EyeCare from './Pages/EyeCare';
@@ -7,9 +8,8 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <EyeCare/>
-      <CartPage/>
       <Home/>
+      <Footer/>
     </div>
   )
 }
