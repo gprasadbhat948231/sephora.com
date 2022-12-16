@@ -52,3 +52,16 @@
   align-self: left;
   font-size: 25px;
 }
+#Cart_section{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+/* width: 70%; */
+margin: auto;
+border-radius: 3px;
+}
+#Cartitems_parents{
+ line-height: 40px;
+ border-bottom: 0.5px solid gray;
+}
+#Links_for_cart_loves{
+color: rgb(47, 157, 225);
+}

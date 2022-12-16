@@ -34,7 +34,25 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [frag, setFrag] = useState([]);
   const [eye, setEye] = useState([]);
-  const [sweats,setSweat]=useState([]);
+  const [sweats, setSweat] = useState([]);
+
+  const featured = [{ name: 'Gifts & Value Sets', img: 'https://www.sephora.com/contentimages/homepage/092022/Homepage/RWD/gifts%2032@3x.png?imwidth=53' },
+  { name: 'Luxury Skincare', img: 'https://www.sephora.com/contentimages/categorybanners/RWD/icons/luxury_beauty.svg' },
+  { name: 'Makeup Under $25', img: 'https://www.sephora.com/contentimages/homepage/100422/Homepage/RWD/under25%2032@3x.jpg?imwidth=53' },
+  { name: 'Moisturizers', img: 'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_skincare_cleanser_moisturizer_us_ca_rwd_slice.jpg?imwidth=53' },
+  { name: 'Hairstyling & Treatment', img: 'https://www.sephora.com/contentimages/homepage/091322/Homepage/RWD/hair%20dryer.JPG?imwidth=53' },
+  { name: 'Perfume', img: 'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_fragrance_bottle_us_ca_rwd_slice.jpg?imwidth=53' },
+  { name: 'Nemow Collection', img: 'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_sephoracollection_SC_us_ca_rwd_slice.jpg?imwidth=53' },
+  { name: 'Jumbos', img: 'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_samples_32_us_ca_rwd_slice.png?imwidth=53' }]
+  
+  const guidence=[{name:'Holiday Gift guide',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/new.svg'},
+                  {name:'Gifting Quiz',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/gift_finder.svg'},
+                  {name:'Foundation Quiz',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/foundation_guide.svg'},
+                  {name:'Skincare Builder',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/skincare_age.svg'},
+                  {name:'Shiny Hair Guide',img:'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_healthy%20scalp%20guide_us_ca_rwd_slice.png?imwidth=53'},
+                  {name:'Fragrance hub',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/niche_fragrances.svg'},
+                  {name:'Clinical Skincare',img:'https://www.sephora.com/contentimages/categorybanners/RWD/icons/skincare_quiz.svg'},
+                  {name:'Black Owned Brands',img:'https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/CategoryTiles/homepage_featured_category_tile_BOB_us_rwd_slice.png?imwidth=53'}]
   const getData = () => {
     return axios(`https://sephorajsonserver.onrender.com/new-arrival?_limit=18`).then((res) => setData(res.data));
   }
@@ -45,8 +63,8 @@ const Home = () => {
     return axios(`https://sephorajsonserver.onrender.com/womens-Eye-Brows?_limit=18`).then((res) => setEye(res.data));
   }
 
-  const getSweat=()=>{
-    return axios(`https://sephorajsonserver.onrender.com/womens-Jackets?_limit=15`).then((res)=>setSweat(res.data));
+  const getSweat = () => {
+    return axios(`https://sephorajsonserver.onrender.com/womens-Jackets?_limit=15`).then((res) => setSweat(res.data));
   }
 
   useEffect(() => {
@@ -126,7 +144,7 @@ const Home = () => {
       }
     ]
   }
-  var setting3={
+  var setting3 = {
     infinite: true,
     speed: 400,
     slidesToShow: 5,
@@ -166,7 +184,7 @@ const Home = () => {
     <div>
       <Box className='HomeTopBanner'>
         <Box className='top-banner-div'>
-          <img src='https://www.sephora.com/contentimages/2022-12-06-slotting-gifts-by-price-site-rwd-hp-hero-banner-4-product-english-us-handoff_01.jpg?imwidth=544' alt='img 1' />
+          <img src='https://www.sephora.com/contentimages/2022-12-06-slotting-gifts-by-price-site-rwd-hp-hero-banner-4-product-english-us-handoff_01.jpg' alt='img 1' />
           <Box className='top-banner-text-div'>
             <Text className='top-banner-text-head'>$65 & Under Gifts</Text>
             <Text className='top-banner-text-p'>Make their holiday with just right presents for all.</Text>
@@ -174,7 +192,7 @@ const Home = () => {
           </Box>
         </Box>
         <Box className='top-banner-div'>
-          <img src='https://www.sephora.com/contentimages/2022-12-02-slotting-just-arrived-v4-standard-site-rwd-home-page-hero-banner-US_01-handoff.jpg?imwidth=545' alt='img2' />
+          <img src='https://www.sephora.com/contentimages/2022-12-02-slotting-just-arrived-v4-standard-site-rwd-home-page-hero-banner-US_01-handoff.jpg?' alt='img2' />
           <Box className='top-banner-text-div1'>
             <Text className='top-banner-text-head1'>The Latest Lineup</Text>
             <Text className='top-banner-text-p1'>New Beauty from the hottest brands</Text>
@@ -182,7 +200,7 @@ const Home = () => {
           </Box>
         </Box>
         <Box className='top-banner-div'>
-          <img src='https://www.sephora.com/contentimages/2022-11-29-slotting-gifts-by-price-site-rwd-hp-hero-banner-skincare-musthaves-us-handoff_01.jpg?imwidth=545' alt='img3' />
+          <img src='https://www.sephora.com/contentimages/2022-11-29-slotting-gifts-by-price-site-rwd-hp-hero-banner-skincare-musthaves-us-handoff_01.jpg?' alt='img3' />
           <Box className='top-banner-text-div'>
             <Text className='top-banner-text-head'>Skincare Must-Have under $50</Text>
             <Text className='top-banner-text-p'>Picks at just-right prices.</Text>
@@ -250,7 +268,7 @@ const Home = () => {
             }
           </Slider>
         </div>
-        <hr className='hr'/>
+        <hr className='hr' />
       </Box>
       <Box className='perfect'>
         <div>
@@ -261,33 +279,33 @@ const Home = () => {
             <Text className='shopmid-now-text'>SHOP NOW <ChevronRightIcon /></Text>
           </Box>
           <div>
-            <img src='https://www.sephora.com/contentimages/2022-12-1-sc-sku-site-desktop-mweb-home-page-rwd-marketing-banner-launch-1-800x256-en-us-can.jpg?imwidth=400' alt='img1'/>
+            <img src='https://www.sephora.com/contentimages/2022-12-1-sc-sku-site-desktop-mweb-home-page-rwd-marketing-banner-launch-1-800x256-en-us-can.jpg?imwidth=400' alt='img1' />
           </div>
         </div>
         <div>
-        <Box className='mid-banner-text-div2'>
+          <Box className='mid-banner-text-div2'>
             <Text className='mid-banner-text-head2'>Get Your Gifts in Time</Text>
             <Text className='mid-banner-text-p2'>Choose free shipping and order by 6am ET 12/20 to</Text>
             <Text className='mid-banner-text-p2'>receive by 12/24.</Text>
             <Text className='shopmid-now-text2'>Learn More <ChevronRightIcon /></Text>
-        </Box>
+          </Box>
           <div>
-            <img src='https://www.sephora.com/contentimages/2022-12-05-holiday-der-b-launch-site-mobile-desktop-home-page-rwd-marketing-banner-ldts-mockup-us-2869-release-800x256.jpg?imwidth=400' alt='img1'/>
+            <img src='https://www.sephora.com/contentimages/2022-12-05-holiday-der-b-launch-site-mobile-desktop-home-page-rwd-marketing-banner-ldts-mockup-us-2869-release-800x256.jpg?imwidth=400' alt='img1' />
           </div>
         </div>
         <div>
-        <Box className='mid-banner-text-div3'>
+          <Box className='mid-banner-text-div3'>
             <Text className='mid-banner-text-head2'>Get Your Gifts in Time</Text>
             <Text className='mid-banner-text-p2'>Choose free shipping and order by 6am ET 12/20 to</Text>
             <Text className='mid-banner-text-p2'>receive by 12/24.</Text>
             <Text className='shopmid-now-text2'>Learn More <ChevronRightIcon /></Text>
-        </Box>
+          </Box>
           <div>
-            <img src='https://www.sephora.com/contentimages/2022-holiday-launch-bun-d-site-mobile-desktop-marketing-banner-rwd-live-chat-us-can-800x256.jpg?imwidth=400' alt='img1'/>
+            <img src='https://www.sephora.com/contentimages/2022-holiday-launch-bun-d-site-mobile-desktop-marketing-banner-rwd-live-chat-us-can-800x256.jpg?imwidth=400' alt='img1' />
           </div>
         </div>
       </Box>
-      <hr className='hr1'/>
+      <hr className='hr1' />
       <Box className='chosen-container'>
         <h2>Some Sweatshirts for winter</h2>
         <div className='slide-container'>
@@ -297,10 +315,10 @@ const Home = () => {
                 <div className="carousel" key={item.id}>
                   <div className='indi-card'>
                     <img className="cImage" src={item.imagePath} alt="image1" />
-                  <div>
+                    <div>
                       <Text fontWeight="700">{item.brand}</Text>
                       <Text fontWeight={'400'} marginTop='4px'>{item.name}</Text>
-                  </div>
+                    </div>
                   </div>
                 </div>
               ))
@@ -308,7 +326,81 @@ const Home = () => {
           </Slider>
         </div>
       </Box>
+      <hr className='hr1' />
+      <Box className='featured-container'>
+        <Box className='featured-div-1'>
+            <Text fontSize={'24px'} fontWeight='bold'>Featured Categories</Text>
+            <Text fontWeight={'400'}>Shop What's popular now</Text>
+        </Box>
+        <Box className='featured-div-2'>
+            {
+              featured.map((item)=>(
+                <div key={item.name} className='featured-div-card'>
+                  <Text>{item.name}</Text>
+                  <div>
+                    <img src={item.img} alt={item.name}/>
+                  </div>
+                </div>
+              ))
+            }
+        </Box>
+      </Box>
+      <hr className='hr1' />
+      <Box className='featured-container'>
+        <Box className='featured-div-1'>
+            <Text fontSize={'24px'} fontWeight='bold'>Need a Little Guidance</Text>
+            <Text fontWeight={'400'}>Check out our <a className='anchor'>quizes and buying guides</a></Text>
+        </Box>
+        <Box className='featured-div-2'>
+            {
+              guidence.map((item)=>(
+                <div key={item.name} className='featured-div-card'>
+                  <Text>{item.name}</Text>
+                  <div>
+                    <img src={item.img} alt={item.name}/>
+                  </div>
+                </div>
+              ))
+            }
+        </Box>
+      </Box>
+      <hr className='hr1' />
+      <Box className='commitment'>
+        <div className='common-end'>
+          <Box className='end-banner-text-div'>
+            <Text className='mid-banner-text-head'>Our Commitment to Diversity,Equity</Text>
+            <Text className='mid-banner-text-head'>& Inclusion</Text>
+            <Text className='shopmid-now-text'>LEARN MORE <ChevronRightIcon /></Text>
+          </Box>
+          <div>
+            <img className='last-banner-img' src='https://www.sephora.com/contentimages/homepage/060222/Homepage/RWD/homepage-reassurance-banner-diversity-inclusion-desktop-mobile-us-ca-slice.jpeg?imwidth=400' alt='img1' />
+          </div>
+        </div>
+        <div className='common-end2'>
+          <Box className='end-banner-text-div2'>
+            <Text className='mid-banner-text-head2'>Get Your Gifts in Time</Text>
+            <Text className='mid-banner-text-p2'>Fast and easy option for stress free holiday shopping</Text>
+            <Text className='shopmid-now-text2'>Learn More <ChevronRightIcon /></Text>
+          </Box>
+          <div>
+            <img className='last-banner-img' src='https://www.sephora.com/contentimages/2022-holiday-launch-site-desktop-mobile-home-page-rwd-marketing-banner-bottom-banner-ease-and-convenience-800x256-us-can.jpg?imwidth=400' alt='img1' />
+          </div>
+        </div>
+        <div className='common-end3'>
+          <Box className='end-banner-text-div3'>
+            <Text className='mid-banner-text-head2'>Clean + Planet Positive</Text>
+            <Text className='mid-banner-text-p2'>Brands on a mission to change your skin and the earth.</Text>
+            <Text className='shopmid-now-text2'>Learn More <ChevronRightIcon /></Text>
+          </Box>
+          <div>
+            <img className='last-banner-img' src='https://www.sephora.com/contentimages/2022-holiday-launch-bun-d-site-mobile-desktop-marketing-banner-rwd-live-chat-us-can-800x256.jpg?imwidth=400' alt='img1' />
+          </div>
+        </div>
+      </Box>
       <hr className='hr1'/>
+      <Box className='feedback-banner'>
+        <Text>Website feedback ? Let us know.</Text>
+      </Box>
     </div>
   )
 }

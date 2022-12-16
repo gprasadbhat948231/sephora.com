@@ -1,14 +1,15 @@
 import Navbar from './Components/Navbar';
+import Footer from './Pages/Footer';
+import Navbarbtm from './Components/Navbarbtm';
+import CartPage from './Components/CartPage/CartPage';
 import Home from './Pages/Home';
-import New from './Pages/New'
 import Eyecare from './Pages/EyeCare'
 function App() {
   return (
     <div>
       <Navbar/>
-      {/* <Home/> */}
-      <New/>
-      {/* <Eyecare/> */}
+      <Home/>
+      <Footer/>
     </div>
   )
 }
