@@ -1,4 +1,3 @@
-
 import thunk from "redux-thunk";
 
 import { reducer } from "./EyecareRedux/Reducer";
@@ -15,5 +14,6 @@ const rootReducer=combineReducers({
     export const store = legacy_createStore(rootReducer,composer(applyMiddleware(thunk)))
 // const rootreducer=combineReducers({ItemAddreducer:reducer})
 // export const store=legacy_createStore(rootreducer)
+
 
 
