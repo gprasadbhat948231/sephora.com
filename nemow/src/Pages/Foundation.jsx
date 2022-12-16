@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 import { Fcomponent } from '../Components/fountation/Fcomponent';
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Checkbox, Flex, Heading, Radio, RadioGroup, SimpleGrid, Spacer, Stack } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Checkbox, Flex, h2, Heading, Radio, RadioGroup, SimpleGrid, Spacer, Stack } from '@chakra-ui/react'
 import LoadingIndicator from '../Components/fountation/loading';
 
-  const getdata=(type="",isChecked="")=>{
+  const getdata=(isChecked="")=>{
     return (  isChecked==""?axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?`):
      axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?isNew=${isChecked}`))
    
@@ -23,10 +23,10 @@ export const Foundation = () => {
 
     useEffect(()=>{
       setLoad(true)
-        getdata(type,isChecked).then(res=>{setData(res.data)
+        getdata(isChecked).then(res=>{setData(res.data)
           setLoad(false)})
         .catch((err)=>{setLoad(false);console.log(err)})
-    },[type,isChecked])
+    },[isChecked])
    
 
   return (<Box w={'100%'} >
@@ -41,14 +41,14 @@ export const Foundation = () => {
 
 
       <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Pickup
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -63,14 +63,14 @@ export const Foundation = () => {
 
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Date
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -83,14 +83,14 @@ export const Foundation = () => {
   </AccordionItem>
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Brand
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -108,14 +108,14 @@ export const Foundation = () => {
 
 <Accordion allowToggle>
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Price Range
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -129,14 +129,14 @@ export const Foundation = () => {
 
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Date
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -149,14 +149,14 @@ export const Foundation = () => {
   </AccordionItem>
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Brand
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -175,14 +175,14 @@ export const Foundation = () => {
 
 <Accordion allowToggle>
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Rating
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -195,14 +195,14 @@ export const Foundation = () => {
   </AccordionItem>
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Concems
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -223,14 +223,14 @@ export const Foundation = () => {
 
 <Accordion allowToggle>
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Coverage
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -243,14 +243,14 @@ export const Foundation = () => {
   </AccordionItem>
 
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Finish
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -268,14 +268,14 @@ export const Foundation = () => {
 
 <Accordion allowToggle>
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Formulation
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
@@ -289,14 +289,14 @@ export const Foundation = () => {
   </Accordion>
   <Accordion allowToggle>
   <AccordionItem>
-       <Heading as="h4" size={"md"}>
+       <h2 as="h4" size={"md"}>
       <AccordionButton>
         <Box as="span" flex='1' textAlign='left'>
          Skin Type
         </Box>
         <AccordionIcon />
       </AccordionButton>
-   </Heading>
+   </h2>
     <AccordionPanel pb={4}>
     <RadioGroup onChange={setType} value={type}>
       <Stack direction='column'>
