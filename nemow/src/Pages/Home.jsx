@@ -34,6 +34,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [frag, setFrag] = useState([]);
   const [eye, setEye] = useState([]);
+  const [sweats,setSweat]=useState([]);
   const getData = () => {
     return axios(`https://sephorajsonserver.onrender.com/new-arrival?_limit=18`).then((res) => setData(res.data));
   }
@@ -44,11 +45,15 @@ const Home = () => {
     return axios(`https://sephorajsonserver.onrender.com/womens-Eye-Brows?_limit=18`).then((res) => setEye(res.data));
   }
 
+  const getSweat=()=>{
+    return axios(`https://sephorajsonserver.onrender.com/womens-Jackets?_limit=15`).then((res)=>setSweat(res.data));
+  }
 
   useEffect(() => {
     getData();
     getData1();
     getData2();
+    getSweat();
   }, [])
   console.log(data);
   var settings = {
@@ -94,6 +99,68 @@ const Home = () => {
     initialSlide: 0,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  }
+  var setting3={
+    infinite: true,
+    speed: 400,
+    slidesToShow: 5,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+
   }
   return (
     <div>
@@ -220,6 +287,28 @@ const Home = () => {
           </div>
         </div>
       </Box>
+      <hr className='hr1'/>
+      <Box className='chosen-container'>
+        <h2>Some Sweatshirts for winter</h2>
+        <div className='slide-container'>
+          <Slider {...setting3} >
+            {
+              sweats.map((item) => (
+                <div className="carousel" key={item.id}>
+                  <div className='indi-card'>
+                    <img className="cImage" src={item.imagePath} alt="image1" />
+                  <div>
+                      <Text fontWeight="700">{item.brand}</Text>
+                      <Text fontWeight={'400'} marginTop='4px'>{item.name}</Text>
+                  </div>
+                  </div>
+                </div>
+              ))
+            }
+          </Slider>
+        </div>
+      </Box>
+      <hr className='hr1'/>
     </div>
   )
 }
