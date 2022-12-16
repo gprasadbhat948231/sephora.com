@@ -66,7 +66,7 @@ function CartPage() {
                     <Link id="Links_for_cart_loves">Remove</Link>
                   </Box>
                   <Box w="20%" display={"flex"}>
-                    <Text textAlign={"right"}>₹{ele.mrpRange.min}</Text>
+                    <Text textAlign={"right"}>₹   {ele.mrpRange.min}</Text>
                   </Box>
                 </Box>
               </Flex>

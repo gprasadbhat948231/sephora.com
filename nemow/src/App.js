@@ -5,9 +5,9 @@ import EyeCare from './Pages/EyeCare';
 function App() {
   return (
     <div>
-      {/* <Navbar/> */}
-      {/* <EyeCare/> */}
-      {/* <CartPage/> */}
+      <Navbar/>
+      <EyeCare/>
+      <CartPage/>
     </div>
   );
 }
