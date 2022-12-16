@@ -34,5 +34,23 @@ code {
     text-align: left;
     line-height: 2;
   }
+  #Footer_button1,#Footer_button{
+    margin-top: 10px;
+    background-color: rgb(249, 248, 248);
+    border-radius: 3px;
+    height: 34px;
+    margin-right: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  
+  }
+  #Footer_text{
+font-size: 16px;
+margin-top: 20px;
+
+  }
+  #Footer_text>span{
+
+font-weight: 600;
+  }
   
   
