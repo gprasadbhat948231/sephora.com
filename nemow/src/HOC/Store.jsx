@@ -1,6 +1,19 @@
+
+import thunk from "redux-thunk";
+
 import { reducer } from "./EyecareRedux/Reducer";
-import {combineReducer,legacy_createStore,} from "redux"
-const rootreducer=combineReducer({ItemAddreducer:reducer})
-export const store=legacy_createStore(rootreducer)
+import { legacy_createStore,compose, combineReducers, applyMiddleware } from "redux";
+import { productReducer } from "./AdminRedux/product.reducer";
+const rootReducer=combineReducers({
+    adminManager:productReducer,
+    reducer:reducer,
+    // authManeger:authReducer
+    })
+    const composer=window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose
+
+
+    export const store = legacy_createStore(rootReducer,composer(applyMiddleware(thunk)))
+// const rootreducer=combineReducers({ItemAddreducer:reducer})
+// export const store=legacy_createStore(rootreducer)
 
 

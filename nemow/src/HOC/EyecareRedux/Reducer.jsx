@@ -10,8 +10,7 @@ case ADD_TO_CART:
 case ADD_TO_WISHLIST:
     return {...state,Wishlist:[...state.Wishlist,payload.data]}
 default:
-    return 
-     state
+    return  state
     }
 }
 

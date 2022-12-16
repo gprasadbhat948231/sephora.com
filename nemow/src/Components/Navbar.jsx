@@ -11,8 +11,10 @@ import wishlist from '../Components/Navbarimg/wishlist.png'
 import notify from '../Components/Navbarimg/notify.png'
 import Navbarbtm from './Navbarbtm';
 const Navbar = () => {
-  return (
+   return (
+    
     <div>
+    
       <HStack className='nav-top-1'>
         <Text className='nav-top-1-text'><b>Join Beauty Insider and get 20% off* Full-Size Fragrances with code FRAGRANCE20.</b>*Terms Apply.<b>SEE DETAILS</b><ChevronRightIcon /></Text>
       </HStack>
