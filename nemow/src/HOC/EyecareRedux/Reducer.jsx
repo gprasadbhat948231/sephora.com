@@ -18,7 +18,9 @@ case ADD_TO_WISHLIST:
     // console.log(state)
     return {...state,Wishlist:[...state.Wishlist,payload]}
 default:
+
     return state
+
     }
 }
 

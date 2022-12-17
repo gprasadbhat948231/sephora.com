@@ -20,82 +20,28 @@ import {
   UnorderedList,
   VStack,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postProduct } from "../../HOC/AdminRedux/product.actions";
 
-const intialPrice = {
-  id: "VARDCI5VXL5",
-  mrpRange: {
-    min: "8150",
-    max: "8150",
-  },
-  sellingPriceRange: {
-    min: 8150,
-    max: 8150,
-  },
-  discountRange: {
-    min: 0,
-    max: 0,
-  },
-  name: "L'Interdit Eau De Toilette",
-  brand: "Givenchy",
-  url: "/givenchy-linterdit-eau-de-toilette-VARDCI5VXL5",
-  imagePath:
-    "https://cdn10.nnnow.com/web-images/medium/styles/VARDCI5VXL5/1665569994739/1.jpg",
-  altImagePath:
-    "https://cdn19.nnnow.com/web-images/medium/styles/VARDCI5VXL5/1665569994733/2.jpg",
-  otherImages: {
-    3: "/styles/VARDCI5VXL5/1665569994736/3.jpg",
-    4: "/styles/VARDCI5VXL5/1665569994736/2.jpg",
-  },
-  promotions: [
-    {
-      id: "f0a9fec1-a69f-49a9-afc1-291f0de1182e",
-      name: "ALL15",
-      displayName: "Buy For 2999 Get Extra 15% Off",
-      type: "coupon",
-      displayDiscount: false,
-      noCouponDetails: 1,
-      brands: [],
-      supportedChannel: ["android", "odin", "ios"],
-      discountInPercentage: 1,
-    },
-  ],
-  moreColors: 1,
-  isNew: true,
-  sizeChartId: 1,
-  skus:1,
-  video: 1,
-  allImages: 1,
-  specs: 1,
-  sapStyleId: 1,
-  productTags: [
-    {
-      tagText: "NEW",
-      tagUrl:
-        "https://cdn00.nnnow.com/web-images/master/product_tags/c0d20acc-1b4b-4e7e-86f4-4180f2247ea0/1552980365718/just_arrived.png",
-      tagTextColor: "#d50032",
-    },
-  ],
-  imageColor: "#f4e3c9",
-};
+
 const pricesRanges = {
   mrpRange: "MRP Range",
   sellingPriceRange: "Selling Price Range",
   discountRange: "Discount Range",
 };
-// const intialPrice={
-//   mrp:{min:0,max:0},
-//   selling:{min:0,max:0},
-//   discount:{min:10,max:0}
-// }
+
 //("/"+brand+"-"+name+"-"+id).replaceAll("'", "").replaceAll(" ", "-").toLowerCase()
-const AddUpdate = () => {
-  const [productData, setProductData] = useState(intialPrice);
+const AddUpdate = ({intialPrice}) => {
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const initialProduactData=useSelector((store)=>store.adminManager.productData)
+  const [productData, setProductData] = useState( initialProduactData);
   const {
     id,
-
     mrpRange,
     sellingPriceRange,
     discountRange,
@@ -118,7 +64,7 @@ const AddUpdate = () => {
     productTags: [{ tagText, tagUrl, tagTextColor }],
     imageColor,
   } = productData;
-  console.log(promotions[0].name)
+  //console.log(promotions[0].name)
   const format = (valKey, type) =>
     valKey === "discountRange"
       ? productData[valKey][type] + "%"
@@ -132,55 +78,76 @@ const AddUpdate = () => {
       [valKey]: { ...productData[valKey], [type]: val },
     });
   };
+
   const handleChange = (e, name) => {
-    console.log(e, name);
+    // console.log(e, name);
     if (name) {
+      
       setProductData({ ...productData, [name]: e });
     } else {
       const { name, value } = e.target;
       setProductData({ ...productData, [name]: value });
     }
    
-    //
-    //console.log(value,name,value.name)
-    //setProductData({ ...productData, [name]:value });
+   
   };
   const getData=async()=>{
     let path="women-perfume "
     const url="https://sephorajsonserver.onrender.com/"+path;
     let res=await axios.get(url)
-    console.log(res)
+    // console.log(res)
   }
-  const postData=async()=>{
-    console.log(productData)
-     //const data=JSON.stringify(productData)
-   // console.log(data)
-     let path="women-perfume "
-     const url="https://sephorajsonserver.onrender.com/"+path;
-     let res=await axios.post(url,productData)
-     console.log(res)
+  const postData=()=>{
+    let path="women-perfume "
+    let description="Please fill all require data"
+    let title="Failed to add Product"
+    let mark="warning"
+    let status
+    if(id && mrpRange&&sellingPriceRange&&discountRange&&name&&brand&&url&&imagePath&&isNew){
+     
+      let description="Product Added Successfully."
+      let title="We've Add  product for you."
+      let mark="success"
+    dispatch(postProduct(productData,path)).then((res) => {
+     //  console.log(res)
+     status=res.status
+    })}
     
-  }
-  const postDelete=async()=>{
-let id=1
-let path="women-perfume "
-    const url="https://sephorajsonserver.onrender.com/"+path+"/"+id;
-    let res=await axios.get(url)
-    console.log(res)
-  }
+        toast({
+          title:title ,
+          description:description ,
+          status: mark,
+          duration: 3000,
+          isClosable: true,
+        });
+     
+    
+  
+}
+
   useEffect(()=>{
     getData()
-    postDelete()
+   
         },[])
   return (
     <Box w="60%" m="auto">
-      <FormControl isRequired onSubmit={postData}>
+      
+      <Center>
+      <Button
+        m={15}
+        colorScheme="messenger"
+        onClick={postData}
+      >
+        Add Product
+      </Button>
+    </Center>
         <Grid
           templateColumns={[null, "repeat(1, 1fr)", null, null, "55% 45%"]}
           justifyContent="center"
           gap="30px 80px"
           alignItems="start"
         >
+          <FormControl isRequired >
           <GridItem>
             <HStack justifyContent="space-between">
               <Box>
@@ -190,6 +157,7 @@ let path="women-perfume "
                   value={id}
                   name="id"
                   onChange={handleChange}
+                  
                 />
               </Box>
               <Box>
@@ -200,19 +168,24 @@ let path="women-perfume "
                   value={imageColor}
                   name="imageColor"
                   onChange={handleChange}
+                 
                 />
               </Box>
             </HStack>
           </GridItem>
-          <GridItem>
+          </FormControl>
+          <FormControl isRequired>
+           <GridItem>
             <FormLabel>Relative URL</FormLabel>
             <Input
               placeholder="Relative URL"
-              value={url}
+              value={url || (("/"+ brand+" "+name+" "+id.replaceAll("'", "")).replaceAll(" ", "-").toLowerCase())}
               name="url"
               onChange={handleChange}
             />
           </GridItem>
+          </FormControl>
+          <FormControl isRequired>
           <GridItem>
             <FormLabel>Product Name</FormLabel>
             <Input
@@ -220,22 +193,25 @@ let path="women-perfume "
               value={name}
               name="name"
               onChange={handleChange}
+              
             />
           </GridItem>
-          <GridItem col>
+          </FormControl>
+          <FormControl isRequired>
+          <GridItem >
             <FormLabel>Brand Name</FormLabel>
             <Input
               placeholder="Brand Name"
               value={brand}
               name="brand"
               onChange={handleChange}
+              
             />
-          </GridItem>
+          </GridItem> 
 
-          {/* <FormLabel>Brand Name</FormLabel>
-          <Input placeholder="Brand Name" name="brand" value="brand" /> */}
-
-          <GridItem>
+          </FormControl>
+          < FormControl isRequired>
+          { <GridItem>
             <FormLabel>Image URL</FormLabel>
             <OrderedList spacing="4px">
               <ListItem>
@@ -252,6 +228,7 @@ let path="women-perfume "
                   value={altImagePath}
                   name="altImagePath"
                   onChange={handleChange}
+
                 />
               </ListItem>
               <ListItem>
@@ -264,6 +241,7 @@ let path="women-perfume "
                       : ""
                   }
                   name="otherImages['3']"
+                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
@@ -278,6 +256,7 @@ let path="women-perfume "
                       : ""
                   }
                   name="otherImages['4']"
+                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
@@ -292,12 +271,15 @@ let path="women-perfume "
                       : ""
                   }
                   name="otherImages['5']"
+                   onChange={handleChange}
                 />
               </ListItem>
             </OrderedList>
-          </GridItem>
+          </GridItem> }
+          </FormControl>
           <GridItem>
-            <SimpleGrid templateColumns="repeat(2,1fr)" gap="5px">
+          < FormControl isRequired>
+            <SimpleGrid templateColumns="40% 60%" gap="5px">
               <FormLabel>More Colors</FormLabel>
               <Input
                 placeholder="moreColors"
@@ -312,6 +294,7 @@ let path="women-perfume "
                 onChange={(e) => handleChange(e, "isNew")}
                 name="isNew"
                 value={isNew}
+                
               >
                 <Radio p="0 10px" value="true">
                   Yes
@@ -324,6 +307,7 @@ let path="women-perfume "
                 placeholder="sizeChartId"
                 value={sizeChartId}
                 name="sizeChartId"
+                  onChange={handleChange}
               />
               <FormLabel>Skus</FormLabel>
               <Input
@@ -341,10 +325,12 @@ let path="women-perfume "
                 onChange={handleChange}
               />
             </SimpleGrid>
+            </FormControl>
           </GridItem>
           <GridItem>
+          < FormControl isRequired>
             <FormLabel textAlign="center">Product Tags</FormLabel>
-            <Grid templateColumns="repeat(2,1fr)" gap="5px">
+            <Grid templateColumns="25% 75%" gap="5px">
               <FormLabel>Text Tag</FormLabel>
               <Input
                 placeholder=" Tag Text"
@@ -368,12 +354,13 @@ let path="women-perfume "
                 onChange={handleChange}
               />
             </Grid>
+            </FormControl>
           </GridItem>
           {/* display={promotions.length ? "block" : "none"}  */}
           <GridItem>
             <FormLabel textAlign="center">Promotions</FormLabel>
 
-            <Grid templateColumns="repeat(2,1fr)" gap="5px">
+            <Grid templateColumns="40% 60%" gap="5px">
               <FormLabel>Promotion name</FormLabel>
 
               <Input
@@ -453,7 +440,7 @@ let path="women-perfume "
                     name={range}
                     onChange={(val) => handleValueChange(val, range, "max")}
                     value={format(range, "max")}
-                    min={0}
+                    min={format(range, "min")}
                     max={range === "discountRange" ? 100 : 10000}
                   >
                     <NumberInputField />
@@ -467,8 +454,16 @@ let path="women-perfume "
             ))}
           </SimpleGrid>
         </Box>
-        <Button onClick={postData}>ADD</Button>
-      </FormControl>
+        <Center>
+      <Button
+        m={15}
+        colorScheme="messenger"
+        onClick={postData}
+      >
+        Add Product
+      </Button>
+    </Center>
+     
     </Box>
   );
 };
