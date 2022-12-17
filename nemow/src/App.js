@@ -6,10 +6,10 @@ import Home from './Pages/Home';
 function App() {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       <EyeCare/>
       <CartPage/>
-      <Home/>
+      {/* <Home/> */}
     </div>
   )
 }

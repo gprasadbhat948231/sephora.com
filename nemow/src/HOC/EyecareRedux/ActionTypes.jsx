@@ -1,4 +1,6 @@
 export const ADD_TO_WISHLIST="Addtowishlist_Eyecare"
 export const ADD_TO_CART="Addtocart_Eyecare"
+export const REMOVE_FROM_WISHLIST="Remove_from_Wishlist"
+export const REMOVE_FROM_CARTLIST="Remove_from_Cartlist"
 export const GET_WISHLIST_DATA="getwishlist_Eyecare"
 export const GET_CARTLIST_DATA="getcartlist_Eyecare"

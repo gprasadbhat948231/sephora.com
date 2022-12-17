@@ -23,7 +23,13 @@ import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import AddToCartModal from "../Components/EyeCarePages/AddToCartModal";
 import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addtocart_Eyecare, addtowishlist_Eyecare, cartlistGetdata, wishlistGetdata } from "../HOC/EyecareRedux/Actions";
+import {
+  addtocart_Eyecare,
+  addtowishlist_Eyecare,
+  cartlistGetdata,
+  Remove_from_Wishlist,
+  wishlistGetdata,
+} from "../HOC/EyecareRedux/Actions";
 const data = {
   rating: 4.2,
   numReviews: 120,
@@ -39,11 +45,10 @@ function EyeCare() {
         setfilterdata(ress.data);
       }
     );
-  };  
+  };
   // for adding wishlist data //
   useEffect(() => {
     GetData();
-
   }, []);
 
   // Type fillter start from here
@@ -96,20 +101,30 @@ function EyeCare() {
       setfilterdata(filterdata);
     }
   };
-  // 
+  //
 
   return (
-
     <>
-      <Box display={{lg:"flex",xl:"flex","2xl":"flex",md:"inherit",sm:"inherit"}}>
-        <Box w={{"2xl":"20%",lg:"20%",xl:"20%",md:"100%",sm:"100%"}} h="auto">
+      <Box
+        display={{
+          lg: "flex",
+          xl: "flex",
+          "2xl": "flex",
+          md: "inherit",
+          sm: "inherit",
+        }}
+      >
+        <Box
+          w={{ "2xl": "20%", lg: "20%", xl: "20%", md: "100%", sm: "100%" }}
+          h="auto"
+        >
           <EyecareLeftSection
             HandleFilterByType={HandleFilterByType}
             HandleFilterByBrand={HandleFilterByBrand}
             HandleFilterByPrice={HandleFilterByPrice}
           />
         </Box>
-        <Box w={{sl:"80%",lg:"80%",xl:"80%",md:"100%",sm:"100%"}}>
+        <Box w={{ sl: "80%", lg: "80%", xl: "80%", md: "100%", sm: "100%" }}>
           <EyeCareSection
             setEyeBrowData={setEyeBrowData}
             EyeBrowData={Allfilterdata}
@@ -136,23 +151,20 @@ function EyeCare() {
 }
 export default EyeCare;
 
-
-
 function EyeCareSection({ EyeBrowData = [] }) {
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [CartData, setCartData] = useState({});
   const toast = useToast();
   const Wishlist = useSelector((store) => store);
 
-   const CartList=useSelector((store)=>store)
+  const CartList = useSelector((store) => store);
   const dispatch = useDispatch();
-  useEffect(()=>{
-dispatch(wishlistGetdata())
-  },[])
-  useEffect(()=>{
-    dispatch(cartlistGetdata())
-  },[])
+  useEffect(() => {
+    dispatch(wishlistGetdata());
+  }, []);
+  useEffect(() => {
+    dispatch(cartlistGetdata());
+  }, []);
   // add to watch list //
   const AddedtoWishlist = (ele) => {
     if (!Wishlist.Wishlist.find((item) => ele.id === item.id)) {
@@ -165,16 +177,17 @@ dispatch(wishlistGetdata())
         isClosable: true,
       });
     } else if (Wishlist.Wishlist.find((item) => ele.id === item.id)) {
+      dispatch(Remove_from_Wishlist(ele.id));
       toast({
         title: "Wishlist.",
-        description: "Item Is Already Added To The Wishlist.",
+        description: "Item Is Removed From Wishlish.",
         status: "error",
         duration: 4000,
         isClosable: true,
       });
     }
   };
-  // to know wish list // 
+  // to know wish list //
   const ToknowWishlist = (Eyedata) => {
     if (Wishlist.Wishlist.find((item) => Eyedata.id === item.id)) {
       return true;
@@ -193,18 +206,29 @@ dispatch(wishlistGetdata())
       });
     }
   };
-  // to know wish list // 
+  // to know wish list //
   const ToknowCartList = (Cartitem) => {
     if (CartList.CartList.find((item) => Cartitem.id === item.id)) {
       return true;
     }
     return false;
   };
-//return EyeCareSection here //
+  //return EyeCareSection here //
   return (
-    <Box  w="100%" m="auto" justifyContent={"center"}>
+    <Box w="100%" m="auto" justifyContent={"center"}>
       {/* filter aand left side link added here=---  */}
-      <Grid w="100%" m="auto" templateColumns={{lg:"repeat(4, 1fr)",xl:"repeat(4, 1fr)",xl:"repeat(4, 1fr)",sm:"repeat(2, 1fr)",md:"repeat(3, 1fr)"}} rowGap={1}>
+      <Grid
+        w="100%"
+        m="auto"
+        templateColumns={{
+          lg: "repeat(4, 1fr)",
+          xl: "repeat(4, 1fr)",
+          xl: "repeat(4, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+        }}
+        rowGap={1}
+      >
         {CartData.name && (
           <AddToCartModal
             onOpen={onOpen}
@@ -213,15 +237,15 @@ dispatch(wishlistGetdata())
             CartData={CartData}
             ToknowCartList={ToknowCartList}
             AddedtoCartList={AddedtoCartList}
-            
+            ToknowWishlist={ToknowWishlist}
           />
         )}
         {EyeBrowData.map((Eyedata) => (
-          <Flex m="auto"
-          w="100%"
+          <Flex
+            m="auto"
+            w="100%"
             key={Eyedata.id}
             p={5}
-          
             alignItems="center"
             justifyContent="center"
           >
@@ -267,7 +291,6 @@ dispatch(wishlistGetdata())
                   justifyContent="space-between"
                   alignContent="center"
                 >
-
                   <Box
                     fontSize="12px"
                     color="grey"
@@ -288,7 +311,7 @@ dispatch(wishlistGetdata())
                   // color={useColorModeValue("gray.800", "white")}
                 >
                   <Box as="span" color={"gray.600"} fontSize="lg">
-                  ₹ 
+                    ₹
                   </Box>
                   {Eyedata.sellingPriceRange.min}
                 </Box>
@@ -336,7 +359,14 @@ const EyecareLeftSection = ({
   HandleFilterByPrice,
 }) => {
   return (
-    <Box display={{lg:"inherit",xl:"inherit","2xl":"inherit",md:"flex",sm:"flex"}}
+    <Box
+      display={{
+        lg: "inherit",
+        xl: "inherit",
+        "2xl": "inherit",
+        md: "flex",
+        sm: "flex",
+      }}
       style={{
         alignItems: "left",
         textAlign: "start",
@@ -346,16 +376,27 @@ const EyecareLeftSection = ({
       }}
     >
       <Box>
-      <Heading fontSize="23px" p={2}>
-        Eye Care
-      </Heading>
-      <Link>Eye Creams & Treatments</Link>
-    
-      <Link>Eye Masks</Link>
+        <Heading fontSize="23px" p={2}>
+          Eye Care
+        </Heading>
+        <Link>Eye Creams & Treatments</Link>
+
+        <Link>Eye Masks</Link>
       </Box>
       {/* accordian start fron here */}
 
-      <Box lineHeight={2} w="100%" m={"auto"} display={{lg:"inherit",xl:"inherit","2xl":"inherit",md:"flex",sm:"flex"}}>
+      <Box
+        lineHeight={2}
+        w="100%"
+        m={"auto"}
+        display={{
+          lg: "inherit",
+          xl: "inherit",
+          "2xl": "inherit",
+          md: "flex",
+          sm: "flex",
+        }}
+      >
         <Accordion allowToggle>
           <AccordionItem>
             <h2>
@@ -363,7 +404,12 @@ const EyecareLeftSection = ({
                 backgroundColor="white"
                 _expanded={{ bg: "grey", color: "white" }}
               >
-                <Box className="Accordian_eyecare_left_dection" as="span" flex="1" textAlign="left">
+                <Box
+                  className="Accordian_eyecare_left_dection"
+                  as="span"
+                  flex="1"
+                  textAlign="left"
+                >
                   Brand
                 </Box>
                 <AccordionIcon />
@@ -417,10 +463,15 @@ const EyecareLeftSection = ({
                 backgroundColor="white"
                 _expanded={{ bg: "grey", color: "white" }}
               >
-                <Box className="Accordian_eyecare_left_dection" as="span" flex="1" textAlign="left">
+                <Box
+                  className="Accordian_eyecare_left_dection"
+                  as="span"
+                  flex="1"
+                  textAlign="left"
+                >
                   Price
                 </Box>
-                <AccordionIcon/>
+                <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel className="Filter_Parents">
@@ -466,7 +517,13 @@ const EyecareLeftSection = ({
                 backgroundColor="white"
                 _expanded={{ bg: "grey", color: "white" }}
               >
-                <Box className="Accordian_eyecare_left_dection" m="auto" as="span" flex="1" textAlign="left">
+                <Box
+                  className="Accordian_eyecare_left_dection"
+                  m="auto"
+                  as="span"
+                  flex="1"
+                  textAlign="left"
+                >
                   Type
                 </Box>
                 <AccordionIcon />

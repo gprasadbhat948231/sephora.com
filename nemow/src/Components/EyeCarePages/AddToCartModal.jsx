@@ -14,10 +14,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addtowishlist_Eyecare } from "../../HOC/EyecareRedux/Actions";
 import "./Eyecare.css";
 
-const AddToCartModal = ({ onClose, isOpen, CartData = {},ToknowCartList,AddedtoCartList}) => {
+const AddToCartModal = ({ onClose, isOpen, CartData = {},ToknowCartList,AddedtoCartList,ToknowWishlist}) => {
   // console.log(CartData);
+
+ const dispatch=useDispatch() 
   return (
     <>
 
@@ -33,7 +37,7 @@ const AddToCartModal = ({ onClose, isOpen, CartData = {},ToknowCartList,AddedtoC
               <Image
                 id="Cart_Carousels_Image"
                 w="100%"
-                src={`https://cdn09.nnnow.com/web-images/medium${CartData.otherImages[3]}`}
+                src={CartData.imagePath}
                 alt="crauser image"
               />
       
@@ -61,7 +65,7 @@ const AddToCartModal = ({ onClose, isOpen, CartData = {},ToknowCartList,AddedtoC
             <Button colorScheme="red" disabled={ToknowCartList(CartData)} borderRadius={"30px"} mr={3} onClick={()=>{AddedtoCartList(CartData); onClose()}}>
               Add to Basket
             </Button>
-            <Button colorScheme="white" color={"black"} border="0.5px solid" borderRadius={"30px"} mr={3}>
+            <Button colorScheme="white" disabled={ToknowWishlist(CartData)} onClick={()=>dispatch(addtowishlist_Eyecare(CartData))} color={"black"} border="0.5px solid" borderRadius={"30px"} mr={3}>
               Add to Loves
             </Button>
           </ModalFooter>
