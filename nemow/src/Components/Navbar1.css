@@ -156,7 +156,7 @@
         justify-content: space-evenly;
     }
 }
-@media screen and (max-width:1024px)
+@media screen and (max-width:1385px)
 {
     .nav-top-1-text{
         font-size: 14px;
