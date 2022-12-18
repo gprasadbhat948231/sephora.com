@@ -1,6 +1,22 @@
 import { PhoneIcon } from "@chakra-ui/icons";
 
 // import 'firebase/auth';
+
+import {
+  Progress,
+  ButtonGroup,
+  FormControl,
+  GridItem,
+  FormLabel,
+  SimpleGrid,
+  InputLeftAddon,
+  
+  Textarea,
+  FormHelperText,
+  InputRightElement,
+} from '@chakra-ui/react';
+
+
 import {
   Box,
   Text,
@@ -23,6 +39,9 @@ import {
   InputGroup,
   InputLeftElement,
   Grid,
+  Badge,
+  Toast,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -31,6 +50,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addtocart_Eyecare,
   addtowishlist_Eyecare,
+  AfterOrderPlaced,
   Remove_from_Cartlist,
   Remove_from_Wishlist,
 } from "../../HOC/EyecareRedux/Actions";
@@ -39,6 +59,7 @@ function CartPage() {
   const [total, settotal] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  
   const { Wishlist, CartList } = useSelector(
     (store) => store.CartandWishReducer
   );
@@ -62,10 +83,12 @@ function CartPage() {
         {/* cartlist map here */}
         {CartList.length > 0 &&
           CartList.map((el) => (
+            <Box>
             <CartListItem ele={el} total={total} settotal={settotal} />
+            </Box>
           ))}
         {CartList.length == 0 && <EmptyCart />}
-        <Box w="fit-content" m="auto" py={"30px"}>
+        <Box  w="fit-content" h="100px" m="auto" py={"30px"}>
           {CartList.length > 0 && (
             <Button
               backgroundColor={"black"}
@@ -74,10 +97,11 @@ function CartPage() {
               fontSize={"13px"}
               color={"white"}
               _hover={{ color: "grey" }}
-              m="auto"
+              
             >
               Proceed To Buy
             </Button>
+           
           )}
         </Box>
         <AddtoCartModal
@@ -96,8 +120,8 @@ function CartPage() {
         <Text id="Cart_Header">Loves({Wishlist.length})</Text>
         {Wishlist.length > 0 ? (
           Wishlist.map((ele) => (
-            <Box key={ele.id} id="Cartitems_parents">
-              <Flex margin={"auto"} fontSize={"13px"} gap={6}>
+            <Box key={ele.id} id="Wishlist_parents">
+              <Flex margin={"auto"} fontSize={"13px"} gap={5}>
                 <Box w="30%">
                   <Image src={ele.imagePath} />
                 </Box>
@@ -131,9 +155,9 @@ function CartPage() {
                     <Text textAlign={"right"}></Text>
                   </Box>
                   <Text>₹{ele.mrpRange.min || 0}</Text>
+                  <Badge  colorScheme='linkedin' fontSize={"10px"} size="sm"  my={"20px"}>FREE SHOPING</Badge>
                 </Box>
               </Flex>
-
               <Divider />
             </Box>
           ))
@@ -165,128 +189,15 @@ const EmptyWishlist = () => {
     </Box>
   );
 };
-const AddtoCartModal = ({ onOpen, onClose, isOpen, CartTotal }) => {
-  return (
-    <Box w="700px">
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
-      <Modal
-        size={"xl"}
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader
-            w="95%"
-            display="flex"
-            margin={"auto"}
-            justifyContent="space-between"
-          >
-            <Heading fontSize={"20px"} color="blue.400">
-              Proceed To Checkout{" "}
-            </Heading>
-            <Heading fontSize={"14px"} color="grey">
-              Total:{CartTotal}{" "}
-            </Heading>
-          </ModalHeader>
-          <ModalCloseButton />
-
-          <ModalBody w="90%" pb={6} lineHeight="20px">
-            {/* phone number */}
-            <Grid templateColumns={"repeat(1,1fr)"} gap="20px">
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<PhoneIcon color="black" />}
-                />
-                <Input
-                  isRequired
-                  borderRadius={"2px"}
-                  type="tel"
-                  _placeholder={{ color: "blue.200" }}
-                  placeholder="Phone number"
-                />
-              </InputGroup>
-              {/* name section */}
-              <Box w="100%" id="Checkout_1">
-                <Input
-                  borderRadius={"2px"}
-                  placeholder="Enter Name..."
-                  _placeholder={{ color: "blue.200" }}
-                />
-              </Box>
-              <Box id="Checkout">
-                <Input
-                  _placeholder={{ color: "blue.200" }}
-                  borderRadius={"2px"}
-                  placeholder="Card..."
-                />
-              </Box>
-
-              {/* Cvv Section  */}
-              <Box
-                w="100%"
-                display={"flex"}
-                margin="auto"
-                color={"grey"}
-                id="Checkout_4_expary"
-              >
-                <Input
-                  h="40px"
-                  color="blue.200"
-                  _placeholder={{ color: "blue.200" }}
-                  borderRadius={"2px"}
-                  placeholder="CVV"
-                />
-                {/* Date section */}
-                <Input
-                  color="blue.200"
-                  borderRadius={"2px"}
-                  placeholder="Select Date and Time"
-                  size="sm"
-                  type="date"
-                  h="40px"
-                />
-              </Box>
-              <InputGroup>
-                <Input
-                  _placeholder={{ color: "blue.200" }}
-                  borderRadius={"2px"}
-                  type="tel"
-                  placeholder="Gmail"
-                />
-              </InputGroup>
-            </Grid>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              backgroundColor="grey"
-              color={"white"}
-              _hover={{ color: "black", backgroundColor: "grey" }}
-              mr={3}
-              onClick={() => {
-                alert("Order Placed SuccesFully");
-                onClose();
-              }}
-            >
-              Proceed
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
-  );
-};
-
+// cart item here
 const CartListItem = ({ ele, settotal, total }) => {
   const { Wishlist, CartList } = useSelector(
     (store) => store.CartandWishReducer
-  );
-
-  const dispatch = useDispatch();
-  const [pric, setpric] = useState(1);
-  const price1 = () => {
+    );
+    
+    const dispatch = useDispatch();
+    const [pric, setpric] = useState(1);
+    const price1 = () => {
     let total1 = 0;
     CartList.forEach((ele) => {
       total1 += Number(pric) * ele.mrpRange.min;
@@ -309,7 +220,9 @@ const CartListItem = ({ ele, settotal, total }) => {
               <Text>{ele.brand}</Text>
               <Text fontSize={"13px"} color="grey">
                 {ele.name}
+                
               </Text>
+            
             </Box>
 
             {/* select tag and remove form cart and  */}
@@ -334,7 +247,7 @@ const CartListItem = ({ ele, settotal, total }) => {
                   dispatch(Remove_from_Cartlist(ele.id));
                 }}
                 id="Links_for_cart_loves"
-              >
+                >
                 Move To Loves
               </Link>
               <Link
@@ -347,6 +260,7 @@ const CartListItem = ({ ele, settotal, total }) => {
             <Box w="20%" display={"flex"}>
               <Text textAlign={"right"}>₹{ele.mrpRange.min || 0}</Text>
             </Box>
+            <Badge  colorScheme='linkedin' fontSize={"10px"} size="sm"  my={"20px"}>FREE SHOPING</Badge>
           </Box>
         </Flex>
         <Divider />
@@ -356,7 +270,7 @@ const CartListItem = ({ ele, settotal, total }) => {
 };
 
 //  wishlist start here
-export const Wishlist = () => {
+export const WishlistCompo = () => {
   const dispatch = useDispatch();
   const { Wishlist, CartList } = useSelector(
     (store) => store.CartandWishReducer
@@ -364,7 +278,7 @@ export const Wishlist = () => {
   return (
     <>
       <Box
-        margin={"auto"}
+    
         id="Suggession_section"
         w={{ lg: "70%", xl: "70%", "2xl": "70%", md: "90%", sm: "90%" }}
       >
@@ -407,9 +321,7 @@ export const Wishlist = () => {
                     <Text textAlign={"right"}></Text>
                   </Box>
                   <Text>₹{ele.mrpRange.min || 0}</Text>
-                  <Text fontWeight={"semibold"} color="blue">
-                    FREE SHIPPING
-                  </Text>
+                  <Badge  colorScheme='linkedin' fontSize={"10px"} size="sm"  my={"20px"}>FREE SHOPING</Badge>
                 </Box>
               </Flex>
 
@@ -423,114 +335,380 @@ export const Wishlist = () => {
       </Box>
     </>
   );
+};      
+      const AddtoCartModal = ({ onOpen, onClose, isOpen, CartTotal }) => {
+        
+        const [step, setStep] = useState(1);
+        const [progress, setProgress] = useState(33.33);
+        const toast =useToast()
+        const dispatch=useDispatch()
+        return (
+          <Box w="700px">
+            {/* <Button onClick={onOpen}>Open Modal</Button> */}
+            <Modal 
+              size={"sm"}
+              closeOnOverlayClick={false}
+              isOpen={isOpen}
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader
+                  w="95%"
+                  display="flex"
+                  margin={"auto"}
+                  justifyContent="space-between"
+                >
+                  <Heading fontSize={"20px"} color="blue.400">
+                    Proceed To Checkout{" "}
+                  </Heading>
+                  <Heading fontSize={"14px"} color="grey">
+                    Total:{CartTotal}{" "}
+                  </Heading>
+                </ModalHeader>
+                <ModalCloseButton />
+      
+                <ModalBody w="90%" pb={6} lineHeight="20px">
+                <Box
+            
+              rounded="lg"
+              p={6}
+              m="10px auto"
+              as="form">
+              <Progress
+                hasStripe
+                value={progress}
+                mb="5%"
+                mx="5%"
+                isAnimated>
+                </Progress>
+                {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+              <ButtonGroup mt="5%" w="100%">
+                <Flex w="100%" justifyContent="space-between">
+                  <Flex>
+                  <Button
+                onClick={() => {
+                  setStep(step - 1);
+                  setProgress(progress - 33.33);
+                }}
+                isDisabled={step === 1}
+                colorScheme="teal"
+                variant="solid"
+                w="7rem"
+                mr="5%">
+                      Back
+                    </Button>
+                    <Button
+                w="7rem"
+                isDisabled={step === 3}
+                onClick={() => {
+                  setStep(step + 1);
+                  if (step === 3) {
+                    setProgress(100);
+                  } else {
+                    setProgress(progress + 33.33);
+                  }
+                }}
+                colorScheme="teal"
+                variant="outline">
+                      Next
+                    </Button>
+                  </Flex>
+                 
+                </Flex>
+              </ButtonGroup>
+            </Box>
+                </ModalBody>
+                <ModalFooter>
+                {step === 3 ? (
+                    <Button
+                      w="7rem"
+                      colorScheme="red"
+                      variant="solid"
+                      onClick={() => {
+                        toast({
+                          title: 'Order...',
+                          description: 'Order Placed Succesfully.',
+                          status: 'success',
+                          duration: 3000,
+                          isClosable: true,
+                          position: "top",
+        
+                        })
+                        dispatch(AfterOrderPlaced())
+                        onClose();
+                      }}
+                      >
+                      Submit
+                    </Button>
+                  ) : null}
+                  
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Box>
+        );
+      };
+
+      const Form1 = () => {
+        const [show, setShow] = React.useState(false);
+        const handleClick = () => setShow(!show);
+        return (
+          <>
+            <Heading w="100%" fontSize={"23px"} color="red" py="10px" textAlign={'center'} fontWeight="normal" mb="2%">
+              Enter Details
+            </Heading>
+            <Flex>
+              <FormControl mr="5%">
+                <FormLabel htmlFor="first-name" fontWeight={'normal'}>
+                  First name
+                </FormLabel>
+                <Input id="first-name" placeholder="First name" />
+              </FormControl>
+      
+              <FormControl>
+                <FormLabel htmlFor="last-name" fontWeight={'normal'}>
+                  Last name
+                </FormLabel>
+                <Input id="last-name" placeholder="First name" />
+              </FormControl>
+            </Flex>
+            <FormControl mt="2%">
+              <FormLabel htmlFor="email" fontWeight={'normal'}>
+                Email address
+              </FormLabel>
+              <Input id="email" type="email" />
+              <FormHelperText>We'll never share your email.</FormHelperText>
+            </FormControl>
+      
+            <FormControl>
+              <FormLabel htmlFor="password" fontWeight={'normal'} mt="2%">
+                Password
+              </FormLabel>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? 'text' : 'password'}
+                  placeholder="Enter password"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    {show ? 'Hide' : 'Show'}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+          </>
+        );
+      };
+      
+      const Form2 = () => {
+        return (
+          <>
+          
+            <Heading w="100%"  fontSize={"23px"} color="red" py="10px" textAlign={'center'} fontWeight="normal" mb="2%">
+              Adress
+            </Heading>
+            <FormControl as={GridItem} colSpan={[6, 3]}>
+              <FormLabel
+                htmlFor="country"
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}>
+                Country / Region
+              </FormLabel>
+              <Select
+                id="country"
+                name="country"
+                autoComplete="country"
+                placeholder="Select option"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md">
+                <option>United States</option>
+                <option>India</option>
+                <option>Mexico</option>
+              </Select>
+            </FormControl>
+      
+            <FormControl as={GridItem} colSpan={6}>
+              <FormLabel
+                htmlFor="street_address"
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}
+                mt="2%">
+                Street address
+              </FormLabel>
+              <Input
+                type="text"
+                name="street_address"
+                id="street_address"
+                autoComplete="street-address"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md"
+              />
+            </FormControl>
+      
+            <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
+              <FormLabel
+                htmlFor="city"
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}
+                mt="2%">
+                City
+              </FormLabel>
+              <Input
+                type="text"
+                name="city"
+                id="city"
+                autoComplete="city"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md"
+              />
+            </FormControl>
+      
+            <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+              <FormLabel
+                htmlFor="state"
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}
+                mt="2%">
+                State / Province
+              </FormLabel>
+              <Input
+                type="text"
+                name="state"
+                id="state"
+                autoComplete="state"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md"
+              />
+            </FormControl>
+      
+            <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+              <FormLabel
+                htmlFor="postal_code"
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}
+                mt="2%">
+                ZIP / Postal
+              </FormLabel>
+              <Input
+                type="text"
+                name="postal_code"
+                id="postal_code"
+                autoComplete="postal-code"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md"
+              />
+              
+            </FormControl>
+          </>
+        );
+      };
+      
+const Form3 = () => {
+  return (
+    <Box >
+      <Heading w="100%"  fontSize={"23px"} color="red" py="10px" my="20px" textAlign={'center'} fontWeight="normal">
+      Enter Cart Details
+      </Heading>
+      <SimpleGrid columns={1} spacing={6}>
+        <FormControl as={GridItem} colSpan={[3, 2]}>
+
+
+        <InputGroup my="20px" size="sm">
+            <InputLeftAddon
+              bg="gray.50"
+              _dark={{
+                bg: 'gray.800',
+              }}
+              color="gray.500"
+              rounded="md">
+              Card No
+            </InputLeftAddon>
+            <Input
+              type="number"
+              focusBorderColor="brand.400"
+              rounded="md"
+            />
+          </InputGroup> 
+          
+                      {/* cvv and expary */}
+           <Grid my="50px" templateColumns={"repeat(2,1fr)"} gap="2px" >
+          <InputGroup  size="sm">
+            <InputLeftAddon
+              bg="gray.50"
+              _dark={{
+                bg: 'gray.800',
+              }}
+              color="gray.500"
+              rounded="md">
+              cvv
+            </InputLeftAddon>
+            <Input w="50px"
+              type="number"
+              
+              focusBorderColor="brand.400"
+              rounded="md"
+            />
+          </InputGroup>
+          <InputGroup   size="sm">
+            <InputLeftAddon
+              bg="gray.50"
+              _dark={{
+                bg: 'gray.800',
+              }}
+              color="gray.500"
+              rounded="md">
+              Expary
+            </InputLeftAddon>
+            <Input w="130px"
+              type="date"
+              
+              focusBorderColor="brand.400"
+              rounded="md"
+            />
+          </InputGroup>
+          </Grid>
+         
+        </FormControl>
+
+       
+      </SimpleGrid>
+    </Box>
+  );
 };
-
-// export const FirebaseConfigForOTP=()=>{
-
-// const handleClick=()=>{
-
-//  let recaptcha=new firebase.auth.RecaptchaVerifier("firebase_container")
-// let number="+917008369373"
-// firebase.auth().signInWithPhoneNumber(number,recaptcha).then((e)=>{
-//   let code =prompt("Enter Otp");
-//   if(code==null){
-// return
-//   }
-//   e.confirm(code).then((res)=>{
-
-//     console.log(res)
-//   })
-// }).catch(()=>{
-//   console.log("error")
-// })
-
-// }
-//   return (<>
-//     <div id="firebase_container">
-//     <Button onClick={handleClick}>onclick</Button>
-//     knsjssfkjfksjo
-//     </div>
-//     </>
-//   )
-
-// }
-// 0
-// :
-// {id: 'D9K496TC6TD', mrpRange: {…}, sellingPriceRange: {…}, discountRange: {…}, name: 'Gimme Brow + Volumizing Pencil - Shade 03 Warm Light Brown', …}
-// 1
-// :
-// allImages
-// :
-// null
-// altImagePath
-// :
-// "https://cdn15.nnnow.com/web-images/medium/styles/9VSW5CNFCXW/1622445771745/2.jpg"
-// brand
-// :
-// "Anastasia Beverly Hills"
-// discountRange
-// :
-// {min: 0, max: 0}
-// id
-// :
-// "9VSW5CNFCXW"
-// imageColor
-// :
-// "#f4e0e9"
-// imagePath
-// :
-// "https://cdn00.nnnow.com/web-images/medium/styles/9VSW5CNFCXW/1622445771747/1.jpg"
-// isNew
-// :
-// false
-// moreColors
-// :
-// null
-// mrpRange
-// :
-// {min: 2400, max: 2400}
-// name
-// :
-// "Brow Definer - Ash Brown"
-// otherImages
-// :
-// {3: '/styles/9VSW5CNFCXW/1622445771746/3.jpg', 4: '/styles/9VSW5CNFCXW/1622445771743/4.jpg', 5: '/styles/9VSW5CNFCXW/1622525120513/5.jpg'}
-// productTags
-// :
-// [{…}]
-// promotions
-// :
-// (4) [{…}, {…}, {…}, {…}]
-// sapStyleId
-// :
-// null
-// sellingPriceRange
-// :
-// {min: 2400, max: 2400}
-// sizeChartId
-// :
-// null
-// skus
-// :
-// null
-// specs
-// :
-// null
-// url
-// :
-// "/anastasia-beverly-hills-brow-definer---ash-brown-9VSW5CNFCXW"
-// video
-// :
-// null
-// [[Prototype]]
-// :
-// Object
-// 2
-// :
-// {id: 'WZ2MW513T8J', mrpRange: {…}, sellingPriceRange: {…}, discountRange: {…}, name: 'Brow Powmade - Shade 05 - Warm Black Brown', …}
-// length
-// :
-// 3
-// [[Prototype]]
-// :
-// Array(0)
