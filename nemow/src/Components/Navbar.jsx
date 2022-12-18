@@ -15,6 +15,7 @@ import cart from '../Components/Navbarimg/cart.png'
 import wishlist from '../Components/Navbarimg/wishlist.png'
 import notify from '../Components/Navbarimg/notify.png'
 import Navbarbtm from './Navbarbtm';
+import { NavLink } from 'react-router-dom';
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const firstField = React.useRef()
@@ -157,7 +158,7 @@ const Navbar = () => {
           <Box className='lastbox'>
             <img className='iconscwc' src={notify} alt='chat' />
             <img className='iconscwc' src={wishlist} alt='wishlist' />
-            <img className='iconscwc' src={cart} alt='cart' />
+  <NavLink to='/cart'><img className='iconscwc' src={cart} alt='cart' /></NavLink>
           </Box>
         </Box>
       </Box>

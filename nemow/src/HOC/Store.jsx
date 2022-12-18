@@ -10,6 +10,6 @@ const rootReducer=combineReducers({
     // authManeger:authReducer
     })
     const composer=window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose
-    // const rootreducer=combineReducers({ItemAddreducer:reducer})
+
     export const store = legacy_createStore(rootReducer,composer(applyMiddleware(thunk)))
 
