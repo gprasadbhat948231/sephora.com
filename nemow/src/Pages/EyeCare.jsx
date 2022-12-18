@@ -35,6 +35,9 @@ const data = {
   numReviews: 120,
 };
 function EyeCare() {
+
+
+
   const [EyeBrowData, setEyeBrowData] = useState([]);
   const [Allfilterdata, setfilterdata] = useState([]);
   // eyeBrow Data fetching //
@@ -53,7 +56,6 @@ function EyeCare() {
 
   // Type fillter start from here
   const HandleFilterByType = (type) => {
-    console.log(EyeBrowData);
 
     if (type === "All") {
       setfilterdata(EyeBrowData);
@@ -102,7 +104,6 @@ function EyeCare() {
     }
   };
   //
-
   return (
     <>
       <Box
@@ -155,9 +156,9 @@ function EyeCareSection({ EyeBrowData = [] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [CartData, setCartData] = useState({});
   const toast = useToast();
-  const Wishlist = useSelector((store) => store);
+  const {Wishlist,CartList} = useSelector((store) => store.CartandWishReducer);
 
-  const CartList = useSelector((store) => store);
+  // const CartList = useSelector((store) => store);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(wishlistGetdata());
@@ -167,7 +168,7 @@ function EyeCareSection({ EyeBrowData = [] }) {
   }, []);
   // add to watch list //
   const AddedtoWishlist = (ele) => {
-    if (!Wishlist.Wishlist.find((item) => ele.id === item.id)) {
+    if (!Wishlist.find((item) => ele.id === item.id)) {
       dispatch(addtowishlist_Eyecare(ele));
       toast({
         title: "Wishlist.",
@@ -176,7 +177,7 @@ function EyeCareSection({ EyeBrowData = [] }) {
         duration: 4000,
         isClosable: true,
       });
-    } else if (Wishlist.Wishlist.find((item) => ele.id === item.id)) {
+    } else if (Wishlist.find((item) => ele.id === item.id)) {
       dispatch(Remove_from_Wishlist(ele.id));
       toast({
         title: "Wishlist.",
@@ -189,13 +190,13 @@ function EyeCareSection({ EyeBrowData = [] }) {
   };
   // to know wish list //
   const ToknowWishlist = (Eyedata) => {
-    if (Wishlist.Wishlist.find((item) => Eyedata.id === item.id)) {
+    if (Wishlist.find((item) => Eyedata.id === item.id)) {
       return true;
     }
     return false;
   };
   const AddedtoCartList = (Cartitem) => {
-    if (!CartList.CartList.find((item) => Cartitem.id === item.id)) {
+    if (!CartList.find((item) => Cartitem.id === item.id)) {
       dispatch(addtocart_Eyecare(Cartitem));
       toast({
         title: "Cartlist.",
@@ -208,7 +209,7 @@ function EyeCareSection({ EyeBrowData = [] }) {
   };
   // to know wish list //
   const ToknowCartList = (Cartitem) => {
-    if (CartList.CartList.find((item) => Cartitem.id === item.id)) {
+    if (CartList.find((item) => Cartitem.id === item.id)) {
       return true;
     }
     return false;
