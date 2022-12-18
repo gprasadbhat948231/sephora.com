@@ -43,7 +43,7 @@ const Navbar = () => {
   }
   if(isAuth)
   {
-    return <Navigate to='/'/>
+    window.location.href='/home'
   }
   // if(error)
   // {
