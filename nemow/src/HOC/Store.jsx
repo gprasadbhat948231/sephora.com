@@ -4,7 +4,7 @@ import { reducer } from "./EyecareRedux/Reducer";
 import thunk from "redux-thunk"
 import { authReducer } from "./LoginRedux/Reducer";
 import { productReducer } from "./AdminRedux/product.reducer";
-import thunk from "redux-thunk";
+// import thunk from "redux-thunk";
 const rootReducer=combineReducers({
     adminManager:productReducer,
     CartandWishReducer:reducer,
