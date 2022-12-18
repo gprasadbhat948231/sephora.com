@@ -33,7 +33,7 @@ const AdminNavbar = ({page}) => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={40} alignItems={"center"}  fontWeight="700" color="gray.500">
-            <Link to="/home"  onClick={() => {
+            <Link to="/"  onClick={() => {
                       setvisible({ ...visible, nav: false });
                     }}>Home</Link>
             <HStack

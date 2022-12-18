@@ -9,7 +9,7 @@ import New from './New'
 const AllRoutes = () => {
   return (
     <Routes>
-    <Route path="/home" element={<Home />} />
+    <Route path="/" element={<Home />} />
     <Route path="/new" element={<New />} />
     <Route path="/eyecare" element={<EyeCare />} />
     <Route path="/foundation" element={<Foundation />} />

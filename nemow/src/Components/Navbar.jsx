@@ -43,7 +43,7 @@ const Navbar = () => {
   }
   if(isAuth)
   {
-    window.location.href='/home'
+    window.location.href='/'
   }
   // if(error)
   // {
