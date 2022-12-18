@@ -1,16 +1,13 @@
-import CartPage from './Components/CartPage/CartPage';
+import CartPage, { Wishlist } from './Components/CartPage/CartPage';
+import LoadingIndicator from './Components/fountation/loading';
 import Navbar from './Components/Navbar';
-import EyeCare from './Pages/EyeCare';
+import EyeCare, { LoadingComponent } from './Pages/EyeCare';
 
 import Home from './Pages/Home';
 
 function App() {
   return (
     <div>
-<Navbar/>
-<Home/>
-<EyeCare/>
-<CartPage/>
     </div>
   )
 }
