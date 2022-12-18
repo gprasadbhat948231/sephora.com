@@ -6,14 +6,15 @@ import CartPage from './Components/CartPage/CartPage';
 
 import Home from './Pages/Home';
 import Eyecare from './Pages/EyeCare'
+import Admin from './Pages/Admin';
 function App() {
   return (
     <div>
-      
-      <Navbar/>
+      <Admin/>
+      {/* <Navbar/>
       <Home/>
 
-      <Footer/>
+      <Footer/> */}
 
     </div>
   )

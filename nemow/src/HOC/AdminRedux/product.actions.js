@@ -3,9 +3,9 @@
 import axios from "axios";
 import {  ADD_PRODUCT_DATA,ADMIN_SIGN_IN,ADMIN_SIGN_OUT ,DELETE_PRODUCT_DATA,UPDATE_PRODUCT_DATA,SET_ADMIN_PAGE } from "./product.types";
 
-export const AddUpdate = (productData,path) => async (dispatch) => {
+export const AddUpdate = (productData,path) =>  (dispatch) => {
   const data={productData,path}
-  dispatch({ type: ADD_PRODUCT_DATA, payload:data});
+  dispatch({ type: UPDATE_PRODUCT_DATA, payload:data});
   
 };
 export const adminSignIn = () => (dispatch) => {

@@ -39,7 +39,7 @@ const adminInitialState = {
     promotions: [
       {
         id: "",
-        name: "xsaaaaa",
+        name: "",
         displayName: "",
         type: "",
         displayDiscount: false,
@@ -80,7 +80,7 @@ export const productReducer = (
     case ADMIN_SIGN_OUT:
       return adminInitialState;
     case UPDATE_PRODUCT_DATA:
-      return { ...state, productData: payload };
+      return { ...state, productData: payload.productData, path:payload.path};
 
     case SET_ADMIN_PAGE:
       return { ...state, page: payload };
