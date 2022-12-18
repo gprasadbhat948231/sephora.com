@@ -60,8 +60,42 @@ border-radius: 3px;
 }
 #Cartitems_parents{
  line-height: 40px;
- border-bottom: 0.5px solid gray;
 }
 #Links_for_cart_loves{
 color: rgb(47, 157, 225);
+}
+#Empty_if_wish{
+height: 200px;
+width: 220px;
+margin: auto;
+display: flex;
+align-items: center;
+}
+#Empty_if_cart{
+height: 200px;
+width: 200px;
+margin: auto;
+display: flex;
+align-items: center;
+
+}
+#Suggession_section{
+
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+/* width: 70%; */
+margin: auto;
+border-radius: 3px;
+}
+#Cart_Header{
+  justify-content: space-between;
+padding-top:20px;
+padding-bottom: 20px;
+padding-left:12px;
+padding-right: 12px;
+width: 100%;
+margin:auto;
+display: flex;
+border-bottom: 2px solid grey;
+border-top: 2px solid grey;
+
 }

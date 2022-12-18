@@ -1,14 +1,16 @@
+import CartPage from './Components/CartPage/CartPage';
 import Navbar from './Components/Navbar';
-import Footer from './Pages/Footer';
+import EyeCare from './Pages/EyeCare';
+
 import Home from './Pages/Home';
 
 function App() {
   return (
     <div>
-      <Navbar/>
-      <Home/>
-      <Footer/>
-
+<Navbar/>
+<Home/>
+<EyeCare/>
+<CartPage/>
     </div>
   )
 }
