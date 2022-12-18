@@ -15,7 +15,6 @@ case GET_CARTLIST_DATA:
 case ADD_TO_CART:
     return {...state,CartList:[...state.CartList,payload]}
 case ADD_TO_WISHLIST:
-    // console.log(state)
     return {...state,Wishlist:[...state.Wishlist,payload]}
 default:
 
