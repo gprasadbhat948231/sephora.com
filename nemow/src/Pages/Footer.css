@@ -29,13 +29,15 @@
     justify-content:left;
     align-items: center;
 }
+
+@media screen and (max-width:480px) {
+    .list-container:nth-child(2){
+        display: none;
+    }
+}
 .footer-container{
     background-color: black;
     color: white;
-}
-.some-beauty{
-    display: flex;
-    flex-direction: column;
 }
 .some-beauty>div>h2{
     font-size: 24px;

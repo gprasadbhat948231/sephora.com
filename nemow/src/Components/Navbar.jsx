@@ -26,14 +26,12 @@ const Navbar = () => {
           <SearchIcon marginLeft={'20px'} /><Input placeholder='Search' className='nav-searchbar' />
         </Box>
         <Box className='nav-midright'>
-          <Box className='nav-mid3'>
-            <Box className='storebox'>
+              <Box className='storebox'>
               <img src={storeicon} alt="store" className='storeicon' />
               <Box className='storetext'>
                 <p>Stores & Services</p>
                 <p>Choose your store</p>
               </Box>
-            </Box>
           </Box>
           <Box>
             <Box className='storebox'>

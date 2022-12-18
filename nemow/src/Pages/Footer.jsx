@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, FormControl, Input, Text, FormLabel, Button } from '@chakra-ui/react';
+import {FormControl, Input,Box, FormLabel, Button, SimpleGrid } from '@chakra-ui/react';
 import usflag from '../Components/Navbarimg/usflag.png';
 import canadaflag from '../Components/Navbarimg/canada.png';
 import { FaFacebookF, FaInstagram, FaPinterest, FaSnapchat, FaTiktok, FaTwitter, FaYoutube } from 'react-icons/fa';
@@ -8,7 +8,7 @@ import "./Footer.css";
 const Footer = () => {
     return (
         <div className='footer-container'>
-            <div className='footer-sub-container'>
+            <SimpleGrid columns={[1,2,3,5]} gap='10px' width='80%' margin={'auto'} className='nthchld' paddingTop={'20px'}>
                 <div className='list-container'>
                     <h3>About Nemow</h3>
                     <ul>About Nemow</ul>
@@ -71,37 +71,37 @@ const Footer = () => {
                         <ul>Canada - Français</ul>
                     </div>
                 </div>
-                <div className='some-beauty'>
-                    <div>
+                <SimpleGrid columns={[1,2,2,1]} gap='10px' width={'auto'}>
+                    <Box>
                         <h2>We Belong to</h2>
                         <h2>Something Beautiful</h2>
-                    </div>
-                    <div>
+                    </Box>
+                    <Box>
                         <FormControl>
                             <FormLabel>Signup for Nemow Emails</FormLabel>
                             <Input type='email' placeholder='Enter your email Address' background={'white'} color='black'/>
                             <Button bg={'black'} width='100%' borderRadius='50px' marginTop='15px' border='1px solid white'>Signup</Button>
                         </FormControl>
-                    </div>
-                </div>
-            </div>
+                    </Box>
+                </SimpleGrid>
+            </SimpleGrid>
             <hr style={{width:'83%',margin:'auto'}}/>
-            <div className='footer-bottom'>
+            <SimpleGrid columns={[1,1,2]} margin='auto' width={'80%'} padding='15px'>
                     <div className='bottom-footer-left'>
                         <p>© 2022 Sephora USA, Inc. All rights reserved.</p>
-                        <div className='footer-privacy'>
-                            <p>Privacy Policy</p>
-                            <p>Terms of Use</p>
-                            <p>Accessability</p>
-                            <p>Sitemap</p>
-                            <p>Your Privary Choices</p>
-                        </div>
-                        <div className='footer-privacy-number'>
+                        <SimpleGrid columns={[2,3,6]}>
+                            <p style={{fontSize:'12px'}}>Privacy Policy</p>
+                            <p style={{fontSize:'12px'}}>Terms of Use</p>
+                            <p style={{fontSize:'12px'}}>Accessability</p>
+                            <p style={{fontSize:'12px'}}>Sitemap</p>
+                            <p style={{fontSize:'12px'}}>Your Privary Choices</p>
+                        </SimpleGrid>
+                        <SimpleGrid columns={[1,2]}>
                             <p>1-877-737-4672</p>
                             <p>TTY: 1-888-866-9845</p>
-                        </div>
+                        </SimpleGrid>
                     </div>
-                    <div className='social-media'>
+                    <SimpleGrid columns={[4,7]} gap='10px'>
                         <FaInstagram size={'1.7em'}/>
                         <FaFacebookF size={'1.7em'}/>
                         <FaTwitter size={'1.7em'}/>
@@ -109,8 +109,8 @@ const Footer = () => {
                         <FaPinterest size={'1.7em'}/>
                         <FaSnapchat size={'1.7em'}/>
                         <FaTiktok size={'1.7em'}/>
-                    </div>
-            </div>
+                    </SimpleGrid>
+            </SimpleGrid>
         </div>
     )
 }
