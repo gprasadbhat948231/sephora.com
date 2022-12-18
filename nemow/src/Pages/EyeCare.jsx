@@ -52,6 +52,8 @@ function EyeCare() {
     );
   };
   // for adding wishlist data //
+
+
   useEffect(() => {
     GetData();
   }, []);
@@ -158,7 +160,6 @@ function EyeCare() {
   );
 }
 export default EyeCare;
-
 function EyeCareSection({ EyeBrowData = [] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [CartData, setCartData] = useState({});
@@ -337,7 +338,7 @@ function EyeCareSection({ EyeBrowData = [] }) {
 }
 
 //  for ratings
-function Rating({ rating, numReviews }) {
+ export function Rating({ rating, numReviews }) {
   return (
     <Box display="flex" alignItems="center">
       {Array(5)
@@ -569,7 +570,13 @@ const EyecareLeftSection = ({
 };
 
 export const LoadingComponent=()=>{
-    return<Grid templateColumns={"repeat(4,1fr)"}>
+    return<Grid ml="20px"  gap={"20px"} templateColumns={{
+      lg: "repeat(4, 1fr)",
+      xl: "repeat(4, 1fr)",
+      xl: "repeat(4, 1fr)",
+      sm: "repeat(2, 1fr)",
+      md: "repeat(3, 1fr)",
+    }}>
 <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
   <SkeletonCircle size='10' />
   <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
