@@ -1,9 +1,9 @@
 //Ritik
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Text, Image, Box, Flex, Select } from '@chakra-ui/react'
-import { BsHeart } from "react-icons/bs";
+import { BsHeartFill } from "react-icons/bs";
 
 import './New.css'
-export default function ModalComponent({ isOpen, onOpen, onClose, product,onClickLike,ToknowCartList,ToknowWishlist }) {
+export default function ModalComponent({ isOpen, onOpen, onClose, product,AddedtoWishlist,AddedtoCartList,ToknowCartList,ToknowWishlist}) {
     // const data = { rating: 4.2, numReviews: 120 };
     return (
         <>
@@ -49,12 +49,9 @@ export default function ModalComponent({ isOpen, onOpen, onClose, product,onClic
                                 <option value="10">10</option>
                             </Select>
                             <Flex direction='column' ml='3'>
-                            {/* Have to enable disabled in buttons
-                             disabled={ToknowCartList(product)}
-                            disabled={ToknowWishlist(product)} */}
-                                <Button borderRadius='3xl' bg='red' color='white'>Add to Basket</Button>
-                                <Button borderRadius='3xl' border='2px solid black' color='black' mt='2' onClick={()=>onClickLike(product)}>
-                                    <BsHeart />
+                                <Button borderRadius='3xl' bg='red' color='white' disabled={ToknowCartList(product)} onClick={()=>AddedtoCartList(product)}>Add to Basket</Button>
+                                <Button borderRadius='3xl' border='2px solid black' color='black' mt='2' disabled={ToknowWishlist(product)} onClick={()=>AddedtoWishlist(product)}>
+                                    <BsHeartFill fill={ToknowWishlist(product)? "red" : "grey"}/>
                                     <Text>Add to Loves</Text>
                                 </Button>
                             </Flex>

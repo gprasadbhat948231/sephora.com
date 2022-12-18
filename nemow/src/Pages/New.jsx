@@ -1,13 +1,14 @@
 // Ritik
 import { useEffect, useState } from "react";
 import '../Components/NewPage/New.css'
+import '../index.css'
 import Card from "../Components/NewPage/Card.jsx";
-import {Box,Heading,Text,Grid,useDisclosure,useToast,} from "@chakra-ui/react";
+import {Box,Heading,Text,Grid,useToast} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { addtocart_Eyecare } from "../HOC/EyecareRedux/Actions";
-import axios from "axios";
+import { addtocart_Eyecare, addtowishlist_Eyecare, Remove_from_Wishlist } from "../HOC/EyecareRedux/Actions";
+import { LoadingComponent } from "./EyeCare";
 const New = () => {
-    const {Wishlist,CartList}=useSelector((state)=>state.reducer)
+    const {Wishlist,CartList}=useSelector((state)=>state.CartandWishReducer)
     const dispatch=useDispatch()
     const [products, setProducts] = useState([]);
 
@@ -18,14 +19,8 @@ const New = () => {
         setProducts((prev) => prev = data)
     }
 
-    const [watchlist, setwatchlist] = useState([]);
-    const getWishlist = () => {
-        axios.get(`https://sephorajsonserver.onrender.com/wishlist`).then(res => setwatchlist(res.data))
-    }
-
     useEffect(() => {
         getNewData(new_arrival_api)
-        getWishlist()
     }, [])
 
     const new_arrival_api = 'https://sephorajsonserver.onrender.com/new-arrival';
@@ -40,13 +35,10 @@ const New = () => {
     const handlePageChange = (api) => {
         getNewData(api)
     }
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [CartData, setCartData] = useState({});
-    console.log(watchlist)
+    // const [CartData, setCartData] = useState({});
     const AddedtoWishlist = (ele) => {
-        if (!watchlist.find((item) => ele.id === item.id)) {
-            setwatchlist([...watchlist, ele]);
+        if (!Wishlist.find((item) => ele.id === item.id)) {
+            dispatch(addtowishlist_Eyecare(ele));
             toast({
                 title: "Wishlist.",
                 description: "Item Added To Wishlist Succesfully.",
@@ -54,8 +46,8 @@ const New = () => {
                 duration: 4000,
                 isClosable: true,
             });
-        } else if (watchlist.find((item) => ele.id === item.id)) {
-            // dispatch(Remove_from_Wishlist(ele.id));
+        } else if (Wishlist.find((item) => ele.id === item.id)) {
+            dispatch(Remove_from_Wishlist(ele.id));
             toast({
                 title: "Wishlist.",
                 description: "Item Is Removed From Wishlish.",
@@ -67,8 +59,8 @@ const New = () => {
     };
 
     // to know wish list //
-    const ToKnowWishlist = (id, watchlist) => {
-        if (watchlist.find((item) => id === item.id)) {
+  const ToKnowWishlist = (product) => {
+        if (Wishlist.find((item) => product.id === item.id)) {
             return true;
         }
         return false;
@@ -76,20 +68,14 @@ const New = () => {
 
      // to know cart list //
   const ToknowCartList = (Cartitem) => {
-    if (CartList.CartList.find((item) => Cartitem.id === item.id)) {
+    if (CartList.find((item) => Cartitem.id === item.id)) {
       return true;
     }
     return false;
   };
 
-    // for clicking image for buy
-    const onClickImage = (product) => {
-        setCartData(product);
-        onOpen();
-    }
-
     const AddedtoCartList = (Cartitem) => {
-        if (!CartList.CartList.find((item) => Cartitem.id === item.id)) {
+        if (!CartList.find((item) => Cartitem.id === item.id)) {
           dispatch(addtocart_Eyecare(Cartitem));
           toast({
             title: "Cartlist.",
@@ -122,9 +108,15 @@ const New = () => {
             <Box w="85%" borderLeft='1px solid grey' pl='5'>
                 <Text align='center' fontSize='32px' mb='8' fontFamily='georgia, times, serif'>New</Text>
                 <Grid templateColumns="repeat(4, 1fr)" rowGap={5} columnGap={2}>
-                    {products.map((product) => (
-                        <Card key={product.id} product={product} AddedtoWishlist={AddedtoWishlist} watchlist={watchlist} ToKnowWishlist={ToKnowWishlist} ToknowCartList={ToknowCartList} onClickImage={onClickImage}/>
-                    ))}
+                        {/* {products.length===0?<LoadingComponent/>:
+                        products.map((product) => (
+                            <Card key={product.id} product={product} AddedtoWishlist={AddedtoWishlist} AddedtoCartList={AddedtoCartList} ToKnowWishlist={ToKnowWishlist} ToknowCartList={ToknowCartList}/>
+                        ))
+                        } */}
+                        {products.map((product) => (
+                            <Card key={product.id} product={product} AddedtoWishlist={AddedtoWishlist} AddedtoCartList={AddedtoCartList} ToKnowWishlist={ToKnowWishlist} ToknowCartList={ToknowCartList}/>
+                        ))
+                        }
                 </Grid>
             </Box>
         </div>

@@ -36,7 +36,6 @@
   height: 300px;
   background-repeat: no-repeat;
 }
-
 #Cart_Name {
   font-size: 12px;
   color: grey;
@@ -47,21 +46,62 @@
 #Cart_Brand {
   align-self: left;
 }
-
 #Cart_Price {
   align-self: left;
   font-size: 25px;
 }
 #Cart_section{
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 /* width: 70%; */
 margin: auto;
 border-radius: 3px;
 }
 #Cartitems_parents{
  line-height: 40px;
- border-bottom: 0.5px solid gray;
+  
+}
+#Wishlist_parents{
+
+  line-height: 40px;
 }
 #Links_for_cart_loves{
 color: rgb(47, 157, 225);
+}
+#Empty_if_wish{
+height: 200px;
+width: 220px;
+margin: auto;
+display: flex;
+align-items: center;
+}
+#Empty_if_cart{
+height: 200px;
+width: 200px;
+margin: auto;
+display: flex;
+align-items: center;
+
+}
+#Suggession_section{
+
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+/* width: 70%; */
+margin: auto;
+border-radius: 3px;
+margin-top: 40px;
+margin-bottom: 40px;
+
+}
+#Cart_Header{
+  justify-content: space-between;
+padding-top:8px;
+padding-bottom: 8px;
+padding-left:12px;
+padding-right: 12px;
+width: 100%;
+margin:auto;
+display: flex;
+border-bottom: 2px solid grey;
+border-top: 2px solid grey;
+
 }
