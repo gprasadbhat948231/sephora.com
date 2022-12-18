@@ -5,7 +5,7 @@ import '../index.css'
 import Card from "../Components/NewPage/Card.jsx";
 import {Box,Heading,Text,Grid,useToast} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { addtocart_Eyecare, addtowishlist_Eyecare, Remove_from_Wishlist } from "../HOC/EyecareRedux/Actions";
+import { addtocart_Eyecare, addtowishlist_Eyecare, cartlistGetdata, Remove_from_Wishlist, wishlistGetdata } from "../HOC/EyecareRedux/Actions";
 import { LoadingComponent } from "./EyeCare";
 const New = () => {
     const {Wishlist,CartList}=useSelector((state)=>state.CartandWishReducer)
@@ -18,9 +18,10 @@ const New = () => {
         data = await data.json();
         setProducts((prev) => prev = data)
     }
-
     useEffect(() => {
-        getNewData(new_arrival_api)
+        getNewData(new_arrival_api);
+        dispatch(wishlistGetdata())
+        dispatch(cartlistGetdata())
     }, [])
 
     const new_arrival_api = 'https://sephorajsonserver.onrender.com/new-arrival';
