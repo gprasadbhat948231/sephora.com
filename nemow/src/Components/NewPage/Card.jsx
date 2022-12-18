@@ -1,29 +1,63 @@
+// Ritik
 import './New.css'
-import {
-    Box,
-    Heading,
-    Text,
-    Img,
-    Flex,
-    Center,
-    useColorModeValue,
-    HStack,
-    Circle,
-    Image,
-    Grid,
-    Button,
-    VStack,
-    Link,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-    textDecoration,
-} from "@chakra-ui/react";
-const Card = ({ product }) => {
+import {Box,Text,Flex,Image} from "@chakra-ui/react";
+
+import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { useDisclosure } from '@chakra-ui/react'
+import {addtowishlist_Eyecare} from '../../HOC/EyecareRedux/Actions';
+import ModalComponent from './Modal';
+const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, ToknowCartList, AddedtoCartList}) => {
+    const data = { rating: 4.2, numReviews: 120 };
+    const Wishlist=useSelector((state)=>state.reducer.Wishlist)
+    const dispatch=useDispatch()
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    function Rating({rating, numReviews}) {
+        return (
+            <>
+                {Array(5)
+                    .fill("")
+                    .map((_, i) => {
+                        const roundedRating = Math.round(rating * 2) / 2;
+                        if (roundedRating - i >= 1) {
+                            return (
+                                <BsStarFill
+                                    key={i}
+                                    style={{ marginLeft: "1" }}
+                                    color={i < rating ? "teal.500" : "gray.300"}
+                                />
+                            );
+                        }
+                        if (roundedRating - i === 0.5) {
+                            return <BsStarHalf key={i} style={{ marginLeft: "1" }} />;
+                        }
+                        return <BsStar key={i} style={{ marginLeft: "1" }} />;
+                    })}
+                <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {numReviews} {numReviews > 1}
+                </Box>
+            </>
+        );
+    }
+
+    const onClickLike=(product)=>{
+        AddedtoWishlist(product);  
+        dispatch(addtowishlist_Eyecare(product))  
+    }
+
     return (
         <Flex key={product.id} className="card">
+          {product.name && (
+          <ModalComponent
+            onOpen={onOpen}
+            onClose={onClose}
+            isOpen={isOpen}
+            product={product}
+            onClickLike={onClickLike}
+            ToknowCartList={ToknowCartList}
+            ToknowWishlist={ToKnowWishlist}
+          />
+        )}
             <Box>
                 <Flex flexDir='column'>
                     <Flex align='center'>
@@ -31,11 +65,13 @@ const Card = ({ product }) => {
                         <Image
                             src={product.imagePath}
                             alt={`Picture of product`}
-                            background='transparent'
-                            w="76%" />
-                        <Box className='like' mt='-100'><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                        </svg></Box>
+                            background='transparent' w="76%"
+                            onClick={onOpen}                            
+                             />
+                        <BsHeartFill className='like' style={{marginTop:'-100'}}
+                            onClick={()=>onClickLike(product)}
+                            fill={ToKnowWishlist(product.id, watchlist) ? "red" : "grey"} fontSize={"24px"}
+                        />
                     </Flex>
                     <Box p="6" align='center'>
                         <Flex className="text-content">
@@ -49,6 +85,7 @@ const Card = ({ product }) => {
                             <Box fontSize="13px">{product.brand}</Box>
                         </Flex>
                         <Text className="price">₹{product.sellingPriceRange.min}</Text>
+                        <Box display="flex" w='67%'>{Rating(data.rating, data.numReviews)}</Box>
                     </Box>
                 </Flex>
             </Box>

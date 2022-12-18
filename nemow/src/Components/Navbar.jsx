@@ -11,8 +11,10 @@ import wishlist from '../Components/Navbarimg/wishlist.png'
 import notify from '../Components/Navbarimg/notify.png'
 import Navbarbtm from './Navbarbtm';
 const Navbar = () => {
-  return (
+   return (
+    
     <div>
+    
       <HStack className='nav-top-1'>
         <Text className='nav-top-1-text'><b>Join Beauty Insider and get 20% off* Full-Size Fragrances with code FRAGRANCE20.</b>*Terms Apply.<b>SEE DETAILS</b><ChevronRightIcon /></Text>
       </HStack>
@@ -24,14 +26,12 @@ const Navbar = () => {
           <SearchIcon marginLeft={'20px'} /><Input placeholder='Search' className='nav-searchbar' />
         </Box>
         <Box className='nav-midright'>
-          <Box>
-            <Box className='storebox'>
+              <Box className='storebox'>
               <img src={storeicon} alt="store" className='storeicon' />
               <Box className='storetext'>
                 <p>Stores & Services</p>
                 <p>Choose your store</p>
               </Box>
-            </Box>
           </Box>
           <Box>
             <Box className='storebox'>
