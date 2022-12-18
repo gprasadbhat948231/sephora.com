@@ -165,7 +165,6 @@ const EmptyWishlist = () => {
     </Box>
   );
 };
-
 const AddtoCartModal = ({ onOpen, onClose, isOpen, CartTotal }) => {
   return (
     <Box w="700px">
@@ -355,6 +354,77 @@ const CartListItem = ({ ele, settotal, total }) => {
     </>
   );
 };
+
+//  wishlist start here
+export const Wishlist = () => {
+  const dispatch = useDispatch();
+  const { Wishlist, CartList } = useSelector(
+    (store) => store.CartandWishReducer
+  );
+  return (
+    <>
+      <Box
+        margin={"auto"}
+        id="Suggession_section"
+        w={{ lg: "70%", xl: "70%", "2xl": "70%", md: "90%", sm: "90%" }}
+      >
+        <Text id="Cart_Header">Loves({Wishlist.length})</Text>
+        {Wishlist.length > 0 ? (
+          Wishlist.map((ele) => (
+            <Box key={ele.id} id="Cartitems_parents">
+              <Flex margin={"auto"} fontSize={"13px"} gap={6}>
+                <Box w="30%">
+                  <Image src={ele.imagePath} />
+                </Box>
+                <Box>
+                  {/* brand name */}
+                  <Box>
+                    <Text>{ele.brand}</Text>
+                    <Text fontSize={"13px"} color="grey">
+                      {ele.name}
+                    </Text>
+                  </Box>
+                  {/*remove form Wish and  */}
+                  <Box gap={"30px"} display={"flex"}>
+                    <Link
+                      onClick={() => {
+                        dispatch(addtocart_Eyecare(ele));
+                        dispatch(Remove_from_Wishlist(ele.id));
+                      }}
+                      id="Links_for_cart_loves"
+                    >
+                      Move To Cart
+                    </Link>
+                    <Link
+                      onClick={() => dispatch(Remove_from_Wishlist(ele.id))}
+                      id="Links_for_cart_loves"
+                    >
+                      Remove
+                    </Link>
+                  </Box>
+
+                  <Box w="20%" display={"flex"}>
+                    <Text textAlign={"right"}></Text>
+                  </Box>
+                  <Text>₹{ele.mrpRange.min || 0}</Text>
+                  <Text fontWeight={"semibold"} color="blue">
+                    FREE SHIPPING
+                  </Text>
+                </Box>
+              </Flex>
+
+              <Divider />
+            </Box>
+          ))
+        ) : (
+          // empty page here
+          <EmptyWishlist />
+        )}
+      </Box>
+    </>
+  );
+};
+
 // export const FirebaseConfigForOTP=()=>{
 
 // const handleClick=()=>{
