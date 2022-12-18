@@ -167,7 +167,7 @@ function EyeCare() {
       console.log("sssu");
     }
   };
-  const ToknowWatchlist = (id, watchlist) => {
+  const  ToknowWatchlist = (id, watchlist) => {
     if (watchlist.find((item) => id === item.id)) {
       return true;
     }
@@ -272,7 +272,7 @@ function EyeCare() {
 
 export default EyeCare;
 //  for ratings
-function Rating({ rating, numReviews }) {
+ export function Rating({ rating, numReviews }) {
   return (
     <Box display="flex" alignItems="center">
       {Array(5)
