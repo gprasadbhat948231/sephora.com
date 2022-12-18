@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ADD_TO_CART, ADD_TO_WISHLIST, GET_CARTLIST_DATA, GET_WISHLIST_DATA, REMOVE_FROM_CARTLIST, REMOVE_FROM_WISHLIST } from "./ActionTypes"
+import { ADD_TO_CART, ADD_TO_WISHLIST, AFTER_ORDER_PLACED, GET_CARTLIST_DATA, GET_WISHLIST_DATA, REMOVE_FROM_CARTLIST, REMOVE_FROM_WISHLIST } from "./ActionTypes"
 
 export const addtowishlist_Eyecare=(data)=>(dispatch)=>{
 axios.post(`https://sephorajsonserver.onrender.com/wishlist`,data)
@@ -32,4 +32,7 @@ axios.delete(`https://sephorajsonserver.onrender.com/wishlist/${id}`)
 
     dispatch({type:REMOVE_FROM_WISHLIST,payload:id})
 
+  }
+  export const AfterOrderPlaced=()=>(dispatch)=>{
+dispatch({type:AFTER_ORDER_PLACED})
   }
