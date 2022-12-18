@@ -1,31 +1,17 @@
+// Ritik
 import './New.css'
-import {
-    Box,
-    Heading,
-    Text,
-    Img,
-    Flex,
-    Center,
-    useColorModeValue,
-    HStack,
-    Circle,
-    Image,
-    Grid,
-    Button,
-    VStack,
-    Link,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-    textDecoration,
-} from "@chakra-ui/react";
-import { StarIcon } from '@chakra-ui/icons';
-import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import {Box,Text,Flex,Image} from "@chakra-ui/react";
 
-const Card = ({ product,watchlist,AddedtoWishlist,ToknowWatchlist,onClickImage}) => {
+import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { useDisclosure } from '@chakra-ui/react'
+import {addtowishlist_Eyecare} from '../../HOC/EyecareRedux/Actions';
+import ModalComponent from './Modal';
+const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, ToknowCartList, AddedtoCartList}) => {
     const data = { rating: 4.2, numReviews: 120 };
+    const Wishlist=useSelector((state)=>state.reducer.Wishlist)
+    const dispatch=useDispatch()
+    const { isOpen, onOpen, onClose } = useDisclosure()
     function Rating({rating, numReviews}) {
         return (
             <>
@@ -54,8 +40,24 @@ const Card = ({ product,watchlist,AddedtoWishlist,ToknowWatchlist,onClickImage})
         );
     }
 
+    const onClickLike=(product)=>{
+        AddedtoWishlist(product);  
+        dispatch(addtowishlist_Eyecare(product))  
+    }
+
     return (
         <Flex key={product.id} className="card">
+          {product.name && (
+          <ModalComponent
+            onOpen={onOpen}
+            onClose={onClose}
+            isOpen={isOpen}
+            product={product}
+            onClickLike={onClickLike}
+            ToknowCartList={ToknowCartList}
+            ToknowWishlist={ToKnowWishlist}
+          />
+        )}
             <Box>
                 <Flex flexDir='column'>
                     <Flex align='center'>
@@ -64,11 +66,11 @@ const Card = ({ product,watchlist,AddedtoWishlist,ToknowWatchlist,onClickImage})
                             src={product.imagePath}
                             alt={`Picture of product`}
                             background='transparent' w="76%"
-                            onClick={()=>onClickImage(product)}                            
+                            onClick={onOpen}                            
                              />
                         <BsHeartFill className='like' style={{marginTop:'-100'}}
-                            onClick={() => AddedtoWishlist(product)}
-                            fill={ToknowWatchlist(product.id, watchlist) ? "red" : "grey"} fontSize={"24px"}
+                            onClick={()=>onClickLike(product)}
+                            fill={ToKnowWishlist(product.id, watchlist) ? "red" : "grey"} fontSize={"24px"}
                         />
                     </Flex>
                     <Box p="6" align='center'>
