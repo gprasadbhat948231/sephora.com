@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Text, Menu, MenuButton, MenuList, Image, Box, SimpleGrid } from "@chakra-ui/react";
+import { NavLink } from 'react-router-dom';
 import {
      Box,
      Flex,
@@ -35,9 +35,9 @@ const Navbarbtm = () => {
                 margin={'auto'}
                 width='auto'
                 display={{ base: 'none', md: 'flex' }}>
-                  <Link to="#about">New</Link>              
-                  <Link to="#about" smooth>Eyecare</Link>
-                  <Link to="#skills"  smooth>Foundation</Link>
+                  <NavLink to="/new">New</NavLink>              
+                  <NavLink to="/eyecare" smooth>Eyecare</NavLink>
+                  <NavLink to="/foundation"  smooth>Foundation</NavLink>
                   <Link to="#project" smooth>Brands</Link>
                   <Link to="#contact" smooth>Makeup</Link>
                   <Link to="#contact" smooth>Skincare</Link>
@@ -54,10 +54,10 @@ const Navbarbtm = () => {
           {isOpen ? (
             <Box pb={4} display={{ md: 'none' }}>
               <Stack color='white' as={'nav'} spacing={4}>
-              <Link to="#about">New</Link>              
-                  <Link to="#about" smooth>Eyecare</Link>
-                  <Link to="#skills"  smooth>Foundation</Link>
-                  <Link to="#project" smooth>Brands</Link>
+                  <NavLink to="/new">New</NavLink>              
+                  <NavLink to="#/eyecare" smooth>Eyecare</NavLink>
+                  <NavLink to="/foundation"  smooth>Foundation</NavLink>
+                  <NavLink to="#project" smooth>Brands</NavLink>
                   <Link to="#contact" smooth>Makeup</Link>
                   <Link to="#contact" smooth>Skincare</Link>
                   <Link to="#contact" smooth>Hair</Link>

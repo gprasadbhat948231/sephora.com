@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addtocart_Eyecare } from "../HOC/EyecareRedux/Actions";
 import axios from "axios";
 const New = () => {
-    const {Wishlist,CartList}=useSelector((state)=>state.reducer)
+    const {Wishlist,CartList}=useSelector((state)=>state.CartandWishReducer)
     const dispatch=useDispatch()
     const [products, setProducts] = useState([]);
 

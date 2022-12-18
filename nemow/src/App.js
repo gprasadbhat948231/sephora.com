@@ -1,16 +1,12 @@
-import CartPage from './Components/CartPage/CartPage';
 import Navbar from './Components/Navbar';
-import EyeCare from './Pages/EyeCare';
-
-import Home from './Pages/Home';
-
+import Footer from "./Pages/Footer";
+import AllRoutes from './Pages/AllRoutes';
 function App() {
   return (
     <div>
-<Navbar/>
-<Home/>
-<EyeCare/>
-<CartPage/>
+      <Navbar/>
+      <AllRoutes/>
+      <Footer/>
     </div>
   )
 }
