@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+// import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,7 +8,8 @@ import Slider from "react-slick";
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import './Home.css';
-
+// import Navbar from '../Components/Navbar';
+// import Footer from './Footer';
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -35,7 +37,7 @@ const Home = () => {
   const [frag, setFrag] = useState([]);
   const [eye, setEye] = useState([]);
   const [sweats, setSweat] = useState([]);
-
+  // const {isAuth}=useSelector((store)=>store.authManeger);
   const featured = [{ name: 'Gifts & Value Sets', img: 'https://www.sephora.com/contentimages/homepage/092022/Homepage/RWD/gifts%2032@3x.png?imwidth=53' },
   { name: 'Luxury Skincare', img: 'https://www.sephora.com/contentimages/categorybanners/RWD/icons/luxury_beauty.svg' },
   { name: 'Makeup Under $25', img: 'https://www.sephora.com/contentimages/homepage/100422/Homepage/RWD/under25%2032@3x.jpg?imwidth=53' },
@@ -73,7 +75,6 @@ const Home = () => {
     getData2();
     getSweat();
   }, [])
-  console.log(data);
   var settings = {
     infinite: true,
     speed: 500,

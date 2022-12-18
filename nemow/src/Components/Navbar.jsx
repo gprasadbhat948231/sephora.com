@@ -1,4 +1,6 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { useDispatch,useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Box, HStack, Text, Input ,useDisclosure, Drawer,
   DrawerBody,
   DrawerHeader,
@@ -16,9 +18,37 @@ import wishlist from '../Components/Navbarimg/wishlist.png'
 import notify from '../Components/Navbarimg/notify.png'
 import Navbarbtm from './Navbarbtm';
 import { NavLink } from 'react-router-dom';
+import {login} from "../HOC/LoginRedux/Action"
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const firstField = React.useRef()
+
+  const [log,setLog]=useState({});
+
+  const {error,loading,isAuth}=useSelector((store)=>store.authManeger);
+  const dispatch=useDispatch();
+
+  const changeHandler=(e)=>{
+    let {name,value}=e.target;
+    setLog({...log,[name]:value});
+  }
+  const handleSubmit=()=>{
+    if(log.email==='admin@gmail.com' && log.password==='nimda')
+    {
+      window.location.href="/admin"
+      console.log('true')
+    }
+    else
+    login(dispatch,log);
+  }
+  if(isAuth)
+  {
+    return <Navigate to='/'/>
+  }
+  // if(error)
+  // {
+  //   alert("wrong credentials")
+  // }
   return (
     <div>
       <HStack className='nav-top-1'>
@@ -72,13 +102,18 @@ const Navbar = () => {
               <Box display={'flex'} justifyContent='space-between'>
                 <Input
                   id='email'
+                  name='email'
+                  type='email'
+                  onChange={changeHandler}
                   placeholder='Email Address'
                   width={'49%'}
                   />
                 <Input
-                  id='email'
+                  id='password'
+                  name='password'
                   type={'password'}
                   width={'49%'}
+                  onChange={changeHandler}
                   placeholder='Password'
                 />
               </Box>
@@ -142,7 +177,10 @@ const Navbar = () => {
               </Box>
               <Divider/>
               <Box>
-                <Button background={'black'} color='white' _hover={{background:'gray.600'}} borderRadius='50px' width={'50%'}>Join Now</Button>
+                <Button background={'black'} 
+                color='white' _hover={{background:'gray.600'}}
+                 borderRadius='50px' width={'50%'}
+                 isLoading={loading} onClick={handleSubmit}>Join Now</Button>
               </Box>
               <Text fontSize={'13px'}>New to Nemow ? <ul style={{color:'#059BE5 '}}>Login Here</ul></Text>
               <Divider/>
@@ -158,7 +196,7 @@ const Navbar = () => {
           <Box className='lastbox'>
             <img className='iconscwc' src={notify} alt='chat' />
             <img className='iconscwc' src={wishlist} alt='wishlist' />
-  <NavLink to='/cart'><img className='iconscwc' src={cart} alt='cart' /></NavLink>
+            <NavLink to='/cart'><img className='iconscwc' src={cart} alt='cart' /></NavLink>
           </Box>
         </Box>
       </Box>
