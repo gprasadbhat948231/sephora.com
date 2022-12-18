@@ -3,8 +3,9 @@ import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { deleteProduct } from "../../HOC/AdminRedux/product.actions";
-import AddUpdate from "./AddUpdate";
+import { deleteProduct, setPage,AddUpdate } from "../../HOC/AdminRedux/product.actions";
+
+
 const intialPrice = {
   id: "VARDCI5VXL5",
   mrpRange: {
@@ -67,12 +68,16 @@ export const UpdateDeleteButton = () => {
 
   const dispatch = useDispatch();
 
-  const handleUpdate = () => {
-    <Navigate to="addproduct" />;
+  const handleUpdate = (product,path) => {
+   const page="Add Product"
+   console.log(product)
+      dispatch(AddUpdate(product,path))
+     dispatch(setPage(page))
+    // <Navigate to="addproduct"/>;
   };
 
   const path = "women-perfume";
-  const handleDelete = async (id) => {
+  const handleDelete =  (id) => {
     dispatch(deleteProduct(id, path)).then((res) => {
       // console.log(res)
       if (res.status == 200)
@@ -91,7 +96,7 @@ export const UpdateDeleteButton = () => {
       <HStack>
         <Button
           m={10}
-          onClick={(intialPrice) => handleUpdate(intialPrice)}
+          onClick={() => handleUpdate(intialPrice, "dummy")}
           colorScheme="orange"
         >
           Update
@@ -105,15 +110,19 @@ export const UpdateDeleteButton = () => {
 };
 
 export const AddButton = () => {
+  const dispatch = useDispatch();
+
   const handleAdd = () => {
-    <Navigate to="addproduct" />;
+   const path="Add Product"
+    dispatch(setPage(path))
+   // <Navigate to="addproduct" />;
   };
   return (
     <Center>
       <Button
         m={15}
         colorScheme="messenger"
-        onClick={(intialPrice) => handleAdd(intialPrice)}
+        onClick={() => handleAdd()}
       >
         Add Product
       </Button>

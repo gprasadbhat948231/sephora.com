@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPage } from '../../HOC/AdminRedux/product.actions';
 
-const Links = ["Admin", "Dashboard", "AddcProduct",];
+const Links = ["Admin", "Dashboard", "Add Product",];
 const AdminNavbar = ({page}) => {
     const dispatch=useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -107,10 +107,14 @@ const AdminNavbar = ({page}) => {
                   to={"/" + + link.toLowerCase().split(" ", 1)}
                 >
                   <Box
+                  fontWeight={"600"}
                     _hover={{ bg: "orange.100" }}
                     color={link == visible.nav ? "blue" : ""}
                     onClick={() => {
                       setvisible({ ...visible, nav: link });
+
+                      dispatch(setPage(link))
+                    
                     }}
                   >
                     {link}
