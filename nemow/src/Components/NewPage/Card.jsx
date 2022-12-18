@@ -7,10 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDisclosure } from '@chakra-ui/react'
 import {addtowishlist_Eyecare} from '../../HOC/EyecareRedux/Actions';
 import ModalComponent from './Modal';
-const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, ToknowCartList, AddedtoCartList}) => {
+const Card = ({ product,AddedtoWishlist,ToKnowWishlist,ToknowCartList, AddedtoCartList}) => {
     const data = { rating: 4.2, numReviews: 120 };
-    const Wishlist=useSelector((state)=>state.reducer.Wishlist)
-    const dispatch=useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
     function Rating({rating, numReviews}) {
         return (
@@ -40,11 +38,6 @@ const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, T
         );
     }
 
-    const onClickLike=(product)=>{
-        AddedtoWishlist(product);  
-        dispatch(addtowishlist_Eyecare(product))  
-    }
-
     return (
         <Flex key={product.id} className="card">
           {product.name && (
@@ -53,9 +46,10 @@ const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, T
             onClose={onClose}
             isOpen={isOpen}
             product={product}
-            onClickLike={onClickLike}
             ToknowCartList={ToknowCartList}
             ToknowWishlist={ToKnowWishlist}
+            AddedtoWishlist={AddedtoWishlist}
+            AddedtoCartList={AddedtoCartList}
           />
         )}
             <Box>
@@ -69,8 +63,8 @@ const Card = ({ product,watchlist,AddedtoWishlist,ToKnowWishlist,onClickImage, T
                             onClick={onOpen}                            
                              />
                         <BsHeartFill className='like' style={{marginTop:'-100'}}
-                            onClick={()=>onClickLike(product)}
-                            fill={ToKnowWishlist(product.id, watchlist) ? "red" : "grey"} fontSize={"24px"}
+                            onClick={()=>AddedtoWishlist(product)}
+                            fill={ToKnowWishlist(product)? "red" : "grey"} fontSize={"24px"}
                         />
                     </Flex>
                     <Box p="6" align='center'>
