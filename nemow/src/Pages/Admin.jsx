@@ -16,7 +16,7 @@ const Admin = () => {
   return (
     <Box>
       <AdminNavbar page={page} />
-      {page === "Dashboard" || page === "Admin" ? (
+      {page === "Dashboard"?<Dashboard/>: page === "Admin" ? (
         <Box>
           <AddButton />
           <UpdateDeleteButton />

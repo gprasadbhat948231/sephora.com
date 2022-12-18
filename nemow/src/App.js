@@ -7,9 +7,12 @@ function App() {
 
   return (
     <div>
+
+
       <Navbar/>
         <AllRoutes/>
       <Footer/>
+
     </div>
   )
 }

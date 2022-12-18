@@ -52,6 +52,8 @@ function EyeCare() {
     );
   };
   // for adding wishlist data //
+
+
   useEffect(() => {
     GetData();
   }, []);
@@ -336,7 +338,7 @@ function EyeCareSection({ EyeBrowData = [] }) {
 }
 
 //  for ratings
-function Rating({ rating, numReviews }) {
+ export function Rating({ rating, numReviews }) {
   return (
     <Box display="flex" alignItems="center">
       {Array(5)
