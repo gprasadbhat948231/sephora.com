@@ -1,6 +1,3 @@
-
-import axios from "axios";
-import { useEffect } from "react";
 import {
   ADD_TO_CART,
   ADD_TO_WISHLIST,
@@ -9,8 +6,6 @@ import {
   REMOVE_FROM_CARTLIST,
   REMOVE_FROM_WISHLIST,
 } from "./ActionTypes";
-
-
 
 const initialState = {
   Wishlist: [],
