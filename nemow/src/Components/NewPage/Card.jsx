@@ -70,7 +70,7 @@ const Card = ({ product,AddedtoWishlist,ToKnowWishlist,ToknowCartList, AddedtoCa
                     <Box p="6" align='center'>
                         <Flex className="text-content">
                             <Box
-                                fontSize="12px"
+                                fontSize={{ base: '9', md: '8', lg: '13' }}
                                 fontWeight="bold"
                                 as="h4"
                                 margin='auto'
