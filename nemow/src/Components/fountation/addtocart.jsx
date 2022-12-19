@@ -2,7 +2,7 @@ import {
     Button, Modal, ModalBody, ModalCloseButton,
     ModalContent,ModalFooter, ModalHeader,
     Box, Text, Image, Flex, useToast, } from "@chakra-ui/react"
-  import React, { useState } from "react";
+  import { useState } from "react";
 
 import { useEffect } from "react";
   import React from "react";
@@ -17,9 +17,6 @@ import { addtocart_Eyecare, addtowishlist_Eyecare,
     // const CartList = useSelector((store) => store);
     console.log(CartList);
 
-
-    const dispatch = useDispatch();
- 
     const dispatch = useDispatch();
     const AddedtoWishlist = (ele) => {
       if (!Wishlist.find((item) => ele.id === item.id)) {
