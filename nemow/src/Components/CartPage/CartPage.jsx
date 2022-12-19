@@ -1,38 +1,16 @@
 
 import { PhoneIcon } from "@chakra-ui/icons";
 
-// import 'firebase/auth';
-
 import {
-  Progress,
-  ButtonGroup,
-  FormControl,
-  GridItem,
-  FormLabel,
-  SimpleGrid,
-  InputLeftAddon,
-  
-  Textarea,
-  FormHelperText,
-  InputRightElement,
-} from '@chakra-ui/react';
+  Progress, ButtonGroup, FormControl,
+  GridItem,FormLabel, SimpleGrid,
+  InputLeftAddon, Textarea, FormHelperText,
+  InputRightElement,} from '@chakra-ui/react';
 
 
-import {
-  Box,
-  Text,
-  Image,
-  Divider,
-  Select,
-  Flex,
+import {Box,Text,
+  Image,Divider,Select,Flex,
   Link,
-} from "@chakra-ui/react";
-import React from "react";
-import { useSelector } from "react-redux";
-import "../EyeCarePages/Eyecare.css";
-function CartPage() { 
-  const {CartList} = useSelector((store) => store.CartandWishReducer);
-  console.log(CartList);
   Heading,
   Button,
   useDisclosure,
@@ -71,30 +49,25 @@ function CartPage() {
   const { Wishlist, CartList } = useSelector(
     (store) => store.CartandWishReducer
   );
+
   return (
     <Box>
       <Box id="Cart_heading">My Basket</Box>
-
       {/* Cartitem Shows here  */}
       <Box
         w={{ lg: "70%", xl: "70%", "2xl": "70%", md: "90%", sm: "90%" }}
         id="Cart_section"
       >
-        <Text
-          textAlign={"left"}
-          fontWeight="bold"
-          backgroundColor={"grey"}
-          pl="20px"
-          py="12px"
-        >
-          Get It Shipped({CartList.length})
-        </Text>
+        <Box id="Cart_Header">
+          <Text display={"inline-block"} fontWeight="bold">
+            Get It Shipped({CartList.length})
+          </Text>
+          <Text display={"inline-block"} fontWeight="bold">
+            Cart Total: ({CartList.length == 0 ? 0 : total})
+          </Text>
+        </Box>
+        {/* cartlist map here */}
         {CartList.length > 0 &&
-
-          CartList.map((ele) => (
-            <Box id="Cartitems_parents">
-              <Flex w="100%">
-
           CartList.map((el) => (
             <Box>
             <CartListItem ele={el} total={total} settotal={settotal} />
@@ -136,138 +109,52 @@ function CartPage() {
             <Box key={ele.id} id="Wishlist_parents">
               <Flex margin={"auto"} fontSize={"13px"} gap={5}>
                 <Box w="30%">
-                  <Image h="200px" src={ele.imagePath} />
+                  <Image src={ele.imagePath} />
                 </Box>
                 <Box>
                   {/* brand name */}
-                  <Box w="100%">
+                  <Box>
                     <Text>{ele.brand}</Text>
                     <Text fontSize={"13px"} color="grey">
                       {ele.name}
                     </Text>
                   </Box>
-
-                  {/* select tag and remove form cart and  */}
+                  {/*remove form Wish and  */}
                   <Box gap={"30px"} display={"flex"}>
-                    <Select
-                      verticalAlign={"center"}
-                      w="60px"
-                      type="number"
-                      defaultValue={"1"}
+                    <Link
+                      onClick={() => {
+                        dispatch(addtocart_Eyecare(ele));
+                        dispatch(Remove_from_Wishlist(ele.id));
+                      }}
+                      id="Links_for_cart_loves"
                     >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                    </Select>
-                    <Link id="Links_for_cart_loves">Move To Loves</Link>
-                    <Link id="Links_for_cart_loves">Remove</Link>
+                      Move To Cart
+                    </Link>
+                    <Link
+                      onClick={() => dispatch(Remove_from_Wishlist(ele.id))}
+                      id="Links_for_cart_loves"
+                    >
+                      Remove
+                    </Link>
                   </Box>
                   <Box w="20%" display={"flex"}>
-                    <Text textAlign={"right"}>₹   {ele.mrpRange.min}</Text>
+                    <Text textAlign={"right"}></Text>
                   </Box>
-
-
                   <Text>₹{ele.mrpRange.min || 0}</Text>
                   <Badge  colorScheme='linkedin' fontSize={"10px"} size="sm"  my={"20px"}>FREE SHOPING</Badge>
-             </Box>
+                </Box>
               </Flex>
               <Divider />
             </Box>
-          ))}
+          ))
+        ) : (
+          // empty page here
+          <EmptyWishlist />
+        )}
       </Box>
-      {/* Suggession shows here*/}
-      <Box id="Suggession_section"></Box>
     </Box>
   );
 }
-
-
-export default CartPage;
-
-// 0
-// :
-// {id: 'D9K496TC6TD', mrpRange: {…}, sellingPriceRange: {…}, discountRange: {…}, name: 'Gimme Brow + Volumizing Pencil - Shade 03 Warm Light Brown', …}
-// 1
-// :
-// allImages
-// :
-// null
-// altImagePath
-// :
-// "https://cdn15.nnnow.com/web-images/medium/styles/9VSW5CNFCXW/1622445771745/2.jpg"
-// brand
-// :
-// "Anastasia Beverly Hills"
-// discountRange
-// :
-// {min: 0, max: 0}
-// id
-// :
-// "9VSW5CNFCXW"
-// imageColor
-// :
-// "#f4e0e9"
-// imagePath
-// :
-// "https://cdn00.nnnow.com/web-images/medium/styles/9VSW5CNFCXW/1622445771747/1.jpg"
-// isNew
-// :
-// false
-// moreColors
-// :
-// null
-// mrpRange
-// :
-// {min: 2400, max: 2400}
-// name
-// :
-// "Brow Definer - Ash Brown"
-// otherImages
-// :
-// {3: '/styles/9VSW5CNFCXW/1622445771746/3.jpg', 4: '/styles/9VSW5CNFCXW/1622445771743/4.jpg', 5: '/styles/9VSW5CNFCXW/1622525120513/5.jpg'}
-// productTags
-// :
-// [{…}]
-// promotions
-// :
-// (4) [{…}, {…}, {…}, {…}]
-// sapStyleId
-// :
-// null
-// sellingPriceRange
-// :
-// {min: 2400, max: 2400}
-// sizeChartId
-// :
-// null
-// skus
-// :
-// null
-// specs
-// :
-// null
-// url
-// :
-// "/anastasia-beverly-hills-brow-definer---ash-brown-9VSW5CNFCXW"
-// video
-// :
-// null
-// [[Prototype]]
-// :
-// Object
-// 2
-// :
-// {id: 'WZ2MW513T8J', mrpRange: {…}, sellingPriceRange: {…}, discountRange: {…}, name: 'Brow Powmade - Shade 05 - Warm Black Brown', …}
-// length
-// :
-// 3
-// [[Prototype]]
-// :
-// Array(0)
-=======
 export default CartPage;
 
 const EmptyCart = () => {
@@ -810,4 +697,4 @@ const Form3 = () => {
       </SimpleGrid>
     </Box>
   );
-}
+};
