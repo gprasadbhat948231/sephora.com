@@ -3,39 +3,63 @@ import axios from "axios"
 import {
     Button, Modal, ModalBody, ModalCloseButton,
     ModalContent,ModalFooter, ModalHeader,
-    Box, Text, Image, Flex, } from "@chakra-ui/react";
+    Box, Text, Image, Flex, useToast, } from "@chakra-ui/react";
   import React, { useState } from "react";
-  
-  const AddToCartModal = ({ onClose, isOpen, CartData = {},ToknowCartList}) => {
+
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addtocart_Eyecare, addtowishlist_Eyecare,
+  cartlistGetdata,  Remove_from_Wishlist, wishlistGetdata,} from "../../HOC/EyecareRedux/Actions"
+  const AddToCartModal = ({ onClose, isOpen, CartData = [],}) => {
     // console.log(CartData);
+    const toast = useToast();
+    const {Wishlist,CartList} = useSelector((store) => store.CartandWishReducer);
+    // const CartList = useSelector((store) => store);
+    console.log(CartList);
 
-    const AddedtoCartList=(data)=>{
-
-      axios.post('https://sephorajsonserver.onrender.com/Cart',data )
-    
-
-      
-      .then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
-   console.log(data)
-    }
-
-
-    const AddedtoWishList=(data)=>{
-
-      axios.post('https://sephorajsonserver.onrender.com/wishlist', data)
-      
-      .then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
-   console.log(data)
-    }
-
+    const dispatch = useDispatch();
+ 
+    const AddedtoWishlist = (ele) => {
+      if (!Wishlist.find((item) => ele.id === item.id)) {
+        dispatch(addtowishlist_Eyecare(ele));
+        toast({
+          title: "Wishlist.",
+          description: "Item Added To Wishlist Succesfully.",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      } else if (Wishlist.find((item) => ele.id === item.id)) {
+        dispatch(Remove_from_Wishlist(ele.id));
+        toast({
+          title: "Wishlist.",
+          description: "Item Is Removed From Wishlish.",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
+      }
+    };
+    // to know wish list //
+    const ToknowWishlist = (Eyedata) => {
+      if (Wishlist.find((item) => Eyedata.id === item.id)) {
+        return true;
+      }
+      return false;
+    };
+    const AddedtoCartList = (Cartitem) => {
+      if (!CartList.find((item) => Cartitem.id === item.id)) {
+        dispatch(addtocart_Eyecare(Cartitem));
+        toast({
+          title: "Cartlist.",
+          description: "Item Added To Cartlist Succesfully.",
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      }
+    };
     return (
       <>
   
@@ -79,7 +103,7 @@ import {
               <Button colorScheme="red" borderRadius={"30px"} mr={3} onClick={()=>{AddedtoCartList(CartData); onClose()}}>
                 Add to Basket
               </Button>
-              <Button colorScheme="white" color={"black"} border="0.5px solid"  onClick={()=>{AddedtoWishList(CartData); onClose()}} borderRadius={"30px"} mr={3}>
+              <Button colorScheme="white" color={"black"} border="0.5px solid"  onClick={()=>{AddedtoWishlist(CartData); onClose()}} borderRadius={"30px"} mr={3}>
                 Add to Loves
               </Button>
             </ModalFooter>
