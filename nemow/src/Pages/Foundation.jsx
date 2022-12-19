@@ -6,13 +6,9 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem,
   AccordionPanel, Box, Button, Checkbox, Flex, h2, Heading, Radio, RadioGroup, SimpleGrid, Spacer, Stack } from '@chakra-ui/react'
 import LoadingIndicator from '../Components/fountation/loading';
 import {
-  Text,
- Image,
-  Grid,
-  Link,
-  Divider,
   useDisclosure,
   useToast} from "@chakra-ui/react";
+
 import AddToCartModal from '../Components/fountation/addtocart';
   const getdata=(isChecked="")=>{
     return (  isChecked===""?axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?`):
@@ -25,13 +21,13 @@ const names=["Estée Lauder","Fenty Beauty by Rihanna","Too Faced","Charlotte Ti
              "Estée Lauder","Fenty Beauty by Rihanna","Too Faced","Charlotte Tilbury","Armani Beauty","NARS","Kosas","bareMinerals","Anastasia Beverly Hills",
              "Estée Lauder","Fenty Beauty by Rihanna","Too Faced","Charlotte Tilbury","Armani Beauty","NARS","Kosas","bareMinerals","Anastasia Beverly Hills"]
 export const Foundation = () => {
-  const [data,setData]=useState()
+  const [data,setData]=useState([])
   const [type,setType]=useState("")
   const [isChecked, setIsChecked] = useState()
   const [load,setLoad]=useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [CartData, setCartData] = useState({});
-  console.log(CartData)
+  const [CartData, setCartData] = useState([]);
+  // console.log(CartData)
     useEffect(()=>{
       setLoad(true)
         getdata(isChecked).then(res=>{setData(res.data)

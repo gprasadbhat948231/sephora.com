@@ -1,29 +1,15 @@
+
 import { PhoneIcon } from "@chakra-ui/icons";
 
-// import 'firebase/auth';
-
 import {
-  Progress,
-  ButtonGroup,
-  FormControl,
-  GridItem,
-  FormLabel,
-  SimpleGrid,
-  InputLeftAddon,
-  
-  Textarea,
-  FormHelperText,
-  InputRightElement,
-} from '@chakra-ui/react';
+  Progress, ButtonGroup, FormControl,
+  GridItem,FormLabel, SimpleGrid,
+  InputLeftAddon, Textarea, FormHelperText,
+  InputRightElement,} from '@chakra-ui/react';
 
 
-import {
-  Box,
-  Text,
-  Image,
-  Divider,
-  Select,
-  Flex,
+import {Box,Text,
+  Image,Divider,Select,Flex,
   Link,
   Heading,
   Button,
