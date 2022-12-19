@@ -11,7 +11,7 @@ import {
 
 import AddToCartModal from '../Components/fountation/addtocart';
   const getdata=(isChecked="")=>{
-    return (  isChecked==""?axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?`):
+    return (  isChecked===""?axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?`):
      axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?isNew=${isChecked}`))
    
   }

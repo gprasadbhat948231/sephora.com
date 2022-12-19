@@ -1,12 +1,18 @@
+
 import Navbar from './Components/Navbar';
-import Footer from "./Pages/Footer";
 import AllRoutes from './Pages/AllRoutes';
+import Footer from './Pages/Footer';
+
 function App() {
+
   return (
     <div>
+
+
       <Navbar/>
-      <AllRoutes/>
+        <AllRoutes/>
       <Footer/>
+
     </div>
   )
 }

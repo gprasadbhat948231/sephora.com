@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   ADD_TO_WISHLIST,
+  AFTER_ORDER_PLACED,
   GET_CARTLIST_DATA,
   GET_WISHLIST_DATA,
   REMOVE_FROM_CARTLIST,
@@ -28,6 +29,9 @@ export const reducer = (state = initialState, { type, payload }) => {
     case REMOVE_FROM_CARTLIST:
       let filterdatacart = state.CartList.filter((ele) => ele.id !== payload);
       return { ...state, CartList: filterdatacart };
+
+   case AFTER_ORDER_PLACED:
+    return {...state,CartList:[]}   
     default:
       return state;
   }

@@ -18,6 +18,8 @@ import {
   Divider,
   useDisclosure,
   useToast,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import AddToCartModal from "../Components/EyeCarePages/AddToCartModal";
@@ -50,6 +52,8 @@ function EyeCare() {
     );
   };
   // for adding wishlist data //
+
+
   useEffect(() => {
     GetData();
   }, []);
@@ -115,7 +119,7 @@ function EyeCare() {
           sm: "inherit",
         }}
       >
-        <Box
+        <Box mt="20px"
           w={{ "2xl": "20%", lg: "20%", xl: "20%", md: "100%", sm: "100%" }}
           h="auto"
         >
@@ -125,13 +129,18 @@ function EyeCare() {
             HandleFilterByPrice={HandleFilterByPrice}
           />
         </Box>
-        <Box w={{ sl: "80%", lg: "80%", xl: "80%", md: "100%", sm: "100%" }}>
+        <Box mt="40px" visibility={EyeBrowData.length>0?"visible":"hidden"} w={{ "2xl": "80%", lg: "80%", xl: "80%", md: "100%", sm: "100%" }}>
           <EyeCareSection
             setEyeBrowData={setEyeBrowData}
             EyeBrowData={Allfilterdata}
           />
-        </Box>
+           <Box visibility={EyeBrowData.length===0?"visible":"hidden"} >
+      {EyeBrowData.length==0&&<LoadingComponent/>}
       </Box>
+        </Box>
+       
+      </Box>
+      
       <Divider color="black" />
       <Box w="96%" m="auto">
         <Heading>Browse More in Eye Care</Heading>
@@ -151,7 +160,6 @@ function EyeCare() {
   );
 }
 export default EyeCare;
-
 function EyeCareSection({ EyeBrowData = [] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [CartData, setCartData] = useState({});
@@ -320,14 +328,17 @@ function EyeCareSection({ EyeBrowData = [] }) {
             </Box>
           </Flex>
         ))}
+
+
       </Grid>
       {/* grid end here=--- */}
     </Box>
+  
   );
 }
 
 //  for ratings
-function Rating({ rating, numReviews }) {
+ export function Rating({ rating, numReviews }) {
   return (
     <Box display="flex" alignItems="center">
       {Array(5)
@@ -557,3 +568,70 @@ const EyecareLeftSection = ({
     </Box>
   );
 };
+
+export const LoadingComponent=()=>{
+    return<Grid ml="20px"  gap={"20px"} templateColumns={{
+      lg: "repeat(4, 1fr)",
+      xl: "repeat(4, 1fr)",
+      xl: "repeat(4, 1fr)",
+      sm: "repeat(2, 1fr)",
+      md: "repeat(3, 1fr)",
+    }}>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+  <SkeletonCircle size='10' />
+  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+
+</Box>
+</Grid>
+}
