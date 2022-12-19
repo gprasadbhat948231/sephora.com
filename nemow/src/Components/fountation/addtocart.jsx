@@ -1,7 +1,10 @@
 import {
     Button, Modal, ModalBody, ModalCloseButton,
     ModalContent,ModalFooter, ModalHeader,
-    Box, Text, Image, Flex, useToast, } from "@chakra-ui/react";
+    Box, Text, Image, Flex, useToast, } from "@chakra-ui/react"
+  import React, { useState } from "react";
+
+import { useEffect } from "react";
   import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -13,6 +16,10 @@ import { addtocart_Eyecare, addtowishlist_Eyecare,
     const {Wishlist,CartList} = useSelector((store) => store.CartandWishReducer);
     // const CartList = useSelector((store) => store);
     console.log(CartList);
+
+
+    const dispatch = useDispatch();
+ 
     const dispatch = useDispatch();
     const AddedtoWishlist = (ele) => {
       if (!Wishlist.find((item) => ele.id === item.id)) {
@@ -35,6 +42,7 @@ import { addtocart_Eyecare, addtowishlist_Eyecare,
         });
       }
     };
+
     const ToknowWishlist = (Eyedata) => {
       if (Wishlist.find((item) => Eyedata.id === item.id)) {
         return true;
