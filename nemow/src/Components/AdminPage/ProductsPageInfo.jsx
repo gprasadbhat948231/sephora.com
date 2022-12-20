@@ -1,3 +1,5 @@
+// pages count cards comonent
+
 import {
   Box,
   chakra,
@@ -10,10 +12,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import { ReactNode, useEffect, useState } from "react";
-import { BsPerson } from "react-icons/bs";
-import { FiServer } from "react-icons/fi";
-import { GoLocation } from "react-icons/go";
 import { useSelector } from "react-redux";
 import {
   GiArmoredPants,
@@ -36,9 +34,11 @@ import { FaTshirt } from "react-icons/fa";
 //   handleFunc:function
 //   }
 
+// card function for buiding card
 function StatsCard(props) {
   const { title, stat, icon, handleFunc, callBackFunc } = props;
 
+  // redirecting to selected page
   const handleClick = () => {
     callBackFunc(handleFunc);
   };
@@ -53,6 +53,7 @@ function StatsCard(props) {
       onClick={handleClick}
       cursor="pointer"
     >
+      {/* all comonent placed in */}
       <Flex justifyContent={"space-between"}>
         <Box pl={{ base: 2, md: 4 }}>
           <StatLabel fontWeight={"medium"} isTruncated>
@@ -76,7 +77,7 @@ function StatsCard(props) {
 
 export default function ProductsPageInfo({ handlePath }) {
   const pagesInfo = useSelector((store) => store.adminManager.pagesInfo);
-  // const[pagesInfo,setPagesInfo]=useState(null)
+
   const compo = [
     GiMonclerJacket,
     FaTshirt,
@@ -90,6 +91,7 @@ export default function ProductsPageInfo({ handlePath }) {
     GiArmoredPants,
   ];
 
+  // for making comonent
   var Ico = "";
 
   return (
@@ -113,10 +115,13 @@ export default function ProductsPageInfo({ handlePath }) {
               var iconCol = pagesInfo[page].color.split(".");
             }
             {
+              // this logic select component (functional )from its name
               var lin = compo.filter(
                 (icon) => icon.name == pagesInfo[page].icon
               );
             }
+
+            // this logic makes react comonent
             <HidingLogic>{(Ico = lin[0])}</HidingLogic>;
             return (
               <StatsCard

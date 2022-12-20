@@ -1,3 +1,4 @@
+// admin navbar page
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Avatar,
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setPage } from "../../HOC/AdminRedux/product.actions";
 
+// navbar options hardcoded
 const Links = ["Admin", "Dashboard", "Add Product"];
 const AdminNavbar = () => {
   const page = useSelector((store) => store.adminManager.page);
@@ -21,10 +23,12 @@ const AdminNavbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [visible, setvisible] = useState({ hove: "false", nav: page });
 
+  // hover effect underline
   const handleHover = (link) => {
     setvisible({ ...visible, hove: link });
   };
 
+  // handle title and cheged color of it
   const handlePage = (link) => {
     setvisible({ ...visible, nav: link });
     dispatch(setPage(link));
@@ -32,6 +36,7 @@ const AdminNavbar = () => {
 
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={10}>
+      {/* full screen navbar */}
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}
@@ -46,6 +51,7 @@ const AdminNavbar = () => {
           fontWeight="700"
           color="gray.500"
         >
+          {/* redirected link to home page */}
           <Link
             to="/"
             onClick={() => {
@@ -92,31 +98,16 @@ const AdminNavbar = () => {
             ))}
           </HStack>
         </HStack>
-        {/* <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}> */}
+
         <Avatar
           size={"sm"}
           src={
             "https://ca.slack-edge.com/T049JC010P9-U04ARFKMAHL-92937c2b8633-72"
           }
         />
-        {/* </MenuButton> */}
-        {/* <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList> */}
-        {/* </Menu>
-          </Flex> */}
       </Flex>
 
+      {/* small screen navbar */}
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
@@ -132,7 +123,6 @@ const AdminNavbar = () => {
                   color={link == page ? "blue" : ""}
                   onClick={() => {
                     setvisible({ ...visible, nav: link });
-
                     dispatch(setPage(link));
                   }}
                 >

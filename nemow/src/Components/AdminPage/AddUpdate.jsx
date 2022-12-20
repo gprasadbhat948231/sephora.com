@@ -1,3 +1,5 @@
+// form page with validation
+
 import {
   Center,
   FormControl,
@@ -17,21 +19,20 @@ import {
   Box,
   RadioGroup,
   SimpleGrid,
-  UnorderedList,
   VStack,
   Button,
   useToast,
   Stack,
-  InputLeftAddon,
 } from "@chakra-ui/react";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postProduct,
   updateProduct,
 } from "../../HOC/AdminRedux/product.actions";
 
+// price rages div hard coded data
 const pricesRanges = {
   mrpRange: "MRP Range",
   sellingPriceRange: "Selling Price Range",
@@ -39,6 +40,7 @@ const pricesRanges = {
 };
 
 //("/"+brand+"-"+name+"-"+id).replaceAll("'", "").replaceAll(" ", "-").toLowerCase()
+
 const AddUpdate = () => {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -46,8 +48,11 @@ const AddUpdate = () => {
   const initialProduactData = useSelector(
     (store) => store.adminManager.productData
   );
+
+  // for avoiding typed data when request is rehected
   const [productData, setProductData] = useState(initialProduactData);
-  
+
+  // key of product data destrutured
   const {
     id,
     mrpRange,
@@ -73,14 +78,16 @@ const AddUpdate = () => {
     // productTags: [{ tagText, tagUrl, tagTextColor }],
     imageColor,
   } = productData;
-console.log(promotions[0]?.type)
+
+  // for adding special symbol in input field
   const format = (valKey, type) =>
     valKey === "discountRange"
       ? productData[valKey][type] + "%"
       : "₹" + productData[valKey][type];
 
   // }
-  // valKey==="discountRange"?value[valKey][type]+"%" :"₹ " + value[valKey][type]};
+
+  // handling  range (number) related change
   const handleValueChange = (val, valKey, type) => {
     val.replace(/^\"₹"/, "");
     val = valKey === "discountRange" && val > 100 ? (val = 100) : val;
@@ -91,6 +98,7 @@ console.log(promotions[0]?.type)
     setProductData(product);
   };
 
+  // handling  fist level object keys data
   const handleChange = (e, name) => {
     if (name) {
       setProductData({ ...productData, [name]: e });
@@ -100,14 +108,15 @@ console.log(promotions[0]?.type)
     }
   };
 
+  // handling tags related values
   const handleTags = (e) => {
     const { name, value } = e.target;
-
     const product = { ...productData };
     product.productTags[0][name] = value;
     setProductData(product);
   };
 
+  // handling prmotions related values
   const handlePromotions = (e, radio) => {
     if (radio) {
       const product = { ...productData };
@@ -115,13 +124,13 @@ console.log(promotions[0]?.type)
       setProductData(product);
     } else {
       const { name, value } = e.target;
-
       const product = { ...productData };
       product.promotions[0][name] = value;
       setProductData(product);
     }
   };
 
+  // post the edited data to server and handale responses
   const postData = () => {
     if (
       id &&
@@ -133,23 +142,22 @@ console.log(promotions[0]?.type)
       imagePath
     ) {
       page == "Update"
-        ? dispatch(updateProduct(productData, path))
-        .then((res) => {
-          console.log(res)
-          if (res.status === 200) {
-            toast({
-              title: "Product Updated Successfully.",
-              description: "We've Updated product for you.",
-              status: "success",
-              duration: 3000,
-              isClosable: true,
-            });
-            setProductData(initialProduactData);
-          }
-        })
-         : dispatch(postProduct(productData, path))
+        ? dispatch(updateProduct(productData, path)).then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              toast({
+                title: "Product Updated Successfully.",
+                description: "We've Updated product for you.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+              setProductData(initialProduactData);
+            }
+          })
+        : dispatch(postProduct(productData, path))
             .then((res) => {
-              console.log(res)
+              console.log(res);
               if (res.status === 201) {
                 toast({
                   title: "Product Added Successfully.",
@@ -184,6 +192,7 @@ console.log(promotions[0]?.type)
   return (
     <Box w="60%" m="auto">
       <Center>
+        {/* add or update button */}
         <Button
           m={15}
           colorScheme={page == "Update" ? "twitter" : "whatsapp"}
@@ -192,6 +201,8 @@ console.log(promotions[0]?.type)
           {page}
         </Button>
       </Center>
+
+      {/* form append here */}
       <Grid
         templateColumns={[null, "repeat(1, 1fr)", null, null, "55% 45%"]}
         justifyContent="center"
@@ -264,9 +275,11 @@ console.log(promotions[0]?.type)
             />
           </GridItem>
         </FormControl>
+
+         {/* image data apeended here */}
         <FormControl isRequired>
           {
-            <GridItem>
+         <GridItem>
               <FormLabel>Image URL</FormLabel>
               <OrderedList spacing="4px">
                 <ListItem>
@@ -332,8 +345,11 @@ console.log(promotions[0]?.type)
             </GridItem>
           }
         </FormControl>
+
+  {/* some small input data  here */}
         <GridItem>
           <FormControl isRequired>
+          
             <SimpleGrid templateColumns={["1fr", "40% 60%"]} gap={"5px"}>
               <FormLabel>More Colors</FormLabel>
               <Input
@@ -342,9 +358,7 @@ console.log(promotions[0]?.type)
                 name="moreColors"
                 onChange={handleChange}
               />
-
               <FormLabel>New</FormLabel>
-
               <RadioGroup
                 onChange={(e) => handleChange(e, "isNew")}
                 name="isNew"
@@ -355,7 +369,6 @@ console.log(promotions[0]?.type)
                 </Radio>
                 <Radio value="false">No</Radio>
               </RadioGroup>
-
               <FormLabel>Size Chart Id</FormLabel>
               <Input
                 placeholder="sizeChartId"
@@ -370,7 +383,6 @@ console.log(promotions[0]?.type)
                 name="skus"
                 onChange={handleChange}
               />
-
               <FormLabel>Spacial Style Id</FormLabel>
               <Input
                 placeholder="sapStyleId"
@@ -381,6 +393,8 @@ console.log(promotions[0]?.type)
             </SimpleGrid>
           </FormControl>
         </GridItem>
+
+          {/* products tag related data is here */}
         <GridItem>
           <FormControl isRequired>
             <FormLabel textAlign="center">Product Tags</FormLabel>
@@ -392,7 +406,6 @@ console.log(promotions[0]?.type)
                 name="tagText"
                 onChange={handleTags}
               />
-
               <FormLabel>Tag URL</FormLabel>
               <Input
                 placeholder=" Tag URL"
@@ -410,20 +423,24 @@ console.log(promotions[0]?.type)
             </Grid>
           </FormControl>
         </GridItem>
-        {/* display={promotions.length ? "block" : "none"}  */}
+
+        {/* promotion related data */}
+
         <GridItem display={promotions.length > 0 ? "block" : "none"}>
           <FormLabel textAlign="center">Promotions</FormLabel>
-          
-          <Grid templateColumns="40% 60%" gap="5px" display={promotions.length > 0 ? "grid" : "none"}>
-            <FormLabel>Promotion name</FormLabel>
 
+          <Grid
+            templateColumns="40% 60%"
+            gap="5px"
+            display={promotions.length > 0 ? "grid" : "none"}
+          >
+            <FormLabel>Promotion name</FormLabel>
             <Input
               placeholder="name"
               value={promotions[0]?.name}
               name="name"
               onChange={handlePromotions}
             />
-
             <FormLabel>Display name</FormLabel>
             <Input
               placeholder="displayName"
@@ -431,7 +448,6 @@ console.log(promotions[0]?.type)
               name="displayName"
               onChange={handlePromotions}
             />
-
             <FormLabel>Promotion Type</FormLabel>
             <Input
               placeholder="type"
@@ -439,9 +455,7 @@ console.log(promotions[0]?.type)
               name="type"
               onChange={handlePromotions}
             />
-
             <FormLabel>Display Discount</FormLabel>
-
             <RadioGroup
               onChange={(e) => handlePromotions(e, "displayDiscount")}
               defaultValue="false"
@@ -452,7 +466,6 @@ console.log(promotions[0]?.type)
               </Radio>
               <Radio value="false">No</Radio>
             </RadioGroup>
-
             <FormLabel fontSize={["15px", "16px"]}>
               Discount Percentage
             </FormLabel>
@@ -464,6 +477,8 @@ console.log(promotions[0]?.type)
             />
           </Grid>
         </GridItem>
+
+        {/* some extra data */}
         <GridItem>
           <FormLabel>Video</FormLabel>
           <Input
@@ -473,11 +488,11 @@ console.log(promotions[0]?.type)
             onChange={handleChange}
           />
         </GridItem>
-        <GridItem display={remain_qnty ? "block" : "none"}>
+        <GridItem >
           <FormControl isRequired>
             <FormLabel>Quantity</FormLabel>
             <Input
-              placeholder="moreColors"
+              placeholder="Update Quantity"
               value={remain_qnty}
               name="remain_qnty"
               onChange={handleChange}
@@ -486,6 +501,7 @@ console.log(promotions[0]?.type)
         </GridItem>
       </Grid>
 
+      {/* pricing related data */}
       <Box mt={10}>
         <SimpleGrid columns={[1, 1, null, 2, null, 3]} spacing={20}>
           {Object.keys(pricesRanges).map((range) => (
@@ -506,10 +522,8 @@ console.log(promotions[0]?.type)
                   </NumberInputStepper>
                 </NumberInput>
               </HStack>
-
               <HStack>
                 <FormLabel>Max</FormLabel>
-
                 <NumberInput
                   name={range}
                   onChange={(val) => handleValueChange(val, range, "max")}

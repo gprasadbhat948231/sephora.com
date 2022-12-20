@@ -1,3 +1,5 @@
+// button function page
+
 import { Box, Button, Center, HStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -8,14 +10,14 @@ import {
   setPage,
   AddUpdate,
 } from "../../HOC/AdminRedux/product.actions";
-import {IoMdAddCircle}from "react-icons/io"
+import { IoMdAddCircle } from "react-icons/io";
 export const UpdateDeleteButton = ({ intialPrice, productsData }) => {
   const toast = useToast();
 
   const dispatch = useDispatch();
   const path = useSelector((store) => store.adminManager.path);
 
-  
+  // for updating path with existing value
   const handleUpdate = (product, path) => {
     const page = "Update";
     console.log(product);
@@ -24,6 +26,7 @@ export const UpdateDeleteButton = ({ intialPrice, productsData }) => {
     // <Navigate to="addproduct"/>;
   };
 
+  // for Deleting product from server
   const handleDelete = (id) => {
     dispatch(deleteProduct(id, path, productsData)).then((res) => {
       if (res.status == 200)
@@ -54,6 +57,7 @@ export const UpdateDeleteButton = ({ intialPrice, productsData }) => {
   );
 };
 
+// add button with path set(Add Product) cart
 export const AddButton = () => {
   const dispatch = useDispatch();
 
@@ -64,7 +68,12 @@ export const AddButton = () => {
   };
   return (
     <Center>
-      <Button m={15} colorScheme="messenger" leftIcon={<IoMdAddCircle/>} onClick={() => handleAdd()}>
+      <Button
+        m={15}
+        colorScheme="messenger"
+        leftIcon={<IoMdAddCircle />}
+        onClick={() => handleAdd()}
+      >
         Add Product
       </Button>
     </Center>

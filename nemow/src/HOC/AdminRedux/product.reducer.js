@@ -94,7 +94,7 @@ export const productReducer = (
       return { ...state, page: payload };
 
     case ADD_PRODUCT_DATA :
-      return { ...state, productData: adminInitialState.productData };
+      return { ...state, productData: adminInitialState.productData,products:{...state.products,payload} };
 
       case  DELETE_PRODUCT_DATA|| FILTER_PRODUCT_DATA:
       return { ...state, products: payload.newProductData };
