@@ -56,7 +56,7 @@ const Navbar = () => {
       </HStack>
       <Box className='nav-top-2'>
         <Box>
-          <img className='sephora-logo' src={Sephora} alt='logo' />
+          <NavLink to="/"><img className='sephora-logo' src={Sephora} alt='logo' /></NavLink>
         </Box>
         <Box className='inputsec'>
           <SearchIcon marginLeft={'20px'} /><Input placeholder='Search' className='nav-searchbar' />
