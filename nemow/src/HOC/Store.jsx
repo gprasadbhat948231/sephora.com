@@ -4,11 +4,11 @@ import { reducer } from "./EyecareRedux/Reducer";
 import thunk from "redux-thunk"
 import { authReducer } from "./LoginRedux/Reducer";
 import { productReducer } from "./AdminRedux/product.reducer";
-import thunk from "redux-thunk";
 const rootReducer=combineReducers({
     adminManager:productReducer,
     CartandWishReducer:reducer,
     authManeger:authReducer
+   
     })
     const composer=window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose
 

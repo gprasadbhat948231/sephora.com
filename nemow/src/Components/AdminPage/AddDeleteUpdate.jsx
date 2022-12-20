@@ -3,28 +3,29 @@ import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { deleteProduct, setPage,AddUpdate } from "../../HOC/AdminRedux/product.actions";
-
-
-
-export const UpdateDeleteButton = ({intialPrice,productsData}) => {
-  
+import {
+  deleteProduct,
+  setPage,
+  AddUpdate,
+} from "../../HOC/AdminRedux/product.actions";
+import {IoMdAddCircle}from "react-icons/io"
+export const UpdateDeleteButton = ({ intialPrice, productsData }) => {
   const toast = useToast();
 
   const dispatch = useDispatch();
   const path = useSelector((store) => store.adminManager.path);
-  const handleUpdate = (product,path) => {
-   const page="Add Product"
-   console.log(product)
-      dispatch(AddUpdate(product,path))
-     dispatch(setPage(page))
+
+  
+  const handleUpdate = (product, path) => {
+    const page = "Update";
+    console.log(product);
+    dispatch(AddUpdate(product, path));
+    dispatch(setPage(page));
     // <Navigate to="addproduct"/>;
   };
 
- 
-  const handleDelete =  (id) => {
-    dispatch(deleteProduct(id, path,productsData)).then((res) => {
-      // console.log(res)
+  const handleDelete = (id) => {
+    dispatch(deleteProduct(id, path, productsData)).then((res) => {
       if (res.status == 200)
         toast({
           title: "Product Deleted Successfully.",
@@ -37,11 +38,10 @@ export const UpdateDeleteButton = ({intialPrice,productsData}) => {
   };
 
   return (
-    <Box w="90%" m="auto" >
-      <HStack justifyContent="space-around" >
+    <Box w="90%" m="auto">
+      <HStack justifyContent="space-around">
         <Button
-        
-          onClick={() => handleUpdate(intialPrice, "dummy")}
+          onClick={() => handleUpdate(intialPrice, path)}
           colorScheme="orange"
         >
           Update
@@ -58,17 +58,13 @@ export const AddButton = () => {
   const dispatch = useDispatch();
 
   const handleAdd = () => {
-   const path="Add Product"
-    dispatch(setPage(path))
-   // <Navigate to="addproduct" />;
+    const path = "Add Product";
+    dispatch(setPage(path));
+    // <Navigate to="addproduct" />;
   };
   return (
     <Center>
-      <Button
-        m={15}
-        colorScheme="messenger"
-        onClick={() => handleAdd()}
-      >
+      <Button m={15} colorScheme="messenger" leftIcon={<IoMdAddCircle/>} onClick={() => handleAdd()}>
         Add Product
       </Button>
     </Center>

@@ -10,22 +10,25 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FaRegClosedCaptioning } from "react-icons/fa";
+
 import AddToCartModal from "./AddToCartModal";
-import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+
 import { Rating } from "../../Pages/EyeCare";
 import { useSelector } from "react-redux";
-import { UpdateDeleteButton } from "../AdminPage/AddDeleteUpdate";
+import { AddButton, UpdateDeleteButton } from "../AdminPage/AddDeleteUpdate";
 
-const Products = ({ EyeBrowData }) => {
-  const admin = useSelector((store) => store.adminManager.admin);
+const Products = ({ limit }) => {
+  const { admin, products } = useSelector((store) => store.adminManager);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [CartData, setCartData] = useState({});
-  
 
+  
+console.log(products,"***")
   return (
     <Box>
       {/* filter aand left side link added here=---  */}
+      <Box display={admin ? "block" : "none"}>
+        <AddButton />
+      </Box>
       <Grid
         w="100%"
         templateColumns={[
@@ -37,15 +40,8 @@ const Products = ({ EyeBrowData }) => {
         ]}
         rowGap={1}
       >
-        {CartData.name && (
-          <AddToCartModal
-            onOpen={onOpen}
-            onClose={onClose}
-            isOpen={isOpen}
-            CartData={CartData}
-          />
-        )}
-        {EyeBrowData.map((Eyedata) => (
+        
+        {products.filter((product,i) => i<26).map(Eyedata=>(
           <Flex
             key={Eyedata.id}
             p={4}
@@ -56,15 +52,11 @@ const Products = ({ EyeBrowData }) => {
             <Box maxW="sm" rounded="lg" position="relative">
               <Flex>
                 <Image
-                  onClick={() => {
-                    setCartData(Eyedata);
-                    onOpen();
-                  }}
                   src={Eyedata.imagePath}
                   alt={`Picture of ₹ {Eyedata.name}`}
                   roundedTop="lg"
                   // w="400px"
-                  h={["250px",null,null,"300"]}
+                  h={["250px", null, null, "300"]}
                 />
                 <Flex
                   position="absolute"
@@ -97,15 +89,8 @@ const Products = ({ EyeBrowData }) => {
                         /> */}
                 </Flex>
               </Flex>
-              <Box
-                p="6"
-                onClick={() => {
-                  setCartData(Eyedata);
-                  onOpen();
-                }}
-                h="180px"
-              >
-                <Box d="flex" alignItems="baseline" ></Box>
+              <Box p="6" h={["auto", "auto", "auto", "auto", "180px"]}>
+                <Box d="flex" alignItems="baseline"></Box>
                 <Heading size="xs" align="left">
                   {Eyedata.brand}
                 </Heading>
@@ -141,9 +126,13 @@ const Products = ({ EyeBrowData }) => {
                   {" " + Eyedata.sellingPriceRange.min}
                 </Box>
               </Box>
-              <Box display={admin?"block":"none"}><UpdateDeleteButton intialPrice={Eyedata} productsData={EyeBrowData}/></Box>
+              <Box display={admin ? "block" : "none"}>
+                <UpdateDeleteButton
+                  intialPrice={Eyedata}
+                  productsData={products}
+                />
+              </Box>
             </Box>
-            
           </Flex>
         ))}
       </Grid>

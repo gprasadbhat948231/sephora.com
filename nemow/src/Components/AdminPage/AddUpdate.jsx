@@ -27,7 +27,10 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../HOC/AdminRedux/product.actions";
+import {
+  postProduct,
+  updateProduct,
+} from "../../HOC/AdminRedux/product.actions";
 
 const pricesRanges = {
   mrpRange: "MRP Range",
@@ -39,10 +42,12 @@ const pricesRanges = {
 const AddUpdate = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const { path, page } = useSelector((store) => store.adminManager);
   const initialProduactData = useSelector(
     (store) => store.adminManager.productData
   );
   const [productData, setProductData] = useState(initialProduactData);
+  
   const {
     id,
     mrpRange,
@@ -62,12 +67,13 @@ const AddUpdate = () => {
     video,
     allImages,
     specs,
+    remain_qnty,
     sapStyleId,
     productTags,
     // productTags: [{ tagText, tagUrl, tagTextColor }],
     imageColor,
   } = productData;
-
+console.log(promotions[0]?.type)
   const format = (valKey, type) =>
     valKey === "discountRange"
       ? productData[valKey][type] + "%"
@@ -115,13 +121,8 @@ const AddUpdate = () => {
       setProductData(product);
     }
   };
-  const getData = async () => {
-    let path = "women-perfume ";
-    const url = "https://sephorajsonserver.onrender.com/" + path;
-    let res = await axios.get(url);
-  };
+
   const postData = () => {
-    let path = "women-perfume ";
     if (
       id &&
       mrpRange &&
@@ -131,31 +132,44 @@ const AddUpdate = () => {
       brand &&
       imagePath
     ) {
-      dispatch(postProduct(productData, path)).then((res) => {
-        console.log(res.status)
-        if (res.status ===201) {
-          console.log("111")
-          toast({
-            title: "Product Added Successfully.",
-            description: "We've Add  product for you.",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-          setProductData(initialProduactData);
-        } 
-          
-        
-      }).catch((err)=>{
-//console.log(err)
-toast({
-  title: "Server Error",
-  description:err.message,
-  status: "error",
-  duration: 3000,
-  isClosable: true,
-});
-      });
+      page == "Update"
+        ? dispatch(updateProduct(productData, path))
+        .then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            toast({
+              title: "Product Updated Successfully.",
+              description: "We've Updated product for you.",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            });
+            setProductData(initialProduactData);
+          }
+        })
+         : dispatch(postProduct(productData, path))
+            .then((res) => {
+              console.log(res)
+              if (res.status === 201) {
+                toast({
+                  title: "Product Added Successfully.",
+                  description: "We've Add  product for you.",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+                setProductData(initialProduactData);
+              }
+            })
+            .catch((err) => {
+              toast({
+                title: "Server Error",
+                description: err.message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              });
+            });
     } else {
       toast({
         title: "Please fill all require data",
@@ -167,14 +181,15 @@ toast({
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <Box w="60%" m="auto">
       <Center>
-        <Button m={15} colorScheme="messenger" onClick={postData}>
-          Add Product
+        <Button
+          m={15}
+          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          onClick={postData}
+        >
+          {page}
         </Button>
       </Center>
       <Grid
@@ -396,15 +411,15 @@ toast({
           </FormControl>
         </GridItem>
         {/* display={promotions.length ? "block" : "none"}  */}
-        <GridItem  display={promotions.length>0 ? "block" : "none"} >
+        <GridItem display={promotions.length > 0 ? "block" : "none"}>
           <FormLabel textAlign="center">Promotions</FormLabel>
-
-          <Grid templateColumns="40% 60%" gap="5px">
+          
+          <Grid templateColumns="40% 60%" gap="5px" display={promotions.length > 0 ? "grid" : "none"}>
             <FormLabel>Promotion name</FormLabel>
 
             <Input
               placeholder="name"
-              value={promotions[0].name}
+              value={promotions[0]?.name}
               name="name"
               onChange={handlePromotions}
             />
@@ -412,7 +427,7 @@ toast({
             <FormLabel>Display name</FormLabel>
             <Input
               placeholder="displayName"
-              value={promotions[0].displayName}
+              value={promotions[0]?.displayName}
               name="displayName"
               onChange={handlePromotions}
             />
@@ -420,7 +435,7 @@ toast({
             <FormLabel>Promotion Type</FormLabel>
             <Input
               placeholder="type"
-              value={promotions[0].type}
+              value={promotions[0]?.type}
               name="type"
               onChange={handlePromotions}
             />
@@ -430,6 +445,7 @@ toast({
             <RadioGroup
               onChange={(e) => handlePromotions(e, "displayDiscount")}
               defaultValue="false"
+              value={promotions[0]?.displayDiscount}
             >
               <Radio p="0 20px" value="true">
                 Yes
@@ -442,22 +458,33 @@ toast({
             </FormLabel>
             <Input
               placeholder="discountInPercentage"
-              value={promotions[0].discountInPercentage}
+              value={promotions[0]?.discountInPercentage}
               name="discountInPercentage"
               onChange={handlePromotions}
             />
           </Grid>
         </GridItem>
+        <GridItem>
+          <FormLabel>Video</FormLabel>
+          <Input
+            placeholder="video"
+            value={video}
+            name="video"
+            onChange={handleChange}
+          />
+        </GridItem>
+        <GridItem display={remain_qnty ? "block" : "none"}>
+          <FormControl isRequired>
+            <FormLabel>Quantity</FormLabel>
+            <Input
+              placeholder="moreColors"
+              value={remain_qnty}
+              name="remain_qnty"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </GridItem>
       </Grid>
-      <Box mt={10}>
-        <FormLabel>Video</FormLabel>
-        <Input
-          placeholder="video"
-          value={video}
-          name="video"
-          onChange={handleChange}
-        />
-      </Box>
 
       <Box mt={10}>
         <SimpleGrid columns={[1, 1, null, 2, null, 3]} spacing={20}>
@@ -501,8 +528,12 @@ toast({
         </SimpleGrid>
       </Box>
       <Center>
-        <Button m={15} colorScheme="messenger" onClick={postData}>
-          Add Product
+        <Button
+          m={15}
+          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          onClick={postData}
+        >
+          {page}
         </Button>
       </Center>
     </Box>
