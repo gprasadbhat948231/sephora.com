@@ -1,3 +1,5 @@
+// form page with validation
+
 import {
   Center,
   FormControl,
@@ -17,18 +19,20 @@ import {
   Box,
   RadioGroup,
   SimpleGrid,
-  UnorderedList,
   VStack,
   Button,
   useToast,
   Stack,
-  InputLeftAddon,
 } from "@chakra-ui/react";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postProduct } from "../../HOC/AdminRedux/product.actions";
 
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postProduct,
+  updateProduct,
+} from "../../HOC/AdminRedux/product.actions";
+
+// price rages div hard coded data
 const pricesRanges = {
   mrpRange: "MRP Range",
   sellingPriceRange: "Selling Price Range",
@@ -36,13 +40,19 @@ const pricesRanges = {
 };
 
 //("/"+brand+"-"+name+"-"+id).replaceAll("'", "").replaceAll(" ", "-").toLowerCase()
+
 const AddUpdate = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const { path, page } = useSelector((store) => store.adminManager);
   const initialProduactData = useSelector(
     (store) => store.adminManager.productData
   );
+
+  // for avoiding typed data when request is rehected
   const [productData, setProductData] = useState(initialProduactData);
+
+  // key of product data destrutured
   const {
     id,
     mrpRange,
@@ -62,19 +72,22 @@ const AddUpdate = () => {
     video,
     allImages,
     specs,
+    remain_qnty,
     sapStyleId,
     productTags,
     // productTags: [{ tagText, tagUrl, tagTextColor }],
     imageColor,
   } = productData;
 
+  // for adding special symbol in input field
   const format = (valKey, type) =>
     valKey === "discountRange"
       ? productData[valKey][type] + "%"
       : "₹" + productData[valKey][type];
 
   // }
-  // valKey==="discountRange"?value[valKey][type]+"%" :"₹ " + value[valKey][type]};
+
+  // handling  range (number) related change
   const handleValueChange = (val, valKey, type) => {
     val.replace(/^\"₹"/, "");
     val = valKey === "discountRange" && val > 100 ? (val = 100) : val;
@@ -85,6 +98,7 @@ const AddUpdate = () => {
     setProductData(product);
   };
 
+  // handling  fist level object keys data
   const handleChange = (e, name) => {
     if (name) {
       setProductData({ ...productData, [name]: e });
@@ -94,14 +108,15 @@ const AddUpdate = () => {
     }
   };
 
+  // handling tags related values
   const handleTags = (e) => {
     const { name, value } = e.target;
-
     const product = { ...productData };
     product.productTags[0][name] = value;
     setProductData(product);
   };
 
+  // handling prmotions related values
   const handlePromotions = (e, radio) => {
     if (radio) {
       const product = { ...productData };
@@ -109,19 +124,14 @@ const AddUpdate = () => {
       setProductData(product);
     } else {
       const { name, value } = e.target;
-
       const product = { ...productData };
       product.promotions[0][name] = value;
       setProductData(product);
     }
   };
-  const getData = async () => {
-    let path = "women-perfume ";
-    const url = "https://sephorajsonserver.onrender.com/" + path;
-    let res = await axios.get(url);
-  };
+
+  // post the edited data to server and handale responses
   const postData = () => {
-    let path = "women-perfume ";
     if (
       id &&
       mrpRange &&
@@ -131,31 +141,43 @@ const AddUpdate = () => {
       brand &&
       imagePath
     ) {
-      dispatch(postProduct(productData, path)).then((res) => {
-        console.log(res.status)
-        if (res.status ===201) {
-          console.log("111")
-          toast({
-            title: "Product Added Successfully.",
-            description: "We've Add  product for you.",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-          setProductData(initialProduactData);
-        } 
-          
-        
-      }).catch((err)=>{
-//console.log(err)
-toast({
-  title: "Server Error",
-  description:err.message,
-  status: "error",
-  duration: 3000,
-  isClosable: true,
-});
-      });
+      page == "Update"
+        ? dispatch(updateProduct(productData, path)).then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              toast({
+                title: "Product Updated Successfully.",
+                description: "We've Updated product for you.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+              setProductData(initialProduactData);
+            }
+          })
+        : dispatch(postProduct(productData, path))
+            .then((res) => {
+              console.log(res);
+              if (res.status === 201) {
+                toast({
+                  title: "Product Added Successfully.",
+                  description: "We've Add  product for you.",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+                setProductData(initialProduactData);
+              }
+            })
+            .catch((err) => {
+              toast({
+                title: "Server Error",
+                description: err.message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              });
+            });
     } else {
       toast({
         title: "Please fill all require data",
@@ -167,16 +189,20 @@ toast({
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <Box w="60%" m="auto">
       <Center>
-        <Button m={15} colorScheme="messenger" onClick={postData}>
-          Add Product
+        {/* add or update button */}
+        <Button
+          m={15}
+          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          onClick={postData}
+        >
+          {page}
         </Button>
       </Center>
+
+      {/* form append here */}
       <Grid
         templateColumns={[null, "repeat(1, 1fr)", null, null, "55% 45%"]}
         justifyContent="center"
@@ -249,9 +275,11 @@ toast({
             />
           </GridItem>
         </FormControl>
+
+         {/* image data apeended here */}
         <FormControl isRequired>
           {
-            <GridItem>
+         <GridItem>
               <FormLabel>Image URL</FormLabel>
               <OrderedList spacing="4px">
                 <ListItem>
@@ -317,8 +345,11 @@ toast({
             </GridItem>
           }
         </FormControl>
+
+  {/* some small input data  here */}
         <GridItem>
           <FormControl isRequired>
+          
             <SimpleGrid templateColumns={["1fr", "40% 60%"]} gap={"5px"}>
               <FormLabel>More Colors</FormLabel>
               <Input
@@ -327,9 +358,7 @@ toast({
                 name="moreColors"
                 onChange={handleChange}
               />
-
               <FormLabel>New</FormLabel>
-
               <RadioGroup
                 onChange={(e) => handleChange(e, "isNew")}
                 name="isNew"
@@ -340,7 +369,6 @@ toast({
                 </Radio>
                 <Radio value="false">No</Radio>
               </RadioGroup>
-
               <FormLabel>Size Chart Id</FormLabel>
               <Input
                 placeholder="sizeChartId"
@@ -355,7 +383,6 @@ toast({
                 name="skus"
                 onChange={handleChange}
               />
-
               <FormLabel>Spacial Style Id</FormLabel>
               <Input
                 placeholder="sapStyleId"
@@ -366,6 +393,8 @@ toast({
             </SimpleGrid>
           </FormControl>
         </GridItem>
+
+          {/* products tag related data is here */}
         <GridItem>
           <FormControl isRequired>
             <FormLabel textAlign="center">Product Tags</FormLabel>
@@ -377,7 +406,6 @@ toast({
                 name="tagText"
                 onChange={handleTags}
               />
-
               <FormLabel>Tag URL</FormLabel>
               <Input
                 placeholder=" Tag URL"
@@ -395,70 +423,85 @@ toast({
             </Grid>
           </FormControl>
         </GridItem>
-        {/* display={promotions.length ? "block" : "none"}  */}
-        <GridItem  display={promotions.length>0 ? "block" : "none"} >
+
+        {/* promotion related data */}
+
+        <GridItem display={promotions.length > 0 ? "block" : "none"}>
           <FormLabel textAlign="center">Promotions</FormLabel>
 
-          <Grid templateColumns="40% 60%" gap="5px">
+          <Grid
+            templateColumns="40% 60%"
+            gap="5px"
+            display={promotions.length > 0 ? "grid" : "none"}
+          >
             <FormLabel>Promotion name</FormLabel>
-
             <Input
               placeholder="name"
-              value={promotions[0].name}
+              value={promotions[0]?.name}
               name="name"
               onChange={handlePromotions}
             />
-
             <FormLabel>Display name</FormLabel>
             <Input
               placeholder="displayName"
-              value={promotions[0].displayName}
+              value={promotions[0]?.displayName}
               name="displayName"
               onChange={handlePromotions}
             />
-
             <FormLabel>Promotion Type</FormLabel>
             <Input
               placeholder="type"
-              value={promotions[0].type}
+              value={promotions[0]?.type}
               name="type"
               onChange={handlePromotions}
             />
-
             <FormLabel>Display Discount</FormLabel>
-
             <RadioGroup
               onChange={(e) => handlePromotions(e, "displayDiscount")}
               defaultValue="false"
+              value={promotions[0]?.displayDiscount}
             >
               <Radio p="0 20px" value="true">
                 Yes
               </Radio>
               <Radio value="false">No</Radio>
             </RadioGroup>
-
             <FormLabel fontSize={["15px", "16px"]}>
               Discount Percentage
             </FormLabel>
             <Input
               placeholder="discountInPercentage"
-              value={promotions[0].discountInPercentage}
+              value={promotions[0]?.discountInPercentage}
               name="discountInPercentage"
               onChange={handlePromotions}
             />
           </Grid>
         </GridItem>
-      </Grid>
-      <Box mt={10}>
-        <FormLabel>Video</FormLabel>
-        <Input
-          placeholder="video"
-          value={video}
-          name="video"
-          onChange={handleChange}
-        />
-      </Box>
 
+        {/* some extra data */}
+        <GridItem>
+          <FormLabel>Video</FormLabel>
+          <Input
+            placeholder="video"
+            value={video}
+            name="video"
+            onChange={handleChange}
+          />
+        </GridItem>
+        <GridItem >
+          <FormControl isRequired>
+            <FormLabel>Quantity</FormLabel>
+            <Input
+              placeholder="Update Quantity"
+              value={remain_qnty}
+              name="remain_qnty"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </GridItem>
+      </Grid>
+
+      {/* pricing related data */}
       <Box mt={10}>
         <SimpleGrid columns={[1, 1, null, 2, null, 3]} spacing={20}>
           {Object.keys(pricesRanges).map((range) => (
@@ -479,10 +522,8 @@ toast({
                   </NumberInputStepper>
                 </NumberInput>
               </HStack>
-
               <HStack>
                 <FormLabel>Max</FormLabel>
-
                 <NumberInput
                   name={range}
                   onChange={(val) => handleValueChange(val, range, "max")}
@@ -501,8 +542,12 @@ toast({
         </SimpleGrid>
       </Box>
       <Center>
-        <Button m={15} colorScheme="messenger" onClick={postData}>
-          Add Product
+        <Button
+          m={15}
+          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          onClick={postData}
+        >
+          {page}
         </Button>
       </Center>
     </Box>

@@ -1,3 +1,5 @@
+// Admin Prooduct page
+
 import {
   Box,
   Circle,
@@ -10,22 +12,27 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FaRegClosedCaptioning } from "react-icons/fa";
-import AddToCartModal from "./AddToCartModal";
-import { BsHeartFill, BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+
 import { Rating } from "../../Pages/EyeCare";
 import { useSelector } from "react-redux";
-import { UpdateDeleteButton } from "../AdminPage/AddDeleteUpdate";
+import { AddButton, UpdateDeleteButton } from "../AdminPage/AddDeleteUpdate";
 
-const Products = ({ EyeBrowData }) => {
-  const admin = useSelector((store) => store.adminManager.admin);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [CartData, setCartData] = useState({});
-  
+const Products = ({ limit }) => {
+  const { admin, products } = useSelector((store) => store.adminManager);
 
   return (
     <Box>
-      {/* filter aand left side link added here=---  */}
+      {/* Add data component */}
+      <Box>
+        <AddButton />
+      </Box>
+
+      {/* product Count Display */}
+      <Text fontWeight={600} m={10} color="green">
+        Total Products : {" " + limit}
+      </Text>
+
+      {/* products render in it */}
       <Grid
         w="100%"
         templateColumns={[
@@ -37,117 +44,104 @@ const Products = ({ EyeBrowData }) => {
         ]}
         rowGap={1}
       >
-        {CartData.name && (
-          <AddToCartModal
-            onOpen={onOpen}
-            onClose={onClose}
-            isOpen={isOpen}
-            CartData={CartData}
-          />
-        )}
-        {EyeBrowData.map((Eyedata) => (
-          <Flex
-            key={Eyedata.id}
-            p={4}
-            w="full"
-            alignItems="start"
-            justifyContent="center"
-          >
-            <Box maxW="sm" rounded="lg" position="relative">
-              <Flex>
-                <Image
-                  onClick={() => {
-                    setCartData(Eyedata);
-                    onOpen();
-                  }}
-                  src={Eyedata.imagePath}
-                  alt={`Picture of ₹ {Eyedata.name}`}
-                  roundedTop="lg"
-                  // w="400px"
-                  h={["250px",null,null,"300"]}
-                />
-                <Flex
-                  position="absolute"
-                  right="0px"
-                  p={2}
-                  alignItems="center"
-                  justifyContent={"space-between"}
-                  roundedBottom={"sm"}
-                  cursor="pointer"
-                >
-                  <Box
-                    bg={Eyedata.remain_qnty < 10 ? "tomato" : "green.500"}
-                    p="7px"
-                    fontSize="12px"
-                    borderRadius="50%"
-                    lineHeight="10px"
-                    color="white"
+        {/* cart for showing product */}
+        {products
+          .filter((product, i) => i < limit)
+          .map((Eyedata) => (
+            <Flex
+              key={Eyedata.id}
+              p={4}
+              w="full"
+              alignItems="start"
+              justifyContent="center"
+            >
+              <Box maxW="sm" rounded="lg" position="relative">
+                <Flex>
+                  <Image
+                    src={Eyedata.imagePath}
+                    alt={`Picture of ₹ {Eyedata.name}`}
+                    roundedTop="lg"
+                    // w="400px"
+                    h={["250px", null, null, "300"]}
+                  />
+                  <Flex
+                    position="absolute"
+                    right="0px"
+                    p={2}
+                    alignItems="center"
+                    justifyContent={"space-between"}
+                    roundedBottom={"sm"}
+                    cursor="pointer"
                   >
-                    <VStack>
-                      <Text>Stock</Text>
-                      <Text>{Eyedata.remain_qnty}</Text>
-                    </VStack>
-                  </Box>
-                  {/* <BsHeartFill
+                    <Box
+                      bg={Eyedata.remain_qnty < 10 ? "tomato" : "green.500"}
+                      p="7px"
+                      fontSize="12px"
+                      borderRadius="50%"
+                      lineHeight="10px"
+                      color="white"
+                    >
+                      <VStack>
+                        <Text>Stock</Text>
+                        <Text>{Eyedata.remain_qnty}</Text>
+                      </VStack>
+                    </Box>
+                    {/* <BsHeartFill
                           onClick={() => AddedtoWishlist(Eyedata)}
                           fill={
                             ToknowWatchlist(Eyedata.id, watchlist)?"red": "grey"
                           }
                           fontSize={"24px"}
                         /> */}
+                  </Flex>
                 </Flex>
-              </Flex>
-              <Box
-                p="6"
-                onClick={() => {
-                  setCartData(Eyedata);
-                  onOpen();
-                }}
-                h="180px"
-              >
-                <Box d="flex" alignItems="baseline" ></Box>
-                <Heading size="xs" align="left">
-                  {Eyedata.brand}
-                </Heading>
-                <Flex
-                  mt="1"
-                  justifyContent="space-between"
-                  alignContent="center"
-                >
-                  <Text
-                    color="grey"
-                    align="left"
-                    fontWeight="semibold"
-                    size="sm"
-                    lineHeight="tight"
+                <Box p="6" h={["auto", "auto", "auto", "auto", "180px"]}>
+                  <Box d="flex" alignItems="baseline"></Box>
+                  <Heading size="xs" align="left">
+                    {Eyedata.brand}
+                  </Heading>
+                  <Flex
+                    mt="1"
+                    justifyContent="space-between"
+                    alignContent="center"
                   >
-                    {Eyedata.name}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between" alignContent="center">
-                  <Rating
-                    rating={Eyedata.rating}
-                    numReviews={Eyedata.numReviews}
-                  />
-                </Flex>
-                <Box
-                  align="left"
-                  fontSize="2xl"
-                  // color={useColorModeValue("gray.800", "white")}
-                >
-                  <Box as="span" color={"gray.600"} fontSize="lg">
-                    ₹ :
+                    <Text
+                      color="grey"
+                      align="left"
+                      fontWeight="semibold"
+                      size="sm"
+                      lineHeight="tight"
+                    >
+                      {Eyedata.name}
+                    </Text>
+                  </Flex>
+                  <Flex justifyContent="space-between" alignContent="center">
+                    <Rating
+                      rating={Eyedata.rating}
+                      numReviews={Eyedata.numReviews}
+                    />
+                  </Flex>
+                  <Box
+                    align="left"
+                    fontSize="2xl"
+                    // color={useColorModeValue("gray.800", "white")}
+                  >
+                    <Box as="span" color={"gray.600"} fontSize="lg">
+                      ₹ :
+                    </Box>
+                    {" " + Eyedata.sellingPriceRange.min}
                   </Box>
-                  {" " + Eyedata.sellingPriceRange.min}
+                </Box>
+                <Box display={admin ? "block" : "none"}>
+                  <UpdateDeleteButton
+                    intialPrice={Eyedata}
+                    productsData={products}
+                  />
                 </Box>
               </Box>
-              <Box display={admin?"block":"none"}><UpdateDeleteButton intialPrice={Eyedata} productsData={EyeBrowData}/></Box>
-            </Box>
-            
-          </Flex>
-        ))}
+            </Flex>
+          ))}
       </Grid>
-      {/* grid end here=--- */}
     </Box>
   );
 };

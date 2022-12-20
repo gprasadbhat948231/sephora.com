@@ -7,14 +7,19 @@ import {
   ADD_PRODUCT_DATA,
   SET_ADMIN_PAGE,
   GET_PRODUCTS_DATA,
-  FILTER_PRODUCT_DATA
+  FILTER_PRODUCT_DATA,
+  GET_PAGES_COUNT_DATA
 } from "./product.types";
 
 const adminInitialState = {
   admin: true,
   path: "",
-  page: "Dashboard",
+  page: "Admin",
   products:[],
+  pagesInfo: {
+   
+  
+  },
   productData: {
     id: "",
     mrpRange: {
@@ -89,13 +94,14 @@ export const productReducer = (
       return { ...state, page: payload };
 
     case ADD_PRODUCT_DATA :
-      return { ...state, productData: adminInitialState.productData };
+      return { ...state, productData: adminInitialState.productData,products:{...state.products,payload} };
 
       case  DELETE_PRODUCT_DATA|| FILTER_PRODUCT_DATA:
       return { ...state, products: payload.newProductData };
 
     case GET_PRODUCTS_DATA : return { ...state,products:payload.Data,path:payload.path}
 
+    case GET_PAGES_COUNT_DATA : return { ...state,pagesInfo:payload}
     default:
       return state;
   }
