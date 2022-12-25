@@ -38,6 +38,11 @@ const pathsInfo = {
     icon: "GiLipstick",
     color: "pink.500",
   },
+  "Mens Jeans ": {
+    path: "mens-jeans",
+    icon: "GiArmoredPants",
+    color: "blue.200",
+  },
   Fragrance: {
     path: "new-arrival-fragrance",
     icon: "GiFragrance",
@@ -53,11 +58,7 @@ const pathsInfo = {
     icon: "GiPoloShirt",
     color: "teal.500",
   },
-  "Mens Jeans ": {
-    path: "mens-jeans",
-    icon: "GiArmoredPants",
-    color: "blue.200",
-  },
+ 
 };
 const Admin = () => {
   const page = useSelector((store) => store.adminManager.page);

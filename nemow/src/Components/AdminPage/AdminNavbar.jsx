@@ -115,7 +115,8 @@ const AdminNavbar = () => {
               <Link
                 key={link}
                 onClick={isOpen ? onClose : onOpen}
-                to={"/" + +link.toLowerCase().split(" ", 1)}
+                
+               // to={"/" + +link.toLowerCase().split(" ", 1)}
               >
                 <Box
                   fontWeight={"600"}
@@ -124,6 +125,7 @@ const AdminNavbar = () => {
                   onClick={() => {
                     setvisible({ ...visible, nav: link });
                     dispatch(setPage(link));
+                    
                   }}
                 >
                   {link}

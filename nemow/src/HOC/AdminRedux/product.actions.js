@@ -14,7 +14,7 @@ import {
 } from "./product.types";
 
 // adding data to products key
-export const AddUpdate = (productData, path) => (dispatch) => {
+export const updateProduct_path = (productData, path) => (dispatch) => {
   const data = { productData, path };
   dispatch({ type: UPDATE_PRODUCT_DATA, payload: data });
 };
@@ -39,35 +39,51 @@ export const setPage = (page) => (dispatch) => {
 };
 
 // sorting data
-export const filterData = (productsData, sortby, quan) => (dispatch) => {
+export const filterData = (productsData, sortby) => (dispatch) => {
   productsData.sort((a, b) => a[sortby] - b[sortby]);
   const newProductData = productsData;
   dispatch({ type: FILTER_PRODUCT_DATA, payload: newProductData });
 };
 
 // delete data from server and update without featching new data from server
-export const deleteProduct = (id, path, productsData) => (dispatch) => {
-  let newProductData = productsData.filter((product) => product.id !== id);
-  const url = `https://sephorajsonserver.onrender.com/${path}/${id}`;
-  let res = axios.delete(url);
-  dispatch({ type: DELETE_PRODUCT_DATA, payload: { newProductData } });
-  return res;
-};
+export const deleteProduct =
+  (id, path, productsData, pagesInfo) => (dispatch) => {
+    let newProductData = productsData.filter((product) => product.id !== id);
+    const url = `https://sephorajsonserver.onrender.com/${path}/${id}`;
+    let res = axios.delete(url);
+    if (pagesInfo) {
+      let page = Object.keys(pagesInfo).filter(
+        (page) => pagesInfo[page].path === path
+      );
+      pagesInfo[page].count = Number(pagesInfo[page].count) - 1;
+    }
+    dispatch({
+      type: DELETE_PRODUCT_DATA,
+      payload: { newProductData, pagesInfo },
+    });
+
+    return res;
+  };
 
 // add new product in page on server and also add with data without request
-export const postProduct = (product, path) => (dispatch) => {
-  // let path="women-perfume"
+export const postProduct = (product, path, products) => async (dispatch) => {
   const url = `https://sephorajsonserver.onrender.com/${path}`;
-  let res = axios.post(url, product);
-  dispatch({ type: ADD_PRODUCT_DATA, payload: product });
+  const newProductData = [...products, product];
+
+  let res = await axios.post(url, product);
+  console.log(res);
+
+  dispatch({ type: ADD_PRODUCT_DATA, payload: newProductData });
+  console.log(newProductData);
   return res;
 };
 
 // update product on server and dom also
-export const updateProduct = (product, path) => (dispatch) => {
+export const updateProduct = (product, path, products) => async (dispatch) => {
   const url = `https://sephorajsonserver.onrender.com/${path}/${product.id}`;
-  let res = axios.put(url, product);
-  dispatch({ type: ADD_PRODUCT_DATA, payload: product });
+  let res = await axios.put(url, product);
+  products.map((pro) => (pro.id === product.id ? product : pro));
+  dispatch({ type: ADD_PRODUCT_DATA, payload: products });
   return res;
 };
 
@@ -97,7 +113,7 @@ export const getPagesCount = (pathsInfo) => (dispatch) => {
     try {
       const res = await axios.get(url);
       const count = res.headers["x-total-count"];
-      pagesInfo[page].count = count;
+      pagesInfo[page].count = +count;
     } catch (err) {
       console.log(err.message);
     }

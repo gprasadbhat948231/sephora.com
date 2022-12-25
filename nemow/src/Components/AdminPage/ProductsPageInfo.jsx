@@ -106,7 +106,7 @@ export default function ProductsPageInfo({ handlePath }) {
         All current Products available in website.
       </chakra.h1>
       <SimpleGrid
-        columns={[1, 2, null, null, 3, 4]}
+        columns={[1, 2, 3,4,3,]}
         spacing={{ base: 5, lg: 8 }}
       >
         {pagesInfo &&

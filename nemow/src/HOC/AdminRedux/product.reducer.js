@@ -74,6 +74,7 @@ const adminInitialState = {
       },
     ],
     imageColor: "",
+  
   },
 };
 
@@ -94,10 +95,16 @@ export const productReducer = (
       return { ...state, page: payload };
 
     case ADD_PRODUCT_DATA :
-      return { ...state, productData: adminInitialState.productData,products:{...state.products,payload} };
+      return { ...state, productData: adminInitialState.productData,products:payload };
 
-      case  DELETE_PRODUCT_DATA|| FILTER_PRODUCT_DATA:
-      return { ...state, products: payload.newProductData };
+      case  DELETE_PRODUCT_DATA:
+        if(state.pagesInfo[payload.page])
+      return { ...state, products: payload.newProductData ,pagesInfo:payload.pagesInfo};
+      else{
+        return { ...state, products: payload.newProductData };
+      }
+      case   FILTER_PRODUCT_DATA:
+        return { ...state, products: payload };
 
     case GET_PRODUCTS_DATA : return { ...state,products:payload.Data,path:payload.path}
 
