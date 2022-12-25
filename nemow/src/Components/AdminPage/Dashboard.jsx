@@ -10,9 +10,9 @@ import ProductsPageInfo from "./ProductsPageInfo";
 
 
 const Dashboard = ({ pathsInfo }) => {
-  const{ products} = useSelector((store) => store.adminManager);
+  const{ products,path} = useSelector((store) => store.adminManager);
   const dispatch = useDispatch();
-  const [path, setPath] = useState(null);
+ // const [path, setPath] = useState(null);
 
   // setting limit as per select tag defalt as per products data length
   const [limit, setLimit] = useState(0);
@@ -22,7 +22,7 @@ const Dashboard = ({ pathsInfo }) => {
   const handlePath = (page) => {
     const newPath = pathsInfo[page].path;
     dispatch(getProducts(newPath));
-    setPath(newPath);
+   // setPath(newPath);
   };
 
   // sorting(filter) data using action and also set limit
@@ -38,7 +38,7 @@ useEffect(()=>{
     <Box width="95%" m="auto" p="40px">
       <Grid
         templateColumns={["repeat(1,1fr)", null,null,null, !path ? "auto 500px" : "500px auto"]}
-        alignItems="center"
+        alignItems={!path ?"center":"start"}
         gap="30px"
       >
         {/* all pages avilable in website */}

@@ -30,6 +30,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postProduct,
+  setPage,
   updateProduct,
   updateProduct_path,
 } from "../../HOC/AdminRedux/product.actions";
@@ -58,29 +59,29 @@ const AddUpdate = () => {
 
   // key of product data destrutured
   const {
-    id,
-    mrpRange,
-    sellingPriceRange,
-    discountRange,
-    name,
-    brand,
-    url,
-    imagePath,
-    altImagePath,
+    id="",
+    mrpRange="",
+    sellingPriceRange="",
+    discountRange="",
+    name="",
+    brand="",
+    url="",
+    imagePath="",
+    altImagePath="",
     otherImages,
-    promotions,
-    moreColors,
-    isNew,
-    sizeChartId,
-    skus,
-    video,
+    promotions="",
+    moreColors="",
+    isNew="",
+    sizeChartId="",
+    skus="",
+    video="",
     allImages,
     specs,
     remain_qnty = 0,
-    sapStyleId,
-    productTags,
-    // productTags: [{ tagText, tagUrl, tagTextColor }],
-    imageColor,
+    sapStyleId="",
+    productTags={},
+     productTags: [{ tagText="", tagUrl="", tagTextColor="" }],
+    imageColor="",
   } = productData;
 
   // for adding special symbol in input field
@@ -158,6 +159,7 @@ const AddUpdate = () => {
                 isClosable: true,
               });
               setProductData(initialProduactData);
+              dispatch(setPage("Dashboard"));
             }
           })
         : dispatch(postProduct(productData, path, products))
