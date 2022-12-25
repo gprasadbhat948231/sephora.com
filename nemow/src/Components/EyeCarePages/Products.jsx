@@ -2,16 +2,13 @@
 
 import {
   Box,
-  Circle,
   Flex,
   Grid,
   Heading,
   Image,
   Text,
-  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 
 import { Rating } from "../../Pages/EyeCare";
 import { useSelector } from "react-redux";
@@ -29,7 +26,7 @@ const Products = ({ limit }) => {
 
       {/* product Count Display */}
       <Text fontWeight={600} m={10} color="green">
-        Total Products : {" " + limit}
+        Total available Products : {" " + products.length}
       </Text>
 
       {/* products render in it */}

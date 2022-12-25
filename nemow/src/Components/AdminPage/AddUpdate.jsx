@@ -23,6 +23,7 @@ import {
   Button,
   useToast,
   Stack,
+  Select,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -30,6 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postProduct,
   updateProduct,
+  updateProduct_path,
 } from "../../HOC/AdminRedux/product.actions";
 
 // price rages div hard coded data
@@ -44,7 +46,9 @@ const pricesRanges = {
 const AddUpdate = () => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { path, page } = useSelector((store) => store.adminManager);
+  const { path, page, products, pagesInfo } = useSelector(
+    (store) => store.adminManager
+  );
   const initialProduactData = useSelector(
     (store) => store.adminManager.productData
   );
@@ -72,7 +76,7 @@ const AddUpdate = () => {
     video,
     allImages,
     specs,
-    remain_qnty,
+    remain_qnty = 0,
     sapStyleId,
     productTags,
     // productTags: [{ tagText, tagUrl, tagTextColor }],
@@ -139,10 +143,11 @@ const AddUpdate = () => {
       discountRange &&
       name &&
       brand &&
-      imagePath
+      imagePath &&
+      path
     ) {
-      page == "Update"
-        ? dispatch(updateProduct(productData, path)).then((res) => {
+      page === "Update"
+        ? dispatch(updateProduct(productData, path, products)).then((res) => {
             console.log(res);
             if (res.status === 200) {
               toast({
@@ -155,7 +160,7 @@ const AddUpdate = () => {
               setProductData(initialProduactData);
             }
           })
-        : dispatch(postProduct(productData, path))
+        : dispatch(postProduct(productData, path, products))
             .then((res) => {
               console.log(res);
               if (res.status === 201) {
@@ -180,7 +185,9 @@ const AddUpdate = () => {
             });
     } else {
       toast({
-        title: "Please fill all require data",
+        title: path
+          ? "Please fill all require data"
+          : "Please select page path at top",
         description: "Failed to add Product",
         status: "warning",
         duration: 3000,
@@ -189,13 +196,40 @@ const AddUpdate = () => {
     }
   };
 
+  const handlePageSelect = ({ target }) => {
+    const path = target.value;
+    dispatch(updateProduct_path(initialProduactData, path));
+  };
+
   return (
     <Box w="60%" m="auto">
+      <Center mt={"10px"}>
+     
+        <Select
+          placeholder="Select page to add product"
+          bg="green.500"
+          color="white"
+          value={path}
+          isDisabled={page === "Update" ? true : false}
+          onChange={handlePageSelect}
+        >
+          {pagesInfo &&
+            Object.keys(pagesInfo).map((page) => (
+              <option
+                key={1001 + page}
+                style={{ color: "black" }}
+                value={pagesInfo[page].path}
+              >
+                {page}
+              </option>
+            ))}
+        </Select>
+      </Center>
       <Center>
         {/* add or update button */}
         <Button
           m={15}
-          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          colorScheme={page === "Update" ? "twitter" : "whatsapp"}
           onClick={postData}
         >
           {page}
@@ -222,6 +256,7 @@ const AddUpdate = () => {
                   value={id}
                   name="id"
                   onChange={handleChange}
+                  isDisabled={page === "Update" ? true : false}
                 />
               </Box>
               <Box>
@@ -250,6 +285,7 @@ const AddUpdate = () => {
               }
               name="url"
               onChange={handleChange}
+              isDisabled
             />
           </GridItem>
         </FormControl>
@@ -276,10 +312,10 @@ const AddUpdate = () => {
           </GridItem>
         </FormControl>
 
-         {/* image data apeended here */}
+        {/* image data apeended here */}
         <FormControl isRequired>
           {
-         <GridItem>
+            <GridItem>
               <FormLabel>Image URL</FormLabel>
               <OrderedList spacing="4px">
                 <ListItem>
@@ -346,10 +382,9 @@ const AddUpdate = () => {
           }
         </FormControl>
 
-  {/* some small input data  here */}
+        {/* some small input data  here */}
         <GridItem>
           <FormControl isRequired>
-          
             <SimpleGrid templateColumns={["1fr", "40% 60%"]} gap={"5px"}>
               <FormLabel>More Colors</FormLabel>
               <Input
@@ -394,7 +429,7 @@ const AddUpdate = () => {
           </FormControl>
         </GridItem>
 
-          {/* products tag related data is here */}
+        {/* products tag related data is here */}
         <GridItem>
           <FormControl isRequired>
             <FormLabel textAlign="center">Product Tags</FormLabel>
@@ -488,7 +523,7 @@ const AddUpdate = () => {
             onChange={handleChange}
           />
         </GridItem>
-        <GridItem >
+        <GridItem>
           <FormControl isRequired>
             <FormLabel>Quantity</FormLabel>
             <Input
@@ -544,7 +579,7 @@ const AddUpdate = () => {
       <Center>
         <Button
           m={15}
-          colorScheme={page == "Update" ? "twitter" : "whatsapp"}
+          colorScheme={page === "Update" ? "twitter" : "whatsapp"}
           onClick={postData}
         >
           {page}
