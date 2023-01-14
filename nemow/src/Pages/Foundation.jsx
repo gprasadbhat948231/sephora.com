@@ -2,9 +2,18 @@ import React, { useEffect } from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 import { Fcomponent } from '../Components/fountation/Fcomponent';
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Checkbox, Flex, h2, Heading, Radio, RadioGroup, SimpleGrid, Spacer, Stack } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, 
+  AccordionPanel, Box, Button, Checkbox, Flex, h2, Heading, Radio, RadioGroup, SimpleGrid, Spacer, Stack } from '@chakra-ui/react'
 import LoadingIndicator from '../Components/fountation/loading';
-
+import {
+  Text,
+ Image,
+  Grid,
+  Link,
+  Divider,
+  useDisclosure,
+  useToast} from "@chakra-ui/react";
+import AddToCartModal from '../Components/fountation/addtocart';
   const getdata=(isChecked="")=>{
     return (  isChecked==""?axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?`):
      axios.get(`https://sephorajsonserver.onrender.com/womens-Foundation?isNew=${isChecked}`))
@@ -20,7 +29,9 @@ export const Foundation = () => {
   const [type,setType]=useState("")
   const [isChecked, setIsChecked] = useState()
   const [load,setLoad]=useState(false)
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [CartData, setCartData] = useState({});
+  console.log(CartData)
     useEffect(()=>{
       setLoad(true)
         getdata(isChecked).then(res=>{setData(res.data)
@@ -59,8 +70,6 @@ export const Foundation = () => {
     </RadioGroup>
     </AccordionPanel>
   </AccordionItem>
-
-
 
   <AccordionItem>
        <h2 as="h4" size={"md"}>
@@ -322,10 +331,21 @@ export const Foundation = () => {
   
     <SimpleGrid  gap={6} columns={{lg:4,md:3,sm:2}}>
     { 
+     CartData.name && (
+      <AddToCartModal
+        onOpen={onOpen}
+        onClose={onClose}
+        isOpen={isOpen}
+        CartData={CartData}   />
+    )
+    }
+{
       load?<LoadingIndicator/>:
      data?.map((dt,i)=>( <Fcomponent key={dt.id} image={dt.altImagePath}
-      name={names[i]} price= { prices[i]} detailes={dt.name} load={load}/>)
-      )
+      name={names[i]} price= { prices[i]} detailes={dt.name} load={load}
+      onClick={()=> {setCartData(dt);
+        onOpen()}} />)
+            )
     }
     </SimpleGrid>
     </Box>
