@@ -38,6 +38,7 @@ const Home = () => {
   const [eye, setEye] = useState([]);
   const [sweats, setSweat] = useState([]);
   // const {isAuth}=useSelector((store)=>store.authManeger);
+
   const featured = [{ name: 'Gifts & Value Sets', img: 'https://www.sephora.com/contentimages/homepage/092022/Homepage/RWD/gifts%2032@3x.png?imwidth=53' },
   { name: 'Luxury Skincare', img: 'https://www.sephora.com/contentimages/categorybanners/RWD/icons/luxury_beauty.svg' },
   { name: 'Makeup Under $25', img: 'https://www.sephora.com/contentimages/homepage/100422/Homepage/RWD/under25%2032@3x.jpg?imwidth=53' },

@@ -2,6 +2,7 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from "redux";
 import { reducer } from "./EyecareRedux/Reducer";
 import { authReducer } from "./LoginRedux/Reducer";
+import thunk from "redux-thunk"
 import { productReducer } from "./AdminRedux/product.reducer";
 const rootReducer=combineReducers({
     adminManager:productReducer,

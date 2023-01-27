@@ -66,6 +66,9 @@ const Navbarbtm = () => {
                   <Link to="#contact" smooth>Mini Size</Link>
                   <Link to="#contact" smooth>💫Gifts✨</Link>
                   <Link to="#contact" smooth>Beauty under $20</Link>
+                  <Link to="#contact" smooth>Community</Link>
+                  <Link to="#contact" smooth>Wishlist</Link>
+                  <Link to="#contact" smooth>Message</Link>
               </Stack>
             </Box>
           ) : null}

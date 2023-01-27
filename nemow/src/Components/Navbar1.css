@@ -2,7 +2,7 @@
     background-color: rgb(79, 15, 109);
     text-align: center;
     width: 100%;
-    min-height: 60px;
+   height: auto;
     display: flex;
     justify-content: center;
     color:#ffff;
@@ -82,6 +82,10 @@
     width:30px;
     height:30px
 }
+.iconscwc1{
+    width: 30px;
+    height:30px
+}
 .lastbox{
     width:200px;
     /* border:1px solid; */
@@ -100,6 +104,9 @@
 {
     .nav-top-1-text{
         font-size: 12px;
+    }
+    .iconscwc1{
+        display: none;
     }
     .storebox{
         display: none;
