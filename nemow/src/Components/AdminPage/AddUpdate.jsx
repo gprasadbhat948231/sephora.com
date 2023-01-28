@@ -68,19 +68,15 @@ const AddUpdate = () => {
     url="",
     imagePath="",
     altImagePath="",
-    otherImages,
     promotions="",
     moreColors="",
     isNew="",
     sizeChartId="",
     skus="",
     video="",
-    allImages,
-    specs,
     remain_qnty = 0,
     sapStyleId="",
     productTags={},
-     productTags: [{ tagText="", tagUrl="", tagTextColor="" }],
     imageColor="",
   } = productData;
 
@@ -94,7 +90,7 @@ const AddUpdate = () => {
 
   // handling  range (number) related change
   const handleValueChange = (val, valKey, type) => {
-    val.replace(/^\"₹"/, "");
+    val.replace(/^"₹"/, "");
     val = valKey === "discountRange" && val > 100 ? (val = 100) : val;
 
     const product = { ...productData };

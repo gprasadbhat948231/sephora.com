@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import {
   Box, HStack, Text, Input, useDisclosure, Drawer,
   DrawerBody,
@@ -19,15 +18,16 @@ import cart from '../Components/Navbarimg/cart.png'
 import wishlist from '../Components/Navbarimg/wishlist.png'
 import notify from '../Components/Navbarimg/notify.png'
 import Navbarbtm from './Navbarbtm';
-import { NavLink } from 'react-router-dom';
-import { login } from "../HOC/LoginRedux/Action"
+import { NavLink, useNavigate } from 'react-router-dom';
+import { login, Logout } from "../HOC/LoginRedux/Action"
+import { useEffect } from 'react';
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const firstField = React.useRef()
-
+  const [search, setSearch] = useState("");
   const [log, setLog] = useState({});
-
-  const { error, loading, isAuth } = useSelector((store) => store.authManeger);
+  const Navigate = useNavigate()
+  const { loading, isAuth } = useSelector((store) => store.authManeger);
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
@@ -37,18 +37,39 @@ const Navbar = () => {
 
   const handleSubmit = () => {
     if (log.email === 'admin@gmail.com' && log.password === 'nimda') {
-      window.location.href = "/admin"
-      console.log('true')
+      Navigate("/admin")
     }
     else
       login(dispatch, log);
   }
+  useEffect(() => {
+    handleSubmit()
+    if (isAuth) {
+      console.log(isAuth)
+      Navigate("/")
+    }
+  }, [])
 
-  if (isAuth) {
-    window.location.href = '/'
+  const handleLogout = () => {
+    dispatch(Logout())
   }
 
-  let loggedin = localStorage.getItem("userloggedin");
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (search === 'eye') {
+        Navigate("/eyecare")
+      }
+      else if (search === 'new') {
+        Navigate("/new")
+      }
+      else if (search === "foundation") {
+        Navigate("/foundation")
+      }
+      else {
+        alert("No items available")
+      }
+    }
+  }
 
   return (
     <div>
@@ -57,10 +78,10 @@ const Navbar = () => {
       </HStack>
       <Box className='nav-top-2'>
         <Box>
-          <NavLink to="/"><img className='sephora-logo' src={Sephora} alt='logo' /></NavLink>
+          <NavLink to="/"> <img className='sephora-logo' src={Sephora} alt='logo' /> </NavLink>
         </Box>
         <Box className='inputsec'>
-          <SearchIcon marginLeft={'20px'} /><Input placeholder='Search' className='nav-searchbar' />
+          <SearchIcon marginLeft={'20px'} /><Input placeholder='Search' className='nav-searchbar' value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleKeyDown} />
         </Box>
         <Box className='nav-midright'>
           <Box className='storebox'>
@@ -80,7 +101,7 @@ const Navbar = () => {
           </Box>
           <>
             {
-              !loggedin ? <> <Button bg='white' _hover={{ backgroundColor: 'white' }} color={'black'} onClick={onOpen}>
+              !isAuth ? <> <Button bg='white' _hover={{ backgroundColor: 'white' }} color={'black'} onClick={onOpen}>
                 Login
               </Button>
                 <Drawer
@@ -194,12 +215,12 @@ const Navbar = () => {
                     </DrawerBody>
                   </DrawerContent>
                 </Drawer>
-              </> : <Button>Logout</Button>
+              </> : <Button bg='white' _hover={{ backgroundColor: 'white' }} color={'black'} onClick={handleLogout}>Logout</Button>
             }
           </>
           <Box className='lastbox'>
             <img className='iconscwc1' src={notify} alt='chat' />
-            <img className='iconscwc1' src={wishlist} alt='wishlist' />
+            <NavLink to="/wishlist"><img className='iconscwc1' src={wishlist} alt='wishlist' /></NavLink>
             <NavLink to='/cart'><img className='iconscwc' src={cart} alt='cart' /></NavLink>
           </Box>
         </Box>

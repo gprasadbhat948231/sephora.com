@@ -86,12 +86,11 @@ const pricesRanges = {
   discountRange: "Discount Range",
 };
 
-const elements=[]
-console.log(typeof elements ,"***")
+const elements = []
 const AddUpdateData = () => {
   const [productData, setProductData] = useState(intialPrice);
-  console.log(elements,typeof elements ,"***")
- // const [elements,setElments]=useState([])
+  console.log(elements, typeof elements, "***")
+  // const [elements,setElments]=useState([])
   const format = (valKey, type) =>
     valKey === "discountRange"
       ? productData[valKey][type] + "%"
@@ -132,12 +131,12 @@ const AddUpdateData = () => {
           gap="30px 80px"
           alignItems="start"
         >
-          {Object.keys(productData).map((key, i) =>{
-           if( typeof productData[key] === "string" ||
-            typeof productData[key] === "number" ||
-            typeof productData[key] === "boolean" ){
-             if( typeof productData[key] === "string" ){
-              return  <GridItem key={i + key}>
+          {Object.keys(productData).map((key, i) => {
+            if (typeof productData[key] === "string" ||
+              typeof productData[key] === "number" ||
+              typeof productData[key] === "boolean") {
+              if (typeof productData[key] === "string") {
+                return <GridItem key={i + key}>
                   <FormLabel>{key}</FormLabel>
                   <Input
                     placeholder=" Product ID"
@@ -146,23 +145,23 @@ const AddUpdateData = () => {
                     onChange={handleChange}
                   />
                 </GridItem>
-              } else if( typeof productData[key] === "number" ) {
-               
-               elements.push( <GridItem key={i + key}>
-            
-                <Box>
-                  <FormLabel>{key}</FormLabel>
-                  <Input
-                    placeholder="moreColors"
-                    value={productData[key]}
-                    name={key}
-                    onChange={handleChange}
-                  />
+              } else if (typeof productData[key] === "number") {
+
+                elements.push(<GridItem key={i + key}>
+
+                  <Box>
+                    <FormLabel>{key}</FormLabel>
+                    <Input
+                      placeholder="moreColors"
+                      value={productData[key]}
+                      name={key}
+                      onChange={handleChange}
+                    />
                   </Box>
-               
+
                 </GridItem>)
-               
-} 
+
+              }
               else {
                 <GridItem key={i + key}>
                   <SimpleGrid templateColumns="repeat(2,1fr)" gap="5px">
@@ -180,16 +179,16 @@ const AddUpdateData = () => {
                     </RadioGroup>
                   </SimpleGrid>
                 </GridItem>
+              }
+            } else {
+              console.log(key, typeof productData[key], typeof elements)
             }
-               } else {
-              console.log(key, typeof productData[key],typeof elements)
-               }
-            })}
-          
-          <SimpleGrid templateColumns="repeat(2,1fr)" gap="5px">{elements.map((ele,i)=><Box>{ele}</Box>)}</SimpleGrid>
-         
+          })}
+
+          <SimpleGrid templateColumns="repeat(2,1fr)" gap="5px">{elements.map((ele, i) => <Box>{ele}</Box>)}</SimpleGrid>
+
         </Grid>
- 
+
       </FormControl>
     </Box>
   );
