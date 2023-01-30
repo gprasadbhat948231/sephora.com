@@ -27,7 +27,8 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const [log, setLog] = useState({});
   const Navigate = useNavigate()
-  const { loading, isAuth } = useSelector((store) => store.authManeger);
+  const { loading, isAuth,token } = useSelector((store) => store.authManeger);
+  console.log(isAuth,token)
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
@@ -45,7 +46,7 @@ const Navbar = () => {
   useEffect(() => {
     handleSubmit()
     if (isAuth) {
-      console.log(isAuth)
+      console.log(token)
       Navigate("/")
     }
   }, [])

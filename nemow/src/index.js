@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     < BrowserRouter >
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </BrowserRouter>
   </Provider>
 );
