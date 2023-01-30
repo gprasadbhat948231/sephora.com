@@ -37,26 +37,31 @@ const data = {
   numReviews: 120,
 };
 function Found() {
-
-
-
   const [foundationdata, setFoundationData] = useState([]);
   const [Allfilterdata, setfilterdata] = useState([]);
+  const [page,setPage]=useState(1)
   // eyeBrow Data fetching //
-  const GetData = () => {
-    axios(`https://sephorajsonserver.onrender.com/womens-Foundation`).then(
+  const GetData = (page) => {
+    axios(`https://sephorajsonserver.onrender.com/womens-Foundation?_page=${page}&_limit=8`).then(
       (ress) => {
         setFoundationData(ress.data);
         setfilterdata(ress.data);
       }
     );
   };
+
+  const handlePage=(val)=>{
+    const value=page+val;
+    setPage(value);
+  }
+
+
   // for adding wishlist data //
 
 
   useEffect(() => {
-    GetData();
-  }, []);
+    GetData(page);
+  }, [page]);
 
   // Type fillter start from here
   const HandleFilterByType = (type) => {
@@ -129,18 +134,26 @@ function Found() {
             HandleFilterByPrice={HandleFilterByPrice}
           />
         </Box>
-        <Box mt="40px" visibility={foundationdata.length>0?"visible":"hidden"} w={{ "2xl": "80%", lg: "80%", xl: "80%", md: "100%", sm: "100%" }}>
+        <Box mt="40px" visibility={foundationdata.length > 0 ? "visible" : "hidden"} w={{ "2xl": "80%", lg: "80%", xl: "80%", md: "100%", sm: "100%" }}>
           <EyeCareSection
             setFoundationData={setFoundationData}
             foundationdata={Allfilterdata}
           />
-           <Box visibility={foundationdata.length===0?"visible":"hidden"} >
-      {foundationdata.length==0&&<LoadingComponent/>}
-      </Box>
+
+          {/* Pagination  */}
+
+
+          <Button disabled={page === 1} onClick={() => handlePage(-1)}>Prev</Button>
+          <Button disabled>{page}</Button>
+          <Button disabled={page === 3} onClick={() => handlePage(1)}>Next</Button>
+
+          <Box visibility={foundationdata.length === 0 ? "visible" : "hidden"} >
+            {foundationdata.length == 0 && <LoadingComponent />}
+          </Box>
         </Box>
-       
+
       </Box>
-      
+
       <Divider color="black" />
       <Box w="96%" m="auto">
         <Heading>Browse More in Eye Care</Heading>
@@ -164,8 +177,12 @@ function EyeCareSection({ foundationdata = [] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [CartData, setCartData] = useState({});
   const toast = useToast();
-  const {Wishlist,CartList} = useSelector((store) => store.CartandWishReducer);
-
+  const { Wishlist, CartList } = useSelector((store) => store.CartandWishReducer);
+  const [page, setPage] = useState(1)
+  const handlePage = (val) => {
+    const value = page + val;
+    setPage(value);
+  }
   // const CartList = useSelector((store) => store);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -317,7 +334,7 @@ function EyeCareSection({ foundationdata = [] }) {
                 <Box
                   align="left"
                   fontSize="2xl"
-                  // color={useColorModeValue("gray.800", "white")}
+                // color={useColorModeValue("gray.800", "white")}
                 >
                   <Box as="span" color={"gray.600"} fontSize="lg">
                     ₹
@@ -328,17 +345,16 @@ function EyeCareSection({ foundationdata = [] }) {
             </Box>
           </Flex>
         ))}
-
-
       </Grid>
       {/* grid end here=--- */}
+
     </Box>
-  
+
   );
 }
 
 //  for ratings
- export function Rating({ rating, numReviews }) {
+export function Rating({ rating, numReviews }) {
   return (
     <Box display="flex" alignItems="center">
       {Array(5)
@@ -525,69 +541,69 @@ const EyecareLeftSection = ({
   );
 };
 
-export const LoadingComponent=()=>{
-    return<Grid ml="20px"  gap={"20px"} templateColumns={{
-      lg: "repeat(4, 1fr)",
-      xl: "repeat(4, 1fr)",
-      xl: "repeat(4, 1fr)",
-      sm: "repeat(2, 1fr)",
-      md: "repeat(3, 1fr)",
-    }}>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+export const LoadingComponent = () => {
+  return <Grid ml="20px" gap={"20px"} templateColumns={{
+    lg: "repeat(4, 1fr)",
+    xl: "repeat(4, 1fr)",
+    xl: "repeat(4, 1fr)",
+    sm: "repeat(2, 1fr)",
+    md: "repeat(3, 1fr)",
+  }}>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box><Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-<Box padding='6' boxShadow='lg' bg='#CBD5E0'>
-  <SkeletonCircle size='10' />
-  <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
+    </Box>
+    <Box padding='6' boxShadow='lg' bg='#CBD5E0'>
+      <SkeletonCircle size='10' />
+      <SkeletonText mt='6' noOfLines={4} spacing='8' skeletonHeight='4' />
 
-</Box>
-</Grid>
+    </Box>
+  </Grid>
 }
