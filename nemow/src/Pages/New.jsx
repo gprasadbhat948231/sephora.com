@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import '../Components/NewPage/New.css'
 import '../index.css'
 import Card from "../Components/NewPage/Card.jsx";
-import { Box, Heading, Text, Grid, useToast } from "@chakra-ui/react";
+import { Box, Heading, Text, Grid, useToast, Button } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addtocart_Eyecare, addtowishlist_Eyecare, cartlistGetdata, Remove_from_Wishlist, wishlistGetdata } from "../HOC/EyecareRedux/Actions";
 import { LoadingComponent } from "./EyeCare";
@@ -11,18 +11,23 @@ const New = () => {
     const { Wishlist, CartList } = useSelector((state) => state.CartandWishReducer)
     const dispatch = useDispatch()
     const [products, setProducts] = useState([]);
-
+    const [page,setPage]=useState(1);
     const toast = useToast();
-    const getNewData = async (api) => {
-        let data = await fetch(api);
+    const handlePage=(val)=>{
+        const value=page+val;
+        setPage(value);
+      }
+    
+    const getNewData = async (api,page) => {
+        let data = await fetch(`${api}?_page=${page}&_limit=8`);
         data = await data.json();
         setProducts((prev) => prev = data)
     }
     useEffect(() => {
-        getNewData(new_arrival_api);
+        getNewData(new_arrival_api,page);
         dispatch(wishlistGetdata())
         dispatch(cartlistGetdata())
-    }, [])
+    }, [page])
 
     const new_arrival_api = 'https://sephorajsonserver.onrender.com/new-arrival';
     const just_dropped_api = 'https://sephorajsonserver.onrender.com/new-arrival-fragrance';
@@ -88,8 +93,6 @@ const New = () => {
         }
     };
 
-    // const breakpoints = { sm: '30em', md: '48em', lg: '62em', xl: '80em', '2xl': '96em' }
-    // brand, imagePath, sellingPriceRange: {min: 440, max: 440}, name: "Color Hit Nail Polish - L153 Blue Suede Shoes", brand, id, discountRange: {min: 0, max: 0}
     return (
         <div style={{ display: 'flex', width: '85%', margin: 'auto', marginTop: '10vh' }}>
             <div className="others-pages-div" style={{ width: '20%', marginRight: '2vw' }}>
@@ -120,6 +123,10 @@ const New = () => {
                         ))
                         }
                     </Grid>}
+                
+          <Button disabled={page === 1} onClick={() => handlePage(-1)}>Prev</Button>
+          <Button disabled>{page}</Button>
+          <Button disabled={page === 3} onClick={() => handlePage(1)}>Next</Button>
             </Box>
         </div>
     )
