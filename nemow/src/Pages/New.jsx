@@ -105,7 +105,7 @@ const New = () => {
                     <Text className="sub-pages" onClick={() => handlePageChange(fragrance_api)}>Fragrance</Text>
                     <Text className="sub-pages" onClick={() => handlePageChange(bath_body_api)}>Bath & Body</Text>
                     <Text className="sub-pages" onClick={() => handlePageChange(eyecare_api)}>Eyecare</Text>
-                    <Text className="sub-pages" onClick={() => handlePageChange(tools_brushes_api)}>Tools & Brushes</Text>
+                    <Text className="sub-pages" onClick={() => handlePageChange(tools_brushes_api)}>Lipsticks</Text>
                 </Box>
             </div>
 

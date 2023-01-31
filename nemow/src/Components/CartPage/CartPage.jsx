@@ -316,21 +316,21 @@ const Form1 = () => {
         Enter Details
       </Heading>
       <Flex>
-        <FormControl mr="5%">
+        <FormControl mr="5%"  isRequired>
           <FormLabel htmlFor="first-name" fontWeight={'normal'}>
             First name
           </FormLabel>
           <Input id="first-name" placeholder="First name" />
         </FormControl>
 
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel htmlFor="last-name" fontWeight={'normal'}>
             Last name
           </FormLabel>
           <Input id="last-name" placeholder="First name" />
         </FormControl>
       </Flex>
-      <FormControl mt="2%">
+      <FormControl mt="2%" isRequired>
         <FormLabel htmlFor="email" fontWeight={'normal'}>
           Email address
         </FormLabel>
@@ -338,7 +338,7 @@ const Form1 = () => {
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
 
-      <FormControl>
+      <FormControl isRequired>
         <FormLabel htmlFor="password" fontWeight={'normal'} mt="2%">
           Password
         </FormLabel>
@@ -366,7 +366,7 @@ const Form2 = () => {
       <Heading w="100%" fontSize={"23px"} color="red" py="10px" textAlign={'center'} fontWeight="normal" mb="2%">
         Adress
       </Heading>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
+      <FormControl as={GridItem} colSpan={[6, 3]} isRequired>
         <FormLabel
           htmlFor="country"
           fontSize="sm"
@@ -393,7 +393,7 @@ const Form2 = () => {
         </Select>
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={6}>
+      <FormControl as={GridItem} colSpan={6} isRequired>
         <FormLabel
           htmlFor="street_address"
           fontSize="sm"
@@ -418,7 +418,7 @@ const Form2 = () => {
         />
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
+      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}isRequired>
         <FormLabel
           htmlFor="city"
           fontSize="sm"
@@ -443,7 +443,7 @@ const Form2 = () => {
         />
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+      <FormControl as={GridItem} colSpan={[6, 3, null, 2]} isRequired>
         <FormLabel
           htmlFor="state"
           fontSize="sm"
@@ -468,7 +468,7 @@ const Form2 = () => {
         />
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+      <FormControl as={GridItem} colSpan={[6, 3, null, 2]} isRequired>
         <FormLabel
           htmlFor="postal_code"
           fontSize="sm"
@@ -505,8 +505,6 @@ const Form3 = () => {
       </Heading>
       <SimpleGrid columns={1} spacing={6}>
         <FormControl as={GridItem} colSpan={[3, 2]}>
-
-
           <InputGroup my="20px" size="sm">
             <InputLeftAddon
               bg="gray.50"
@@ -538,7 +536,7 @@ const Form3 = () => {
               </InputLeftAddon>
               <Input w="50px"
                 type="number"
-
+                maxLength={3}
                 focusBorderColor="brand.400"
                 rounded="md"
               />

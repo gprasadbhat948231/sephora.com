@@ -37,11 +37,17 @@ const Navbar = () => {
   }
 
   const handleSubmit = () => {
-    if (log.email === 'admin@gmail.com' && log.password === 'nimda') {
-      Navigate("/admin")
+    if(log.email!==""&&log.password!=="" )
+    {
+      if (log.email === 'admin@gmail.com' && log.password === 'nimda') {
+        Navigate("/admin")
+      }
+      else
+        login(dispatch, log);
     }
-    else
-      login(dispatch, log);
+    else{
+      alert("Please Fill all the Credentials")
+    }
   }
   useEffect(() => {
     handleSubmit()
