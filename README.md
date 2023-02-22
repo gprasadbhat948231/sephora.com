@@ -1,11 +1,5 @@
 
-# Nemow
-
-
-We have made the nemow website as our construct week project in the RCT201 of our Masai Journey. We, a team of 5 people have completed this project in a span of 5 days using our knowledge of React, Redux, Chakra UI, Css and Js.
-
-
-## About the website
+# About Nemow
 
 Nemow is an e-commerce website where all types of Skincare, Eyecare, Hairstyle and many more related products are available for men, women and kids.
 
